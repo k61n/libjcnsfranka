@@ -1,16 +1,11 @@
-#include <jcnsfranka.h>
+#include "mainwindow.h"
 
-using namespace std;
+#include <QApplication>
 
-int main()
+int main(int argc, char *argv[])
 {
-//    string ip = "172.25.80.146";
-      string ip = "192.168.1.5";
-
-    JcnsFranka robot(ip);
-    cout << robot.readState() << endl;
-
-//    robot.goHome();
-//    robot.communicationTest();
-    return 0;
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }

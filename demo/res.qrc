@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>resources/panda_joints.png</file>
+    </qresource>
+</RCC>
