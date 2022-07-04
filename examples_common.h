@@ -3,8 +3,7 @@
 #pragma once
 
 #include <array>
-
-#include <Eigen/Core>
+#include <eigen3/Eigen/Core>
 
 #include <franka/control_types.h>
 #include <franka/duration.h>

@@ -43,7 +43,7 @@ bool JcnsFranka::goHome()
         double speed_factor = 0.5;
         MotionGenerator motion_generator(speed_factor, q_goal);
         robot->control(motion_generator, franka::ControllerMode::kJointImpedance, true,
-                       franka::kMaxCutoffFrequency);
+                       franka::kDefaultCutoffFrequency);
     }
     catch (franka::Exception const& e) {
             std::cout << e.what() << std::endl;
@@ -70,11 +70,6 @@ void JcnsFranka::communicationTest()
                 return zero_torques;
               }
               counter++;
-              if (counter % 100 == 0) {
-                std::cout << "#" << counter
-                          << " Current success rate: " << robot_state.control_command_success_rate
-                          << std::endl;
-              }
               std::this_thread::sleep_for(std::chrono::microseconds(100));
               avg_success_rate += robot_state.control_command_success_rate;
               if (robot_state.control_command_success_rate > max_success_rate) {
@@ -90,7 +85,7 @@ void JcnsFranka::communicationTest()
               // Sending zero torques - if EE is configured correctly, robot should not move
               return zero_torques;
             },
-            false, 1000);
+            true, 1000);
 
     }
     catch (franka::Exception const& e) {
