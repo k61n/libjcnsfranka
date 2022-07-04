@@ -20,9 +20,9 @@ add_library(JcnsFranka SHARED
 target_compile_definitions(JcnsFranka PRIVATE JCNSFRANKA_LIBRARY)
 target_link_libraries(JcnsFranka Franka::Franka Eigen3::Eigen)
 
-install(TARGETS JcnsFranka DESTINATION "${CMAKE_INSTALL_PREFIX}/lib")
+install(TARGETS JcnsFranka DESTINATION "${PROJECT_SOURCE_DIR}/install/lib")
 install(FILES
     jcnsfranka.h
     jcnsfranka_global.h
     examples_common.h
-    DESTINATION "${CMAKE_INSTALL_PREFIX}/include")
+    DESTINATION "${PROJECT_SOURCE_DIR}/install/include")
