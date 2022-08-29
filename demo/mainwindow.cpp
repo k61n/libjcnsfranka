@@ -73,7 +73,11 @@ void MainWindow::on_clearBtn_clicked()
 
 void MainWindow::on_readBtn_clicked()
 {
-    QString output = QString::fromStdString(robot->readState());
-    ui->connectionEdit->appendPlainText(output);
-
+    ui->connectionEdit->clear();
+    QJsonDocument state = QJsonDocument::fromJson(QString::fromStdString(this->robot->readState()).toUtf8());
+    QList joint_positions = state.object().toVariantMap()["q"].toStringList();
+    for (int i=0; i<joint_positions.count(); i++) {
+        double degrees = joint_positions[i].toDouble() / M_PI * 180;
+        ui->connectionEdit->appendPlainText("j" + QString::number(i) + " = " + joint_positions[i] + "\t" + QString::number((int)degrees));
+    }
 }
