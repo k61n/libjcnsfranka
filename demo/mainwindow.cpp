@@ -1,5 +1,7 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
+#include "ui_mainwindow.h"
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -15,8 +17,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->j6Box, &QSpinBox::valueChanged, this, &MainWindow::on_stateChanged);
     connect(ui->j7Box, &QSpinBox::valueChanged, this, &MainWindow::on_stateChanged);
 
-    this->on_connectBtn_clicked();
+    boxList.append(ui->j1Box);
+    boxList.append(ui->j2Box);
+    boxList.append(ui->j3Box);
+    boxList.append(ui->j4Box);
+    boxList.append(ui->j5Box);
+    boxList.append(ui->j6Box);
+    boxList.append(ui->j7Box);
 
+    this->on_connectBtn_clicked();
 }
 
 MainWindow::~MainWindow()
@@ -28,14 +37,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_stateChanged()
 {
-    double j1 = (double)ui->j1Box->value() / 180 * M_PI;
-    double j2 = (double)ui->j2Box->value() / 180 * M_PI;
-    double j3 = (double)ui->j3Box->value() / 180 * M_PI;
-    double j4 = (double)ui->j4Box->value() / 180 * M_PI;
-    double j5 = (double)ui->j5Box->value() / 180 * M_PI;
-    double j6 = (double)ui->j6Box->value() / 180 * M_PI;
-    double j7 = (double)ui->j7Box->value() / 180 * M_PI;
-    this->robot->moveJoints(j1, j2 ,j3, j4, j5, j6, j7);
+    std::array<double, 7> joints;
+    for (int i=0; i<boxList.count(); i++) {
+        joints[i] = boxList.at(i)->value() / 180.0 * M_PI;
+        qDebug() << i << boxList.at(i)->value() << joints[i];
+    }
+    this->robot->moveJoints(joints);
+
+    QJsonDocument state = QJsonDocument::fromJson(QString::fromStdString(this->robot->readState()).toUtf8());
+    QList joint_positions = state.object().toVariantMap()["q"].toStringList();
+    qDebug() << joint_positions;
+
 }
 
 

@@ -58,13 +58,12 @@ bool JcnsFranka::goHome()
 }
 
 
-void JcnsFranka::moveJoints(double j1, double j2, double j3, double j4, double j5, double j6, double j7)
+void JcnsFranka::moveJoints(std::array<double, 7> joints)
 {
     try {
         robot->automaticErrorRecovery();
-        std::array<double, 7> q_goal = {{j1, j2, j3, j4, j5, j6, j7}};
         double speed_factor = 0.5;
-        MotionGenerator motion_generator(speed_factor, q_goal);
+        MotionGenerator motion_generator(speed_factor, joints);
         robot->control(motion_generator, franka::ControllerMode::kJointImpedance, true,
                        franka::kDefaultCutoffFrequency);
     }

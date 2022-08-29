@@ -17,7 +17,7 @@ public:
     void communicationTest();
 
     bool goHome();
-    void moveJoints(double j1, double j2, double j3, double j4, double j5, double j6, double j7);
+    void moveJoints(std::array<double, 7> joints);
 
 private:
     void setDefault();

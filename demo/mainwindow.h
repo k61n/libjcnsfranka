@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <jcnsfranka.h>
+#include "qspinbox.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,5 +28,6 @@ private:
     Ui::MainWindow *ui;
     int count = 0;
     JcnsFranka *robot;
+    QList<QSpinBox *> boxList;
 };
 #endif // MAINWINDOW_H
