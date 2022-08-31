@@ -81,3 +81,12 @@ void MainWindow::on_readBtn_clicked()
         ui->connectionEdit->appendPlainText("j" + QString::number(i) + " = " + joint_positions[i] + "\t" + QString::number((int)degrees));
     }
 }
+
+
+void MainWindow::on_gripperBtn_clicked()
+{
+    if (robot->isGripping())
+        robot->release();
+    else robot->grasp();
+}
+

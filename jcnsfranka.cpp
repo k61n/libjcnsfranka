@@ -9,10 +9,16 @@ JcnsFranka::JcnsFranka(std::string ip)
         robot->automaticErrorRecovery();
         this->setDefault();
         std::cout << "Connected to " << ip << std::endl;
+
+        gripper = new franka::Gripper(ip);
+        gripper->homing();
+
+        franka::GripperState state;
+        state = gripper->readOnce();
+        maxWidth = state.width;
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
-
     }
 }
 
@@ -35,6 +41,21 @@ std::string JcnsFranka::readState()
         std::cout << e.what() << std::endl;
     }
     return state.str();
+}
+
+
+bool JcnsFranka::isGripping()
+{
+    franka::GripperState state;
+    try {
+        state = gripper->readOnce();
+    }
+    catch (franka::Exception const& e) {
+        std::cout << e.what() << std::endl;
+    }
+    if (state.width < 0.01)
+        return true;
+    else return false;
 }
 
 
@@ -66,6 +87,28 @@ void JcnsFranka::moveJoints(std::array<double, 7> joints)
         MotionGenerator motion_generator(speed_factor, joints);
         robot->control(motion_generator, franka::ControllerMode::kJointImpedance, true,
                        franka::kDefaultCutoffFrequency);
+    }
+    catch (franka::Exception const& e) {
+        std::cout << e.what() << std::endl;
+    }
+}
+
+
+void JcnsFranka::grasp()
+{
+    try {
+        gripper->move(0, 0.1);
+    }
+    catch (franka::Exception const& e) {
+        std::cout << e.what() << std::endl;
+    }
+}
+
+
+void JcnsFranka::release()
+{
+    try {
+        gripper->move(maxWidth, 0.1);
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
