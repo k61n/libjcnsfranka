@@ -15,7 +15,7 @@ public:
     JcnsFranka(std::string ip);
     ~JcnsFranka();
 
-    std::string readState();
+    franka::RobotState readState();
     bool isGripping();
     void communicationTest();
 

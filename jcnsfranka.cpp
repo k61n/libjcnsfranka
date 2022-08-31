@@ -29,17 +29,17 @@ JcnsFranka::~JcnsFranka()
 }
 
 
-std::string JcnsFranka::readState()
+franka::RobotState JcnsFranka::readState()
 {
-    std::stringstream state;
+    franka::RobotState state;
 
     try {
-        state << robot->readOnce();
+        state = robot->readOnce();
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
     }
-    return state.str();
+    return state;
 }
 
 
