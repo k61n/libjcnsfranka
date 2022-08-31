@@ -8,7 +8,6 @@ JcnsFranka::JcnsFranka(std::string ip)
         robot = new franka::Robot(ip, franka::RealtimeConfig::kIgnore);
         robot->automaticErrorRecovery();
         this->setDefault();
-        std::cout << "Connected to " << ip << std::endl;
 
         gripper = new franka::Gripper(ip);
         gripper->homing();
@@ -64,7 +63,6 @@ bool JcnsFranka::goHome()
     try {
         robot->stop();
         robot->automaticErrorRecovery();
-        std::cout << "going home" << std::endl;;
         std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4}};
         double speed_factor = 0.5;
         MotionGenerator motion_generator(speed_factor, q_goal);

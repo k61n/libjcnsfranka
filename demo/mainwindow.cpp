@@ -9,13 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->j1Box, &QSpinBox::valueChanged, this, &MainWindow::on_stateChanged);
-    connect(ui->j2Box, &QSpinBox::valueChanged, this, &MainWindow::on_stateChanged);
-    connect(ui->j3Box, &QSpinBox::valueChanged, this, &MainWindow::on_stateChanged);
-    connect(ui->j4Box, &QSpinBox::valueChanged, this, &MainWindow::on_stateChanged);
-    connect(ui->j5Box, &QSpinBox::valueChanged, this, &MainWindow::on_stateChanged);
-    connect(ui->j6Box, &QSpinBox::valueChanged, this, &MainWindow::on_stateChanged);
-    connect(ui->j7Box, &QSpinBox::valueChanged, this, &MainWindow::on_stateChanged);
 
     boxList.append(ui->j1Box);
     boxList.append(ui->j2Box);
@@ -24,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
     boxList.append(ui->j5Box);
     boxList.append(ui->j6Box);
     boxList.append(ui->j7Box);
+
+    foreach (const QSpinBox *box, boxList)
+        connect(box, &QSpinBox::valueChanged, this, &MainWindow::on_stateChanged);
 
     this->on_connectBtn_clicked();
 }
@@ -43,11 +39,6 @@ void MainWindow::on_stateChanged()
         qDebug() << i << boxList.at(i)->value() << joints[i];
     }
     this->robot->moveJoints(joints);
-
-    QJsonDocument state = QJsonDocument::fromJson(QString::fromStdString(this->robot->readState()).toUtf8());
-    QList joint_positions = state.object().toVariantMap()["q"].toStringList();
-    qDebug() << joint_positions;
-
 }
 
 

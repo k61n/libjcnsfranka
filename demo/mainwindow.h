@@ -27,7 +27,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    int count = 0;
     JcnsFranka *robot;
     QList<QSpinBox *> boxList;
 };
