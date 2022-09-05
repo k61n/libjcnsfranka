@@ -24,6 +24,7 @@ private slots:
     void on_clearBtn_clicked();
     void on_readBtn_clicked();
     void on_gripperBtn_clicked();
+    void on_cmtestBtn_clicked();
 
 private:
     Ui::MainWindow *ui;

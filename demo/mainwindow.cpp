@@ -84,3 +84,9 @@ void MainWindow::on_gripperBtn_clicked()
     else robot->grasp();
 }
 
+
+void MainWindow::on_cmtestBtn_clicked()
+{
+    robot->communicationTest();
+}
+
