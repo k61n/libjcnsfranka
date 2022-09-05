@@ -26,6 +26,8 @@ public:
     Coordinates readState();
     bool goHome();
     void moveJoints(std::array<double, 7> joints);
+    void moveRelative(double dx, double dy, double dz);
+    void moveAbsolute(double x, double y, double z);
     bool isGripping();
     void grasp();
     void release();
@@ -34,6 +36,8 @@ public:
 private:
     orl::Robot *robot;
     double maxWidth = 0.7;  // [m]
+    double amax = 13; // [m t^-2]
+    double vmax = 1.7;  // [m s^-1]
 };
 
 #endif // JCNSFRANKA_H

@@ -26,6 +26,13 @@ private slots:
     void on_gripperBtn_clicked();
     void on_cmtestBtn_clicked();
 
+    void on_xPlusBtn_clicked();
+    void on_xMinusBtn_clicked();
+    void on_yPlusBtn_clicked();
+    void on_yMinusBtn_clicked();
+    void on_zPlusBtn_clicked();
+    void on_zMinusBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     JcnsFranka *robot;

@@ -73,6 +73,42 @@ void JcnsFranka::moveJoints(std::array<double, 7> joints)
 }
 
 
+void JcnsFranka::moveRelative(double dx, double dy, double dz)
+{
+    double s = sqrt(dx*dx + dy*dy + dz*dz);
+    double t = s/vmax + vmax/amax;
+    try {
+        // t is the fastest time for franka to perform a movement
+        // 4 * t is empirical value to allow franja move smooth yet fast
+        robot->relative_cart_motion(dx, dy, dz, 4 * t);
+    }
+    catch (franka::Exception const& e) {
+        std::cout << e.what() << std::endl;
+        robot->get_franka_robot().automaticErrorRecovery();
+    }
+}
+
+
+void JcnsFranka::moveAbsolute(double x, double y, double z)
+{
+    Coordinates state = this->readState();
+    double x0 = state.xyz[0];
+    double y0 = state.xyz[1];
+    double z0 = state.xyz[2];
+    double s = sqrt(pow((x - x0), 2) + pow((y - y0), 2) + pow((z - z0), 2));
+    double t = s/vmax + vmax/amax;
+    try {
+        // t is the fastest time for franka to perform a movement
+        // 4 * t is empirical value to allow franja move smooth yet fast
+        robot->absolute_cart_motion(x, y, z, 4 * t);
+    }
+    catch (franka::Exception const& e) {
+        std::cout << e.what() << std::endl;
+        robot->get_franka_robot().automaticErrorRecovery();
+    }
+}
+
+
 bool JcnsFranka::isGripping()
 {
     franka::GripperState state;

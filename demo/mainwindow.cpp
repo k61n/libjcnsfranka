@@ -88,3 +88,45 @@ void MainWindow::on_cmtestBtn_clicked()
     robot->communicationTest();
 }
 
+
+void MainWindow::on_xPlusBtn_clicked()
+{
+    double value = ui->displacementLine->text().toDouble();
+    robot->moveRelative(value, 0, 0);
+}
+
+
+void MainWindow::on_xMinusBtn_clicked()
+{
+    double value = ui->displacementLine->text().toDouble();
+    robot->moveRelative(-value, 0, 0);
+}
+
+
+void MainWindow::on_yPlusBtn_clicked()
+{
+    double value = ui->displacementLine->text().toDouble();
+    robot->moveRelative(0, value, 0);
+}
+
+
+void MainWindow::on_yMinusBtn_clicked()
+{
+    double value = ui->displacementLine->text().toDouble();
+    robot->moveRelative(0, -value, 0);
+}
+
+
+void MainWindow::on_zPlusBtn_clicked()
+{
+    double value = ui->displacementLine->text().toDouble();
+    robot->moveRelative(0, 0, value);
+}
+
+
+void MainWindow::on_zMinusBtn_clicked()
+{
+    double value = ui->displacementLine->text().toDouble();
+    robot->moveRelative(0, 0, -value);
+}
+
