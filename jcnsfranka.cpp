@@ -10,8 +10,6 @@ JcnsFranka::JcnsFranka(std::string ip)
         this->setDefault();
 
         gripper = new franka::Gripper(ip);
-        gripper->homing();
-
         franka::GripperState state;
         state = gripper->readOnce();
         maxWidth = state.width;
