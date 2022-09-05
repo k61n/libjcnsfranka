@@ -68,6 +68,7 @@ bool JcnsFranka::goHome()
         MotionGenerator motion_generator(speed_factor, q_goal);
         robot->control(motion_generator, franka::ControllerMode::kJointImpedance, true,
                        franka::kDefaultCutoffFrequency);
+        gripper->homing();
     }
     catch (franka::Exception const& e) {
             std::cout << e.what() << std::endl;
