@@ -19,17 +19,23 @@ JcnsFranka::~JcnsFranka()
 }
 
 
-franka::RobotState JcnsFranka::readState()
+Coordinates JcnsFranka::readState()
 {
-    franka::RobotState state;
+    Coordinates result;
+    orl::Pose pose;
 
     try {
-        state = robot->get_franka_robot().readOnce();
+        result.joints = robot->get_current_Joints();
+        pose = robot->get_current_pose();
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
+        robot->get_franka_robot().automaticErrorRecovery();
     }
-    return state;
+    result.xyz[0] = pose.getPosition()[0];
+    result.xyz[1] = pose.getPosition()[1];
+    result.xyz[2] = pose.getPosition()[2];
+    return result;
 }
 
 

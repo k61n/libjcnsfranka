@@ -10,13 +10,20 @@
 #include <iostream>
 #include "liborl/liborl.h"
 
+
+struct Coordinates {
+    std::array<double, 7> joints;
+    std::array<double, 3> xyz;
+};
+
+
 class JCNSFRANKA_EXPORT JcnsFranka
 {
 public:
     JcnsFranka(std::string ip);
     ~JcnsFranka();
 
-    franka::RobotState readState();
+    Coordinates readState();
     bool goHome();
     void moveJoints(std::array<double, 7> joints);
     bool isGripping();

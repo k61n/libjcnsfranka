@@ -63,15 +63,15 @@ void MainWindow::on_clearBtn_clicked()
 void MainWindow::on_readBtn_clicked()
 {
     ui->connectionEdit->clear();
-    franka::RobotState state = this->robot->readState();
-    for (int i=0; i<state.q.max_size(); i++) {
-        double degrees = state.q[i] / M_PI * 180;
-        ui->connectionEdit->appendPlainText("j" + QString::number(i) + " = " + QString::number(state.q[i], 'g', 6) + "\t" + QString::number((int)degrees));
+    Coordinates state = robot->readState();
+    for (int i=0; i<state.joints.max_size(); i++) {
+        double degrees = state.joints[i] / M_PI * 180;
+        ui->connectionEdit->appendPlainText("j" + QString::number(i) + " = " + QString::number(state.joints[i], 'g', 6) + "\t" + QString::number((int)degrees));
     }
     ui->connectionEdit->appendPlainText("");
-    ui->connectionEdit->appendPlainText("X = " + QString::number(state.O_T_EE_c[12], 'g', 3));
-    ui->connectionEdit->appendPlainText("Y = " + QString::number(state.O_T_EE_c[13], 'g', 3));
-    ui->connectionEdit->appendPlainText("Z = " + QString::number(state.O_T_EE_c[14], 'g', 3));
+    ui->connectionEdit->appendPlainText("X = " + QString::number(state.xyz[0], 'g', 3));
+    ui->connectionEdit->appendPlainText("Y = " + QString::number(state.xyz[1], 'g', 3));
+    ui->connectionEdit->appendPlainText("Z = " + QString::number(state.xyz[2], 'g', 3));
 }
 
 
