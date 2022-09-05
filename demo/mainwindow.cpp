@@ -36,7 +36,6 @@ void MainWindow::on_stateChanged()
     std::array<double, 7> joints;
     for (int i=0; i<boxList.count(); i++) {
         joints[i] = boxList.at(i)->value() / 180.0 * M_PI;
-        qDebug() << i << boxList.at(i)->value() << joints[i];
     }
     this->robot->moveJoints(joints);
 }
@@ -66,14 +65,14 @@ void MainWindow::on_readBtn_clicked()
 {
     ui->connectionEdit->clear();
     franka::RobotState state = this->robot->readState();
-
-
-//    QJsonDocument state = QJsonDocument::fromJson(QString::fromStdString(this->robot->readState()).toUtf8());
-//    QList joint_positions = state.object().toVariantMap()["q"].toStringList();
     for (int i=0; i<state.q.max_size(); i++) {
         double degrees = state.q[i] / M_PI * 180;
-        ui->connectionEdit->appendPlainText("j" + QString::number(i) + " = " + QString::number(state.q[i]) + "\t" + QString::number((int)degrees));
+        ui->connectionEdit->appendPlainText("j" + QString::number(i) + " = " + QString::number(state.q[i], 'g', 6) + "\t" + QString::number((int)degrees));
     }
+    ui->connectionEdit->appendPlainText("");
+    ui->connectionEdit->appendPlainText("X = " + QString::number(state.O_T_EE_c[12], 'g', 3));
+    ui->connectionEdit->appendPlainText("Y = " + QString::number(state.O_T_EE_c[13], 'g', 3));
+    ui->connectionEdit->appendPlainText("Z = " + QString::number(state.O_T_EE_c[14], 'g', 3));
 }
 
 
