@@ -31,6 +31,13 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::on_connectBtn_clicked()
+{
+    std::string ip = ui->ipLine->text().toStdString();
+    this->robot = new JcnsFranka(ip);
+}
+
+
 void MainWindow::on_stateChanged()
 {
     std::array<double, 7> joints;
@@ -39,14 +46,6 @@ void MainWindow::on_stateChanged()
     }
     this->robot->moveJoints(joints);
 }
-
-
-void MainWindow::on_connectBtn_clicked()
-{
-    std::string ip = ui->ipLine->text().toStdString();
-    this->robot = new JcnsFranka(ip);
-}
-
 
 
 void MainWindow::on_homeBtn_clicked()

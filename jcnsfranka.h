@@ -8,6 +8,7 @@
 #include <franka/gripper.h>
 #include <franka/gripper_state.h>
 #include <iostream>
+#include "liborl/liborl.h"
 
 class JCNSFRANKA_EXPORT JcnsFranka
 {
@@ -16,21 +17,16 @@ public:
     ~JcnsFranka();
 
     franka::RobotState readState();
-    bool isGripping();
-    void communicationTest();
-
     bool goHome();
     void moveJoints(std::array<double, 7> joints);
+    bool isGripping();
     void grasp();
     void release();
-
-    double maxWidth;
+    void communicationTest();
 
 private:
-    void setDefault();
-
-    franka::Robot *robot;
-    franka::Gripper *gripper;
+    orl::Robot *robot;
+    double maxWidth = 0.7;
 };
 
 #endif // JCNSFRANKA_H

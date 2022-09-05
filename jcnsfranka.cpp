@@ -1,18 +1,10 @@
 #include "jcnsfranka.h"
 #include <thread>
-#include <chrono>
 
 JcnsFranka::JcnsFranka(std::string ip)
 {
     try {
-        robot = new franka::Robot(ip, franka::RealtimeConfig::kIgnore);
-        robot->automaticErrorRecovery();
-        this->setDefault();
-
-        gripper = new franka::Gripper(ip);
-        franka::GripperState state;
-        state = gripper->readOnce();
-        maxWidth = state.width;
+        robot = new orl::Robot(ip);
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
@@ -22,7 +14,7 @@ JcnsFranka::JcnsFranka(std::string ip)
 
 JcnsFranka::~JcnsFranka()
 {
-    robot->stop();
+    robot->get_franka_robot().stop();
     delete robot;
 }
 
@@ -32,7 +24,7 @@ franka::RobotState JcnsFranka::readState()
     franka::RobotState state;
 
     try {
-        state = robot->readOnce();
+        state = robot->get_franka_robot().readOnce();
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
@@ -41,32 +33,15 @@ franka::RobotState JcnsFranka::readState()
 }
 
 
-bool JcnsFranka::isGripping()
-{
-    franka::GripperState state;
-    try {
-        state = gripper->readOnce();
-    }
-    catch (franka::Exception const& e) {
-        std::cout << e.what() << std::endl;
-    }
-    if (state.width < 0.01)
-        return true;
-    else return false;
-}
-
-
 bool JcnsFranka::goHome()
 {
     try {
-        robot->stop();
-        robot->automaticErrorRecovery();
+        robot->get_franka_robot().stop();
+        robot->get_franka_robot().automaticErrorRecovery();
         std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4}};
         double speed_factor = 0.5;
-        MotionGenerator motion_generator(speed_factor, q_goal);
-        robot->control(motion_generator, franka::ControllerMode::kJointImpedance, true,
-                       franka::kDefaultCutoffFrequency);
-        gripper->homing();
+        robot->joint_motion(q_goal, speed_factor);
+        robot->get_franka_gripper().homing();
     }
     catch (franka::Exception const& e) {
             std::cout << e.what() << std::endl;
@@ -79,11 +54,9 @@ bool JcnsFranka::goHome()
 void JcnsFranka::moveJoints(std::array<double, 7> joints)
 {
     try {
-        robot->automaticErrorRecovery();
+        robot->get_franka_robot().automaticErrorRecovery();
         double speed_factor = 0.5;
-        MotionGenerator motion_generator(speed_factor, joints);
-        robot->control(motion_generator, franka::ControllerMode::kJointImpedance, true,
-                       franka::kDefaultCutoffFrequency);
+        robot->joint_motion(joints, speed_factor);
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
@@ -91,10 +64,23 @@ void JcnsFranka::moveJoints(std::array<double, 7> joints)
 }
 
 
+bool JcnsFranka::isGripping()
+{
+    franka::GripperState state;
+    try {
+        state = robot->get_franka_gripper().readOnce();
+    }
+    catch (franka::Exception const& e) {
+        std::cout << e.what() << std::endl;
+    }
+    return state.is_grasped;
+}
+
+
 void JcnsFranka::grasp()
 {
     try {
-        gripper->move(0, 0.1);
+        robot->close_gripper(0, 0.05, 1, 0.1);
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
@@ -105,7 +91,7 @@ void JcnsFranka::grasp()
 void JcnsFranka::release()
 {
     try {
-        gripper->move(maxWidth, 0.1);
+        robot->open_gripper(0.05, 0.1);
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
@@ -123,8 +109,8 @@ void JcnsFranka::communicationTest()
 
     try {
         franka::Torques zero_torques{{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}};
-        robot->control([&time, &counter, &avg_success_rate, &min_success_rate, &max_success_rate, zero_torques](
-                       const franka::RobotState& robot_state, franka::Duration period) -> franka::Torques {
+        robot->get_franka_robot().control([&time, &counter, &avg_success_rate, &min_success_rate, &max_success_rate, zero_torques](
+                                          const franka::RobotState& robot_state, franka::Duration period) -> franka::Torques {
             time += period.toMSec();
             if (time == 0.0) {
             return zero_torques;
@@ -165,26 +151,5 @@ void JcnsFranka::communicationTest()
     if (lost_robot_states > 0) {
         std::cout << "The control loop did not get executed " << lost_robot_states << " times in the" << std::endl
                   << "last " << time << " milliseconds! (lost " << lost_robot_states << " robot states)" << std::endl << std::endl;
-    }
-}
-
-
-void JcnsFranka::setDefault()
-{
-    try {
-        robot->setCollisionBehavior(
-                    {{20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0}},
-                    {{20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0}},
-                    {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}},
-                    {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}},
-                    {{20.0, 20.0, 20.0, 20.0, 20.0, 20.0}},
-                    {{20.0, 20.0, 20.0, 20.0, 20.0, 20.0}},
-                    {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0}},
-                    {{10.0, 10.0, 10.0, 10.0, 10.0, 10.0}});
-        robot->setJointImpedance({{3000, 3000, 3000, 2500, 2500, 2000, 2000}});
-        robot->setCartesianImpedance({{3000, 3000, 3000, 300, 300, 300}});
-    }
-    catch (franka::Exception const& e) {
-            std::cout << e.what() << std::endl;
     }
 }
