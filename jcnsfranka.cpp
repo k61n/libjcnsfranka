@@ -8,6 +8,7 @@ JcnsFranka::JcnsFranka(std::string ip)
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
+        robot->get_franka_robot().automaticErrorRecovery();
     }
 }
 
@@ -51,6 +52,7 @@ bool JcnsFranka::goHome()
     }
     catch (franka::Exception const& e) {
             std::cout << e.what() << std::endl;
+            robot->get_franka_robot().automaticErrorRecovery();
             return false;
     }
     return true;
@@ -66,6 +68,7 @@ void JcnsFranka::moveJoints(std::array<double, 7> joints)
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
+        robot->get_franka_robot().automaticErrorRecovery();
     }
 }
 
@@ -78,6 +81,7 @@ bool JcnsFranka::isGripping()
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
+        robot->get_franka_robot().automaticErrorRecovery();
     }
     return state.is_grasped;
 }
@@ -90,6 +94,7 @@ void JcnsFranka::grasp()
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
+        robot->get_franka_robot().automaticErrorRecovery();
     }
 }
 
@@ -101,6 +106,7 @@ void JcnsFranka::release()
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
+        robot->get_franka_robot().automaticErrorRecovery();
     }
 }
 

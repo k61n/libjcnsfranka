@@ -33,7 +33,7 @@ public:
 
 private:
     orl::Robot *robot;
-    double maxWidth = 0.7;
+    double maxWidth = 0.7;  // [m]
 };
 
 #endif // JCNSFRANKA_H
