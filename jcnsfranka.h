@@ -2,7 +2,6 @@
 #define JCNSFRANKA_H
 
 #include "jcnsfranka_global.h"
-#include "examples_common.h"
 
 #include <franka/exception.h>
 #include <franka/gripper.h>
