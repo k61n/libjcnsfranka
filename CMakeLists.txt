@@ -26,3 +26,13 @@ install(FILES
     jcnsfranka.h
     jcnsfranka_global.h
     DESTINATION "${PROJECT_SOURCE_DIR}/demo/jcnsfranka/include")
+
+## Packaging
+set(CPACK_PACKAGE_VENDOR "FZJ GmbH")
+set(CPACK_GENERATOR "DEB;TGZ")
+set(CPACK_PACKAGE_VERSION ${libjcnsfranka_VERSION})
+set(CPACK_SYSTEM_NAME ${CMAKE_HOST_SYSTEM_PROCESSOR})
+# Debian versions require a dash
+set(CPACK_DEBIAN_PACKAGE_VERSION ${CPACK_PACKAGE_VERSION}-1)
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "FZJ GmbH")
+include(CPack)
