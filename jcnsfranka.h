@@ -28,8 +28,7 @@ public:
 
 private:
     orl::Robot *robot;
-    double maxWidth = 0.7;  // [m]
-    double amax = 13; // [m t^-2]
+    double amax = 13; // [m s^-2]
     double vmax = 1.7;  // [m s^-1]
 };
 
