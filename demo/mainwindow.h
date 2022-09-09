@@ -33,6 +33,8 @@ private slots:
     void on_zPlusBtn_clicked();
     void on_zMinusBtn_clicked();
 
+    void on_moveBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     JcnsFranka *robot;

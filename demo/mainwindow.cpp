@@ -130,3 +130,12 @@ void MainWindow::on_zMinusBtn_clicked()
     robot->moveRelative(0, 0, -value);
 }
 
+
+void MainWindow::on_moveBtn_clicked()
+{
+    double x = ui->xLn->text().toDouble();
+    double y = ui->yLn->text().toDouble();
+    double z = ui->zLn->text().toDouble();
+    robot->moveAbsolute(x, y, z);
+}
+
