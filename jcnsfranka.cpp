@@ -1,4 +1,5 @@
 #include "jcnsfranka.h"
+#include <iostream>
 #include <thread>
 
 JcnsFranka::JcnsFranka(std::string ip)

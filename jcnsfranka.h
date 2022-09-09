@@ -1,12 +1,6 @@
 #ifndef JCNSFRANKA_H
 #define JCNSFRANKA_H
 
-#include "jcnsfranka_global.h"
-
-#include <franka/exception.h>
-#include <franka/gripper.h>
-#include <franka/gripper_state.h>
-#include <iostream>
 #include "liborl/liborl.h"
 
 
@@ -16,7 +10,7 @@ struct Coordinates {
 };
 
 
-class JCNSFRANKA_EXPORT JcnsFranka
+class JcnsFranka
 {
 public:
     JcnsFranka(std::string ip);
