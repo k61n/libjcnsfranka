@@ -13,7 +13,7 @@ struct Coordinates {
 class JcnsFranka
 {
 public:
-    JcnsFranka(std::string ip);
+    JcnsFranka(char *ip);
     ~JcnsFranka();
 
     Coordinates readState();

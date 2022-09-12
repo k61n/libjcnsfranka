@@ -2,10 +2,11 @@
 #include <iostream>
 #include <thread>
 
-JcnsFranka::JcnsFranka(std::string ip)
+JcnsFranka::JcnsFranka(char *ip)
 {
+    std::string ipstring(ip);
     try {
-        robot = new orl::Robot(ip);
+        robot = new orl::Robot(ipstring);
     }
     catch (franka::Exception const& e) {
         std::cout << e.what() << std::endl;
