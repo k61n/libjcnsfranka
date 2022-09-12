@@ -149,7 +149,7 @@ void JcnsFranka::release()
 }
 
 
-void JcnsFranka::communicationTest()
+uint64_t JcnsFranka::communicationTest()
 {
     uint64_t counter = 0;
     double avg_success_rate = 0.0;
@@ -202,4 +202,5 @@ void JcnsFranka::communicationTest()
         std::cout << "The control loop did not get executed " << lost_robot_states << " times in the" << std::endl
                   << "last " << time << " milliseconds! (lost " << lost_robot_states << " robot states)" << std::endl << std::endl;
     }
+    return lost_robot_states;
 }

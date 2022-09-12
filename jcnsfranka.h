@@ -24,7 +24,7 @@ public:
     bool isGripping();
     void grasp();
     void release();
-    void communicationTest();
+    uint64_t communicationTest();
 
 private:
     orl::Robot *robot;
@@ -60,7 +60,7 @@ extern "C"
     bool isGripping(JcnsFranka* self) {return self->isGripping();}
     void grasp(JcnsFranka* self) {return self->grasp();}
     void release(JcnsFranka* self) {return self->release();}
-    void communicationTest(JcnsFranka* self) {return self->communicationTest();}
+    uint64_t communicationTest(JcnsFranka* self) {return self->communicationTest();}
 }
 
 
