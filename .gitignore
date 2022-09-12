@@ -2,3 +2,6 @@
 build*/
 jcnsfranka/
 install/
+franka-linux-x86/
+.idea/
+pyjcnsfranka.egg-info/
