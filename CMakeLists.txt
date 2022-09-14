@@ -12,6 +12,7 @@ find_package(orl REQUIRED)
 
 add_library(jcnsfranka SHARED
   jcnsfranka.cpp
+  c_calls.cpp
   jcnsfranka.h
 )
 
