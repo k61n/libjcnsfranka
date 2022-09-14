@@ -1,8 +1,10 @@
-#include "jcnsfranka.h"
+#include <jcnsfranka.h>
 #include <iostream>
 #include <thread>
 
-JcnsFranka::JcnsFranka(char *ip)
+using namespace JcnsFranka;
+
+Robot::Robot(char* ip)
 {
     std::string ipstring(ip);
     try {
@@ -15,14 +17,14 @@ JcnsFranka::JcnsFranka(char *ip)
 }
 
 
-JcnsFranka::~JcnsFranka()
+Robot::~Robot()
 {
     robot->get_franka_robot().stop();
     delete robot;
 }
 
 
-Coordinates JcnsFranka::readState()
+JcnsFranka::Coordinates Robot::readState()
 {
     Coordinates result;
     orl::Pose pose;
@@ -42,7 +44,7 @@ Coordinates JcnsFranka::readState()
 }
 
 
-bool JcnsFranka::goHome()
+bool Robot::goHome()
 {
     try {
         robot->get_franka_robot().stop();
@@ -61,7 +63,7 @@ bool JcnsFranka::goHome()
 }
 
 
-void JcnsFranka::moveJoints(std::array<double, 7> joints)
+void Robot::moveJoints(std::array<double, 7> joints)
 {
     try {
         robot->get_franka_robot().automaticErrorRecovery();
@@ -75,7 +77,7 @@ void JcnsFranka::moveJoints(std::array<double, 7> joints)
 }
 
 
-void JcnsFranka::moveRelative(double dx, double dy, double dz)
+void Robot::moveRelative(double dx, double dy, double dz)
 {
     double s = sqrt(dx*dx + dy*dy + dz*dz);
     double t = s/vmax + vmax/amax;
@@ -91,7 +93,7 @@ void JcnsFranka::moveRelative(double dx, double dy, double dz)
 }
 
 
-void JcnsFranka::moveAbsolute(double x, double y, double z)
+void Robot::moveAbsolute(double x, double y, double z)
 {
     Coordinates state = this->readState();
     double x0 = state.xyz[0];
@@ -111,7 +113,7 @@ void JcnsFranka::moveAbsolute(double x, double y, double z)
 }
 
 
-bool JcnsFranka::isGripping()
+bool Robot::isGripping()
 {
     franka::GripperState state;
     try {
@@ -125,7 +127,7 @@ bool JcnsFranka::isGripping()
 }
 
 
-void JcnsFranka::grasp()
+void Robot::grasp()
 {
     try {
         robot->close_gripper(0, 0.05, 1, 0.1);
@@ -137,7 +139,7 @@ void JcnsFranka::grasp()
 }
 
 
-void JcnsFranka::release()
+void Robot::release()
 {
     try {
         robot->open_gripper(0.05, 0.1);
@@ -149,7 +151,7 @@ void JcnsFranka::release()
 }
 
 
-uint64_t JcnsFranka::communicationTest()
+uint64_t Robot::communicationTest()
 {
     uint64_t counter = 0;
     double avg_success_rate = 0.0;
