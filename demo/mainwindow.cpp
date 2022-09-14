@@ -63,7 +63,7 @@ void MainWindow::on_clearBtn_clicked()
 void MainWindow::on_readBtn_clicked()
 {
     ui->connectionEdit->clear();
-    Coordinates state = robot->readState();
+    JcnsFranka::Coordinates state = robot->readState();
     for (int i=0; i<state.joints.max_size(); i++) {
         double degrees = state.joints[i] / M_PI * 180;
         ui->connectionEdit->appendPlainText("j" + QString::number(i) + " = " + QString::number(state.joints[i], 'g', 6) + "\t" + QString::number((int)degrees));

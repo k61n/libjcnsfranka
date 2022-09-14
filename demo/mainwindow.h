@@ -37,7 +37,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    JcnsFranka *robot;
+    JcnsFranka::Robot *robot;
     QList<QSpinBox *> boxList;
 };
+
 #endif // MAINWINDOW_H
