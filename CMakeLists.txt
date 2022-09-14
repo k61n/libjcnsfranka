@@ -21,8 +21,28 @@ target_link_libraries(jcnsfranka orl::orl)
 
 # Installation
 include(GNUInstallDirs)
-install(TARGETS jcnsfranka DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS jcnsfranka
+        EXPORT jcnsfrankaTargets
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES jcnsfranka.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+# cmake targets
+set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/jcnsfranka)
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+        jcnsfrankaConfigVersion.cmake
+        VERSION ${PACKAGE_VERSION}
+        COMPATIBILITY SameMajorVersion)
+configure_package_config_file(cmake/jcnsfrankaConfig.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/jcnsfrankaConfig.cmake
+        INSTALL_DESTINATION ${INSTALL_CONFIGDIR})
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/jcnsfrankaConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/jcnsfrankaConfigVersion.cmake"
+        DESTINATION ${INSTALL_CONFIGDIR}        )
+install(EXPORT jcnsfrankaTargets
+        FILE jcnsfrankaTargets.cmake
+        NAMESPACE jcnsfranka::
+        DESTINATION ${INSTALL_CONFIGDIR}        )
 
 ## Packaging
 set(CPACK_PACKAGE_VENDOR "FZJ GmbH")

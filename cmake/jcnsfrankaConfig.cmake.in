@@ -1,0 +1,6 @@
+
+@PACKAGE_INIT@
+include(CMakeFindDependencyMacro)
+find_dependency(orl)
+include(${CMAKE_CURRENT_LIST_DIR}/jcnsfrankaTargets.cmake)
+
