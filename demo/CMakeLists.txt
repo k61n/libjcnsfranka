@@ -27,5 +27,3 @@ set(PROJECT_SOURCES
 
 add_executable(franka_demo ${PROJECT_SOURCES})
 target_link_libraries(franka_demo Qt6::Widgets jcnsfranka)
-
-install(TARGETS franka_demo DESTINATION "${PROJECT_SOURCE_DIR}/install")
