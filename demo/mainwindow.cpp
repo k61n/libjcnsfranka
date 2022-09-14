@@ -34,7 +34,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_connectBtn_clicked()
 {
     std::string ip = ui->ipLine->text().toStdString();
-    this->robot = new JcnsFranka(ip.c_str());
+    this->robot = new JcnsFranka::Robot(ip.data());
 }
 
 
