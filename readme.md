@@ -1,8 +1,4 @@
 
-Install
--------
-python3 setup.py --install
-
 JcnsFranka
 ============
 JcnsFranka is a high level wrapper for LibORL, a motion library for Franka Emika
