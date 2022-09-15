@@ -24,7 +24,7 @@ Robot::~Robot()
 }
 
 
-JcnsFranka::Coordinates Robot::readState()
+Coordinates Robot::readState()
 {
     Coordinates result;
     orl::Pose pose;
