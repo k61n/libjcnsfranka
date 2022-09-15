@@ -5,7 +5,7 @@ import platform
 mode = dict(winmode=0) if platform.python_version() >= '3.8' else dict()
 
 
-class Pyjcnsfranka:
+class FrankaRobot:
     def __init__(self, ip):
         self.lib = CDLL('libjcnsfranka.so', **mode)
         self.lib.init.argtypes = [c_char_p]
@@ -64,20 +64,3 @@ class Pyjcnsfranka:
         self.lib.communicationTest.argtypes = [c_void_p]
         self.lib.communicationTest.restype = c_uint64
         return self.lib.communicationTest(self.obj)
-
-
-def main():
-    robot = Pyjcnsfranka('192.168.1.5')
-    print(robot.read_state())
-    # robot.go_home()
-    # robot.move_joints([0, 0, 0, -math.pi/2, 0, math.pi, math.pi/4])
-    # robot.move_relative(0, 0, 0.01)
-    # robot.move_absolute(0, 0, 0.01)
-    # print(robot.is_gripping())
-    # robot.grasp()
-    # robot.release()
-    # robot.communication_test()
-
-
-if __name__ == '__main__':
-    main()
