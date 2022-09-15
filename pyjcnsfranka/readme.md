@@ -18,8 +18,8 @@ python3 setup.py install
 Usage
 -----
 ```python
-from pyjcnsfranka.main import Pyjcnsfranka
+from pyjcnsfranka.robot import FrankaRobot
 
-robot = Pyjcnsfranka('192.168.201.2')
+robot = FrankaRobot('192.168.201.2')
 robot.communication_test()
 ```
