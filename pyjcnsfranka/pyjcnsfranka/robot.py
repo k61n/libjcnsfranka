@@ -15,6 +15,8 @@ class FrankaRobot:
         self.lib.init.restype = c_void_p
         buffer = create_string_buffer(ip.encode('utf-8'))
         self.obj = self.lib.init(buffer)
+        if self.read_error() != '':
+            raise Exception(self.read_error())
 
     def __del__(self):
         self.lib.deinit.argtypes = [c_void_p]
@@ -29,6 +31,8 @@ class FrankaRobot:
         self.lib.readState.argtypes = [c_void_p]
         self.lib.readState.restype = POINTER(c_double)
         result = self.lib.readState(self.obj)
+        if self.read_error() != '':
+            raise Exception(self.read_error())
         return [result[i] for i in range(10)]
 
     def go_home(self):
@@ -40,6 +44,8 @@ class FrankaRobot:
         self.lib.goHome.argtypes = [c_void_p]
         self.lib.goHome.restype = None
         self.lib.goHome(self.obj)
+        if self.read_error() != '':
+            raise Exception(self.read_error())
 
     def move_joints(self, joints):
         """
@@ -50,6 +56,8 @@ class FrankaRobot:
         self.lib.moveJoints.restype = None
         input = (c_double * len(joints))(*joints)
         self.lib.moveJoints(self.obj, input)
+        if self.read_error() != '':
+            raise Exception(self.read_error())
 
     def move_relative(self, dx, dy, dz):
         """
@@ -61,6 +69,8 @@ class FrankaRobot:
         self.lib.moveRelative.argtypes = [c_void_p, c_double, c_double, c_double]
         self.lib.moveRelative.restype = None
         self.lib.moveRelative(self.obj, dx, dy, dz)
+        if self.read_error() != '':
+            raise Exception(self.read_error())
 
     def move_absolute(self, x, y, z):
         """
@@ -72,6 +82,8 @@ class FrankaRobot:
         self.lib.moveAbsolute.argtypes = [c_void_p, c_double, c_double, c_double]
         self.lib.moveAbsolute.restype = None
         self.lib.moveAbsolute(self.obj, x, y, z)
+        if self.read_error() != '':
+            raise Exception(self.read_error())
 
     def is_gripping(self):
         """
@@ -81,6 +93,8 @@ class FrankaRobot:
         self.lib.isGripping.argtypes = [c_void_p]
         self.lib.isGripping.restype = c_bool
         self.lib.isGripping(self.obj)
+        if self.read_error() != '':
+            raise Exception(self.read_error())
 
     def grasp(self):
         """
@@ -89,6 +103,8 @@ class FrankaRobot:
         self.lib.grasp.argtypes = [c_void_p]
         self.lib.grasp.restype = None
         self.lib.grasp(self.obj)
+        if self.read_error() != '':
+            raise Exception(self.read_error())
 
     def release(self):
         """
@@ -97,6 +113,8 @@ class FrankaRobot:
         self.lib.release.argtypes = [c_void_p]
         self.lib.release.restype = None
         self.lib.release(self.obj)
+        if self.read_error() != '':
+            raise Exception(self.read_error())
 
     def communication_test(self):
         """
