@@ -15,8 +15,6 @@ class FrankaRobot:
         self.lib.init.restype = c_void_p
         buffer = create_string_buffer(ip.encode('utf-8'))
         self.obj = self.lib.init(buffer)
-        if self.read_error() != '':
-            raise Exception(self.read_error())
 
         self.lib.deinit.argtypes = [c_void_p]
         self.lib.deinit.restype = None
@@ -51,6 +49,8 @@ class FrankaRobot:
         self.lib.error.argtypes = [c_void_p]
         self.lib.error.restype = c_char_p
 
+        if self.read_error() != '':
+            raise Exception(self.read_error())
 
     def __del__(self):
         self.lib.deinit(self.obj)
