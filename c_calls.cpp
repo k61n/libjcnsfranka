@@ -20,12 +20,12 @@ extern "C"
         std::array<double, 7> joints_arr;
         for (int i = 0; i < 7; i++)
             joints_arr[i] = joints[i];
-        return self->moveJoints(joints_arr);
+        self->moveJoints(joints_arr);
     }
-    void moveRelative(JcnsFranka::Robot* self, double dx, double dy, double dz) {return self->moveRelative(dx, dy, dz);}
-    void moveAbsolute(JcnsFranka::Robot* self, double x, double y, double z) {return self->moveAbsolute(x, y, z);}
+    void moveRelative(JcnsFranka::Robot* self, double dx, double dy, double dz) {self->moveRelative(dx, dy, dz);}
+    void moveAbsolute(JcnsFranka::Robot* self, double x, double y, double z) {self->moveAbsolute(x, y, z);}
     bool isGripping(JcnsFranka::Robot* self) {return self->isGripping();}
-    void grasp(JcnsFranka::Robot* self) {return self->grasp();}
-    void release(JcnsFranka::Robot* self) {return self->release();}
+    void grasp(JcnsFranka::Robot* self) {self->grasp();}
+    void release(JcnsFranka::Robot* self) {self->release();}
     uint64_t communicationTest(JcnsFranka::Robot* self) {return self->communicationTest();}
 }
