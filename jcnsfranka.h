@@ -48,7 +48,7 @@ namespace JcnsFranka {
          * Home position is { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad]
          * @return True when homing is finished
          */
-        bool goHome();
+        void goHome();
 
         /**
          * @brief moveJoints

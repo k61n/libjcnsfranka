@@ -14,7 +14,7 @@ extern "C"
             result[i + 7] = state.xyz[i];
         return result;
     }
-    bool goHome(JcnsFranka::Robot* self) {return self->goHome();}
+    void goHome(JcnsFranka::Robot* self) {self->goHome();}
     void moveJoints(JcnsFranka::Robot* self, double* joints)
     {
         std::array<double, 7> joints_arr;

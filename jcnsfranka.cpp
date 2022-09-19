@@ -44,7 +44,7 @@ Coordinates Robot::readState()
 }
 
 
-bool Robot::goHome()
+void Robot::goHome()
 {
     try {
         robot->get_franka_robot().stop();
