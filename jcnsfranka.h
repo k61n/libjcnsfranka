@@ -101,6 +101,13 @@ namespace JcnsFranka {
          */
         uint64_t communicationTest();
 
+        /**
+         * @brief error
+         * Class field to return recent error if any.
+         * @return
+         */
+        char* error();
+
     private:
         /**
          * @brief robot
@@ -119,6 +126,12 @@ namespace JcnsFranka {
          * Maximum velocuty of the Franka robot when moved in cartesian space
          */
         double vmax = 1.7;  // [m s^-1]
+
+        /**
+         * @brief frankaerror
+         * Description of error from libfranka
+         */
+        const char* frankaerror;
     };
 }
 

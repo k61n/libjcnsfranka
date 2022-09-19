@@ -9,9 +9,10 @@ Robot::Robot(char* ip)
     std::string ipstring(ip);
     try {
         robot = new orl::Robot(ipstring);
+        frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        std::cout << e.what() << std::endl;
+        frankaerror = e.what();
         robot->get_franka_robot().automaticErrorRecovery();
     }
 }
@@ -32,9 +33,10 @@ Coordinates Robot::readState()
     try {
         result.joints = robot->get_current_Joints();
         pose = robot->get_current_pose();
+        frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        std::cout << e.what() << std::endl;
+        frankaerror = e.what();
         robot->get_franka_robot().automaticErrorRecovery();
     }
     result.xyz[0] = pose.getPosition()[0];
@@ -53,13 +55,12 @@ void Robot::goHome()
         double speed_factor = 0.5;
         robot->joint_motion(q_goal, speed_factor);
         robot->get_franka_gripper().homing();
+        frankaerror = "";
     }
     catch (franka::Exception const& e) {
-            std::cout << e.what() << std::endl;
-            robot->get_franka_robot().automaticErrorRecovery();
-            return false;
+        frankaerror = e.what();
+        robot->get_franka_robot().automaticErrorRecovery();
     }
-    return true;
 }
 
 
@@ -69,9 +70,10 @@ void Robot::moveJoints(std::array<double, 7> joints)
         robot->get_franka_robot().automaticErrorRecovery();
         double speed_factor = 0.5;
         robot->joint_motion(joints, speed_factor);
+        frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        std::cout << e.what() << std::endl;
+        frankaerror = e.what();
         robot->get_franka_robot().automaticErrorRecovery();
     }
 }
@@ -86,9 +88,10 @@ void Robot::moveRelative(double dx, double dy, double dz)
         // t is the fastest time for franka to perform a movement
         // 4 * t is empirical value to allow franja move smooth yet fast
         robot->relative_cart_motion(dx, dy, dz, 4 * t);
+        frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        std::cout << e.what() << std::endl;
+        frankaerror = e.what();
         robot->get_franka_robot().automaticErrorRecovery();
     }
 }
@@ -107,9 +110,10 @@ void Robot::moveAbsolute(double x, double y, double z)
         // t is the fastest time for franka to perform a movement
         // 4 * t is empirical value to allow franja move smooth yet fast
         robot->absolute_cart_motion(x, y, z, 4 * t);
+        frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        std::cout << e.what() << std::endl;
+        frankaerror = e.what();
         robot->get_franka_robot().automaticErrorRecovery();
     }
 }
@@ -120,9 +124,10 @@ bool Robot::isGripping()
     franka::GripperState state;
     try {
         state = robot->get_franka_gripper().readOnce();
+        frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        std::cout << e.what() << std::endl;
+        frankaerror = e.what();
         robot->get_franka_robot().automaticErrorRecovery();
     }
     return state.is_grasped;
@@ -133,9 +138,10 @@ void Robot::grasp()
 {
     try {
         robot->close_gripper(0, 0.05, 1, 0.1);
+        frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        std::cout << e.what() << std::endl;
+        frankaerror = e.what();
         robot->get_franka_robot().automaticErrorRecovery();
     }
 }
@@ -145,9 +151,10 @@ void Robot::release()
 {
     try {
         robot->open_gripper(0.05, 0.1);
+        frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        std::cout << e.what() << std::endl;
+        frankaerror = e.what();
         robot->get_franka_robot().automaticErrorRecovery();
     }
 }
@@ -195,10 +202,10 @@ uint64_t Robot::communicationTest()
             return zero_torques;
             },
             false, 1000);
-
+        frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        std::cout << e.what() << std::endl;
+        frankaerror = e.what();
     }
     std::cout << std::endl << std::endl << "#######################################################" << std::endl;
     uint64_t lost_robot_states = time - counter;
@@ -207,4 +214,9 @@ uint64_t Robot::communicationTest()
                   << "last " << time << " milliseconds! (lost " << lost_robot_states << " robot states)" << std::endl << std::endl;
     }
     return lost_robot_states;
+}
+
+char *Robot::error()
+{
+    return const_cast<char*>(frankaerror);
 }
