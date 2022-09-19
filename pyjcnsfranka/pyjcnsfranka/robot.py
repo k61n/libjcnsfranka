@@ -38,8 +38,8 @@ class FrankaRobot:
         :return: True when homing is finished.
         """
         self.lib.goHome.argtypes = [c_void_p]
-        self.lib.goHome.restype = c_bool
-        return self.lib.goHome(self.obj)
+        self.lib.goHome.restype = None
+        self.lib.goHome(self.obj)
 
     def move_joints(self, joints):
         """
