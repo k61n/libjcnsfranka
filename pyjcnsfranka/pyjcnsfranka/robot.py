@@ -112,9 +112,10 @@ class FrankaRobot:
         Check gripping status of the end-effecor.
         :return: True if end-effector is closed.
         """
-        self.lib.isGripping(self.obj)
+        result = self.lib.isGripping(self.obj)
         if self.read_error() != '':
             raise Exception(self.read_error())
+        return result
 
     def grasp(self):
         """
@@ -137,7 +138,10 @@ class FrankaRobot:
         Method sends 10k empty commands to the Franka robot and checks the response.
         :return: number of lost states.
         """
-        return self.lib.communicationTest(self.obj)
+        result = self.lib.communicationTest(self.obj)
+        if self.read_error() != '':
+            raise Exception(self.read_error())
+        return result
 
     def read_error(self):
         return self.lib.error(self.obj).decode('utf-8')
