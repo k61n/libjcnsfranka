@@ -42,7 +42,7 @@ git clone https://github.com/k61n/liborl.git
 cd liborl
 mkdir build
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF
 cmake --build . --parallel=4
 cpack -G DEB
 dpkg -i liborl*
