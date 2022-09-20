@@ -106,7 +106,7 @@ namespace JcnsFranka {
          * Class field to return recent error if any.
          * @return
          */
-        char* error();
+        char* read_error();
 
     private:
         /**

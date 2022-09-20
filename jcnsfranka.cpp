@@ -216,7 +216,7 @@ uint64_t Robot::communicationTest()
     return lost_robot_states;
 }
 
-char *Robot::error()
+char *Robot::read_error()
 {
     return const_cast<char*>(frankaerror);
 }

@@ -46,8 +46,8 @@ class FrankaRobot:
         self.lib.communicationTest.argtypes = [c_void_p]
         self.lib.communicationTest.restype = c_uint64
 
-        self.lib.error.argtypes = [c_void_p]
-        self.lib.error.restype = c_char_p
+        self.lib.read_error.argtypes = [c_void_p]
+        self.lib.read_error.restype = c_char_p
 
         if self.read_error() != '':
             raise Exception(self.read_error())
@@ -144,4 +144,4 @@ class FrankaRobot:
         return result
 
     def read_error(self):
-        return self.lib.error(self.obj).decode('utf-8')
+        return self.lib.read_error(self.obj).decode('utf-8')
