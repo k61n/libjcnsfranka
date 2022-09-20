@@ -49,6 +49,9 @@ class FrankaRobot:
         self.lib.read_error.argtypes = [c_void_p]
         self.lib.read_error.restype = c_char_p
 
+        self.lib.reset_error.argtypes = [c_void_p]
+        self.lib.reset_error.restype = None
+
         if self.read_error() != '':
             raise Exception(self.read_error())
 
@@ -145,3 +148,6 @@ class FrankaRobot:
 
     def read_error(self):
         return self.lib.read_error(self.obj).decode('utf-8')
+
+    def reset_error(self):
+        self.lib.reset_error(self.obj)

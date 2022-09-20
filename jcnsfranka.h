@@ -108,6 +108,12 @@ namespace JcnsFranka {
          */
         char* read_error();
 
+        /**
+         * @brief reset_error
+         * Resets current error.
+         */
+        void reset_error();
+
     private:
         /**
          * @brief robot

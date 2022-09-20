@@ -13,7 +13,6 @@ Robot::Robot(char* ip)
     }
     catch (franka::Exception const& e) {
         frankaerror = e.what();
-        robot->get_franka_robot().automaticErrorRecovery();
     }
 }
 
@@ -37,7 +36,6 @@ Coordinates Robot::readState()
     }
     catch (franka::Exception const& e) {
         frankaerror = e.what();
-        robot->get_franka_robot().automaticErrorRecovery();
     }
     result.xyz[0] = pose.getPosition()[0];
     result.xyz[1] = pose.getPosition()[1];
@@ -50,7 +48,7 @@ void Robot::goHome()
 {
     try {
         robot->get_franka_robot().stop();
-        robot->get_franka_robot().automaticErrorRecovery();
+        reset_error();
         std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4}};
         double speed_factor = 0.5;
         robot->joint_motion(q_goal, speed_factor);
@@ -59,7 +57,6 @@ void Robot::goHome()
     }
     catch (franka::Exception const& e) {
         frankaerror = e.what();
-        robot->get_franka_robot().automaticErrorRecovery();
     }
 }
 
@@ -67,14 +64,12 @@ void Robot::goHome()
 void Robot::moveJoints(std::array<double, 7> joints)
 {
     try {
-        robot->get_franka_robot().automaticErrorRecovery();
         double speed_factor = 0.5;
         robot->joint_motion(joints, speed_factor);
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
         frankaerror = e.what();
-        robot->get_franka_robot().automaticErrorRecovery();
     }
 }
 
@@ -92,7 +87,6 @@ void Robot::moveRelative(double dx, double dy, double dz)
     }
     catch (franka::Exception const& e) {
         frankaerror = e.what();
-        robot->get_franka_robot().automaticErrorRecovery();
     }
 }
 
@@ -114,7 +108,6 @@ void Robot::moveAbsolute(double x, double y, double z)
     }
     catch (franka::Exception const& e) {
         frankaerror = e.what();
-        robot->get_franka_robot().automaticErrorRecovery();
     }
 }
 
@@ -128,7 +121,6 @@ bool Robot::isGripping()
     }
     catch (franka::Exception const& e) {
         frankaerror = e.what();
-        robot->get_franka_robot().automaticErrorRecovery();
     }
     return state.is_grasped;
 }
@@ -142,7 +134,6 @@ void Robot::grasp()
     }
     catch (franka::Exception const& e) {
         frankaerror = e.what();
-        robot->get_franka_robot().automaticErrorRecovery();
     }
 }
 
@@ -155,7 +146,6 @@ void Robot::release()
     }
     catch (franka::Exception const& e) {
         frankaerror = e.what();
-        robot->get_franka_robot().automaticErrorRecovery();
     }
 }
 
@@ -216,7 +206,15 @@ uint64_t Robot::communicationTest()
     return lost_robot_states;
 }
 
+
 char *Robot::read_error()
 {
     return const_cast<char*>(frankaerror);
+}
+
+
+void Robot::reset_error()
+{
+    robot->get_franka_robot().automaticErrorRecovery();
+    frankaerror = "";
 }

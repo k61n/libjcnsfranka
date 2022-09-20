@@ -29,4 +29,5 @@ extern "C"
     void release(JcnsFranka::Robot* self) {self->release();}
     uint64_t communicationTest(JcnsFranka::Robot* self) {return self->communicationTest();}
     char* read_error(JcnsFranka::Robot* self) {return self->read_error();}
+    void reset_error(JcnsFranka::Robot* self) {self->reset_error();}
 }
