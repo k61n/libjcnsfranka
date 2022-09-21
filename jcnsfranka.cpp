@@ -207,6 +207,15 @@ uint64_t Robot::communicationTest()
 }
 
 
+bool Robot::is_in_error_mode()
+{
+    if (std::string(frankaerror) == "")
+        return false;
+    else
+        return true;
+}
+
+
 char *Robot::read_error()
 {
     return const_cast<char*>(frankaerror);

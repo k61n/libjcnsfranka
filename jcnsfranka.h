@@ -102,9 +102,16 @@ namespace JcnsFranka {
         uint64_t communicationTest();
 
         /**
+         * @brief is_in_error_mode
+         * Class method to check if the robot is in error state
+         * @return True if is in error state
+         */
+        bool is_in_error_mode();
+
+        /**
          * @brief error
-         * Class field to return recent error if any.
-         * @return
+         * Class method to return recent error if any
+         * @return error message obtained from libfranka exception
          */
         char* read_error();
 
@@ -137,7 +144,7 @@ namespace JcnsFranka {
          * @brief frankaerror
          * Description of error from libfranka
          */
-        const char* frankaerror;
+        const char* frankaerror = "";
     };
 }
 

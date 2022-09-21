@@ -28,6 +28,7 @@ extern "C"
     void grasp(JcnsFranka::Robot* self) {self->grasp();}
     void release(JcnsFranka::Robot* self) {self->release();}
     uint64_t communicationTest(JcnsFranka::Robot* self) {return self->communicationTest();}
+    bool is_in_error_mode(JcnsFranka::Robot* self) {return self->is_in_error_mode();}
     char* read_error(JcnsFranka::Robot* self) {return self->read_error();}
     void reset_error(JcnsFranka::Robot* self) {self->reset_error();}
 }

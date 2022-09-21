@@ -46,13 +46,16 @@ class FrankaRobot:
         self.lib.communicationTest.argtypes = [c_void_p]
         self.lib.communicationTest.restype = c_uint64
 
+        self.lib.is_in_error_mode.argtypes = [c_void_p]
+        self.lib.is_in_error_mode.restype = c_bool
+
         self.lib.read_error.argtypes = [c_void_p]
         self.lib.read_error.restype = c_char_p
 
         self.lib.reset_error.argtypes = [c_void_p]
         self.lib.reset_error.restype = None
 
-        if self.read_error() != '':
+        if self.is_in_error_mode():
             raise Exception(self.read_error())
 
     def __del__(self):
@@ -64,7 +67,7 @@ class FrankaRobot:
         :return: Current joints and end-effector positions.
         """
         result = self.lib.readState(self.obj)
-        if self.read_error() != '':
+        if self.is_in_error_mode():
             raise Exception(self.read_error())
         return [result[i] for i in range(10)]
 
@@ -75,7 +78,7 @@ class FrankaRobot:
         :return: True when homing is finished.
         """
         self.lib.goHome(self.obj)
-        if self.read_error() != '':
+        if self.is_in_error_mode():
             raise Exception(self.read_error())
 
     def move_joints(self, joints):
@@ -85,7 +88,7 @@ class FrankaRobot:
         """
         input = (c_double * len(joints))(*joints)
         self.lib.moveJoints(self.obj, input)
-        if self.read_error() != '':
+        if self.is_in_error_mode():
             raise Exception(self.read_error())
 
     def move_relative(self, dx, dy, dz):
@@ -96,7 +99,7 @@ class FrankaRobot:
         :param dz: relative displacement in Z axis [m].
         """
         self.lib.moveRelative(self.obj, dx, dy, dz)
-        if self.read_error() != '':
+        if self.is_in_error_mode():
             raise Exception(self.read_error())
 
     def move_absolute(self, x, y, z):
@@ -107,7 +110,7 @@ class FrankaRobot:
         :param z: coordinate in cartesian space [m].
         """
         self.lib.moveAbsolute(self.obj, x, y, z)
-        if self.read_error() != '':
+        if self.is_in_error_mode():
             raise Exception(self.read_error())
 
     def is_gripping(self):
@@ -116,7 +119,7 @@ class FrankaRobot:
         :return: True if end-effector is closed.
         """
         result = self.lib.isGripping(self.obj)
-        if self.read_error() != '':
+        if self.is_in_error_mode():
             raise Exception(self.read_error())
         return result
 
@@ -125,7 +128,7 @@ class FrankaRobot:
         Method to grasp an object.
         """
         self.lib.grasp(self.obj)
-        if self.read_error() != '':
+        if self.is_in_error_mode():
             raise Exception(self.read_error())
 
     def release(self):
@@ -133,7 +136,7 @@ class FrankaRobot:
         Method to release an object.
         """
         self.lib.release(self.obj)
-        if self.read_error() != '':
+        if self.is_in_error_mode():
             raise Exception(self.read_error())
 
     def communication_test(self):
@@ -142,12 +145,26 @@ class FrankaRobot:
         :return: number of lost states.
         """
         result = self.lib.communicationTest(self.obj)
-        if self.read_error() != '':
+        if self.is_in_error_mode():
             raise Exception(self.read_error())
         return result
 
+    def is_in_error_mode(self):
+        """
+        Class method to check if the robot is in error state.
+        :return: True if is in error state.
+        """
+        return self.lib.is_in_error_mode(self.obj)
+
     def read_error(self):
+        """
+        Class method to return recent error if any.
+        :return: error message.
+        """
         return self.lib.read_error(self.obj).decode('utf-8')
 
     def reset_error(self):
+        """
+        Resets current error.
+        """
         self.lib.reset_error(self.obj)
