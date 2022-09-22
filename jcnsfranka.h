@@ -144,7 +144,7 @@ namespace JcnsFranka {
          * @brief frankaerror
          * Description of error from libfranka
          */
-        const char* frankaerror = "";
+        std::string frankaerror = "";
     };
 }
 

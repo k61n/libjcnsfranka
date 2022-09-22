@@ -12,7 +12,9 @@ Robot::Robot(char* ip)
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        frankaerror = e.what();
+        frankaerror = std::string(e.what());
+//        std::strcpy(frankaerror, e.what());
+//        strlcpy(frankaerror, e.what(), sizeof(e.what()));
     }
 }
 
@@ -35,7 +37,7 @@ Coordinates Robot::readState()
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        frankaerror = e.what();
+        frankaerror = std::string(e.what());
     }
     result.xyz[0] = pose.getPosition()[0];
     result.xyz[1] = pose.getPosition()[1];
@@ -56,7 +58,7 @@ void Robot::goHome()
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        frankaerror = e.what();
+        frankaerror = std::string(e.what());
     }
 }
 
@@ -69,7 +71,7 @@ void Robot::moveJoints(std::array<double, 7> joints)
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        frankaerror = e.what();
+        frankaerror = std::string(e.what());
     }
 }
 
@@ -86,7 +88,7 @@ void Robot::moveRelative(double dx, double dy, double dz)
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        frankaerror = e.what();
+        frankaerror = std::string(e.what());
     }
 }
 
@@ -107,7 +109,7 @@ void Robot::moveAbsolute(double x, double y, double z)
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        frankaerror = e.what();
+        frankaerror = std::string(e.what());
     }
 }
 
@@ -120,7 +122,7 @@ bool Robot::isGripping()
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        frankaerror = e.what();
+        frankaerror = std::string(e.what());
     }
     return state.is_grasped;
 }
@@ -133,7 +135,7 @@ void Robot::grasp()
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        frankaerror = e.what();
+        frankaerror = std::string(e.what());
     }
 }
 
@@ -145,7 +147,7 @@ void Robot::release()
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        frankaerror = e.what();
+        frankaerror = std::string(e.what());
     }
 }
 
@@ -195,7 +197,7 @@ uint64_t Robot::communicationTest()
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
-        frankaerror = e.what();
+        frankaerror = std::string(e.what());
     }
     std::cout << std::endl << std::endl << "#######################################################" << std::endl;
     uint64_t lost_robot_states = time - counter;
@@ -209,7 +211,7 @@ uint64_t Robot::communicationTest()
 
 bool Robot::is_in_error_mode()
 {
-    if (std::string(frankaerror) == "")
+    if (frankaerror == "")
         return false;
     else
         return true;
@@ -218,7 +220,7 @@ bool Robot::is_in_error_mode()
 
 char *Robot::read_error()
 {
-    return const_cast<char*>(frankaerror);
+    return const_cast<char*>(frankaerror.c_str());
 }
 
 
