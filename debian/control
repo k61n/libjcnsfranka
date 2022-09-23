@@ -1,0 +1,14 @@
+Source: jcnsfranka
+Priority: optional
+Maintainer: Konstantin Kholostov <k.kholostov@fz-juelich.de>
+Build-Depends: debhelper (>=13~),
+ cmake,
+ liborl-dev
+Standards-Version: 4.5.1
+Section: libs
+
+Package: liborl
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: JCNS adapter library for Franka robots
+ JCNS adapter library for Franka robots using libfranka/liborl.
