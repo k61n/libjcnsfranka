@@ -2,13 +2,16 @@ Source: jcnsfranka
 Priority: optional
 Maintainer: Konstantin Kholostov <k.kholostov@fz-juelich.de>
 Build-Depends: debhelper (>=13~),
+ dh-python,
+ python3 (>= 3.6),
  cmake,
  liborl-dev
 Standards-Version: 4.5.1
 Section: libs
 
-Package: liborl
+Package: jcnsfranka
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3
 Description: JCNS adapter library for Franka robots
- JCNS adapter library for Franka robots using libfranka/liborl.
+ JCNS adapter library for Franka robots using libfranka/liborl
+ including Python package.
