@@ -4,16 +4,12 @@ Python wrapper for JcnsFranka C++ library.
 
 Requirements
 ------------
-Setuptools
-```bash
-apt install python3-setuptools
-```
+None.
 
 Installation
 ------------
-```bash
-python3 setup.py install
-```
+The Python library is installed by CMake together with the
+C++ library.
 
 Usage
 -----

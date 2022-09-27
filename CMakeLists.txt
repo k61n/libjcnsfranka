@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(orl REQUIRED)
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 add_library(jcnsfranka SHARED
   jcnsfranka.cpp
@@ -43,6 +44,8 @@ install(EXPORT jcnsfrankaTargets
         FILE jcnsfrankaTargets.cmake
         NAMESPACE jcnsfranka::
         DESTINATION ${INSTALL_CONFIGDIR}        )
+install(DIRECTORY pyjcnsfranka/pyjcnsfranka
+        DESTINATION "${Python3_SITELIB}")
 
 ## Packaging
 set(CPACK_PACKAGE_VENDOR "FZJ GmbH")
