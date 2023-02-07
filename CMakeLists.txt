@@ -9,7 +9,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(orl REQUIRED)
+find_package(Eigen3 REQUIRED)
+find_package(Boost REQUIRED)
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
+
+include_directories(${EIGEN3_INCLUDE_DIR})
+include_directories(${Boost_INCLUDE_DIRS})
 
 add_library(jcnsfranka SHARED
   jcnsfranka.cpp
