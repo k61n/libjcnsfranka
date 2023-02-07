@@ -29,8 +29,10 @@ target_link_libraries(jcnsfranka orl::orl)
 include(GNUInstallDirs)
 install(TARGETS jcnsfranka
         EXPORT jcnsfrankaTargets
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(FILES jcnsfranka.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 # cmake targets
 set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/jcnsfranka)
