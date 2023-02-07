@@ -7,3 +7,4 @@ franka-linux-x86/
 pyjcnsfranka.egg-info/
 dist/
 __pycache__/
+CMakeLists.txt.*
