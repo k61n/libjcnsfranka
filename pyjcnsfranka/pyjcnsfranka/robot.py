@@ -37,11 +37,11 @@ class FrankaRobot:
         self.lib.isGripping.argtypes = [c_void_p]
         self.lib.isGripping.restype = c_bool
 
-        self.lib.grasp.argtypes = [c_void_p]
-        self.lib.grasp.restype = None
+        self.lib.close_gripper.argtypes = [c_void_p, c_double, c_double]
+        self.lib.close_gripper.restype = None
 
-        self.lib.release.argtypes = [c_void_p]
-        self.lib.release.restype = None
+        self.lib.open_gripper.argtypes = [c_void_p, c_double]
+        self.lib.open_gripper.restype = None
 
         self.lib.communicationTest.argtypes = [c_void_p]
         self.lib.communicationTest.restype = c_uint64
@@ -123,19 +123,19 @@ class FrankaRobot:
             raise Exception(self.read_error())
         return result
 
-    def grasp(self):
+    def close_gripper(self, width, force):
         """
         Method to grasp an object.
         """
-        self.lib.grasp(self.obj)
+        self.lib.close_gripper(self.obj, width, force)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
-    def release(self):
+    def open_gripper(self, width):
         """
         Method to release an object.
         """
-        self.lib.release(self.obj)
+        self.lib.open_gripper(self.obj, width)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 

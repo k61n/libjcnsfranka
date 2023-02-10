@@ -86,13 +86,13 @@ namespace JcnsFranka {
          * @brief grasp
          * Method to grasp an object
          */
-        void grasp();
+        void close_gripper(double width, double force);
 
         /**
          * @brief release
          * Method to release an object
          */
-        void release();
+        void open_gripper(double width);
 
         /**
          * @brief communicationTest

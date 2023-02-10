@@ -25,8 +25,8 @@ extern "C"
     void moveRelative(JcnsFranka::Robot* self, double dx, double dy, double dz) {self->moveRelative(dx, dy, dz);}
     void moveAbsolute(JcnsFranka::Robot* self, double x, double y, double z) {self->moveAbsolute(x, y, z);}
     bool isGripping(JcnsFranka::Robot* self) {return self->isGripping();}
-    void grasp(JcnsFranka::Robot* self) {self->grasp();}
-    void release(JcnsFranka::Robot* self) {self->release();}
+    void close_gripper(JcnsFranka::Robot* self, double force, double width) {self->close_gripper(force, width);}
+    void open_gripper(JcnsFranka::Robot* self, double width) {self->open_gripper(width);}
     uint64_t communicationTest(JcnsFranka::Robot* self) {return self->communicationTest();}
     bool is_in_error_mode(JcnsFranka::Robot* self) {return self->is_in_error_mode();}
     char* read_error(JcnsFranka::Robot* self) {return self->read_error();}

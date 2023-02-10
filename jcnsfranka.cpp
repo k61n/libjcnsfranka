@@ -128,10 +128,10 @@ bool Robot::isGripping()
 }
 
 
-void Robot::grasp()
+void Robot::close_gripper(double width, double force)
 {
     try {
-        robot->close_gripper(0, 0.05, 1, 0.1);
+        robot->close_gripper(width, 0.05, force, 0.005);
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
@@ -140,10 +140,10 @@ void Robot::grasp()
 }
 
 
-void Robot::release()
+void Robot::open_gripper(double width)
 {
     try {
-        robot->open_gripper(0.05, 0.1);
+        robot->open_gripper(0.05, width);
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
