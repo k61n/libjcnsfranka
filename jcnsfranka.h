@@ -175,13 +175,6 @@ namespace JcnsFranka {
         void open_gripper(double width);
 
         /**
-         * @brief communicationTest
-         * Method sends 10k empty commands to the Franka robot and checks the response
-         * @return number of lost states
-         */
-        uint64_t communicationTest();
-
-        /**
          * @brief is_in_error_mode
          * Class method to check if the robot is in error state
          * @return True if is in error state
@@ -232,6 +225,14 @@ namespace JcnsFranka {
          */
         std::string frankaerror = "";
     };
+
+
+    /**
+     * @brief communicationTest
+     * Method sends 10k empty commands to the Franka robot and checks the response
+     * @return number of lost states
+     */
+    uint64_t communicationTest(char *ip);
 }
 
 #endif // JCNSFRANKA_H

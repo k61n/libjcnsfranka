@@ -20,6 +20,7 @@ add_library(jcnsfranka SHARED
   jcnsfranka.h
   robot.cpp
   robot_c.cpp
+  comtest.cpp
   gripper.cpp
 )
 

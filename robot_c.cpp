@@ -27,8 +27,10 @@ extern "C"
     bool isGripping(JcnsFranka::Robot* self) {return self->isGripping();}
     void close_gripper(JcnsFranka::Robot* self, double force, double width) {self->close_gripper(force, width);}
     void open_gripper(JcnsFranka::Robot* self, double width) {self->open_gripper(width);}
-    uint64_t communicationTest(JcnsFranka::Robot* self) {return self->communicationTest();}
+//    uint64_t communicationTest(JcnsFranka::Robot* self) {return self->communicationTest();}
     bool is_in_error_mode(JcnsFranka::Robot* self) {return self->is_in_error_mode();}
     char* read_error(JcnsFranka::Robot* self) {return self->read_error();}
     void reset_error(JcnsFranka::Robot* self) {self->reset_error();}
+
+    uint64_t communicationTest(char *ip) {return JcnsFranka::communicationTest(ip);}
 }

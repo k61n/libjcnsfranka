@@ -43,9 +43,6 @@ class FrankaRobot:
         self.lib.open_gripper.argtypes = [c_void_p, c_double]
         self.lib.open_gripper.restype = None
 
-        self.lib.communicationTest.argtypes = [c_void_p]
-        self.lib.communicationTest.restype = c_uint64
-
         self.lib.is_in_error_mode.argtypes = [c_void_p]
         self.lib.is_in_error_mode.restype = c_bool
 
@@ -139,16 +136,6 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
-    def communication_test(self):
-        """
-        Method sends 10k empty commands to the Franka robot and checks the response.
-        :return: number of lost states.
-        """
-        result = self.lib.communicationTest(self.obj)
-        if self.is_in_error_mode():
-            raise Exception(self.read_error())
-        return result
-
     def is_in_error_mode(self):
         """
         Class method to check if the robot is in error state.
@@ -168,3 +155,11 @@ class FrankaRobot:
         Resets current error.
         """
         self.lib.reset_error(self.obj)
+
+
+def comtest(ip):
+    lib = CDLL('libjcnsfranka.so', **mode)
+    buffer = create_string_buffer(ip.encode('utf-8'))
+    lib.communicationTest.argtypes = [c_char_p]
+    lib.communicationTest.restype = c_uint64
+    lib.communicationTest(buffer)
