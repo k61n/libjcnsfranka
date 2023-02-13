@@ -23,7 +23,6 @@ private slots:
     void on_homeBtn_clicked();
     void on_clearBtn_clicked();
     void on_readBtn_clicked();
-    void on_gripperBtn_clicked();
     void on_cmtestBtn_clicked();
 
     void on_xPlusBtn_clicked();
@@ -34,6 +33,8 @@ private slots:
     void on_zMinusBtn_clicked();
 
     void on_moveBtn_clicked();
+    void on_closegripperBtn_clicked();
+    void on_opengripperBtn_clicked();
 
 private:
     Ui::MainWindow *ui;

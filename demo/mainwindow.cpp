@@ -75,17 +75,10 @@ void MainWindow::on_readBtn_clicked()
 }
 
 
-void MainWindow::on_gripperBtn_clicked()
-{
-    if (robot->isGripping())
-        robot->release();
-    else robot->grasp();
-}
-
-
 void MainWindow::on_cmtestBtn_clicked()
 {
-    robot->communicationTest();
+    std::string ip = ui->ipLine->text().toStdString();
+    JcnsFranka::communicationTest(ip.data());
 }
 
 
@@ -139,3 +132,17 @@ void MainWindow::on_moveBtn_clicked()
     robot->moveAbsolute(x, y, z);
 }
 
+
+void MainWindow::on_closegripperBtn_clicked()
+{
+    double width = ui->widthcloseLn->text().toDouble();
+    double force = ui->forceLn->text().toDouble();
+    robot->close_gripper(width, force);
+}
+
+
+void MainWindow::on_opengripperBtn_clicked()
+{
+    double width = ui->widthopenLn->text().toDouble();
+    robot->open_gripper(width);
+}
