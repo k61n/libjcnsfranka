@@ -2,13 +2,16 @@
 #include <iostream>
 #include <thread>
 
+
 using namespace JcnsFranka;
+
 
 Robot::Robot(char* ip)
 {
     std::string ipstring(ip);
     try {
         robot = new orl::Robot(ipstring);
+        gripper = new Gripper(ipstring);
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
@@ -21,6 +24,8 @@ Robot::Robot(char* ip)
 
 Robot::~Robot()
 {
+    gripper->stop();
+    delete gripper;
     robot->get_franka_robot().stop();
     delete robot;
 }
@@ -116,22 +121,22 @@ void Robot::moveAbsolute(double x, double y, double z)
 
 bool Robot::isGripping()
 {
-    franka::GripperState state;
+    bool state;
     try {
-        state = robot->get_franka_gripper().readOnce();
+        state = gripper->is_gripping();
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
         frankaerror = std::string(e.what());
     }
-    return state.is_grasped;
+    return state;
 }
 
 
 void Robot::close_gripper(double width, double force)
 {
     try {
-        robot->close_gripper(width, 0.05, force, 0.005);
+        gripper->close_gripper(width, force);
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
@@ -143,7 +148,7 @@ void Robot::close_gripper(double width, double force)
 void Robot::open_gripper(double width)
 {
     try {
-        robot->open_gripper(0.05, width);
+        gripper->open_gripper(width);
         frankaerror = "";
     }
     catch (franka::Exception const& e) {

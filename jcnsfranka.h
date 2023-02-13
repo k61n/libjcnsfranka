@@ -20,6 +20,29 @@ namespace JcnsFranka {
         std::array<double, 3> xyz;
     };
 
+
+    class Gripper
+    {
+    public:
+        Gripper(std::string ip);
+        ~Gripper();
+
+        void go_home();
+        double read_width();
+        double max_width();
+        bool is_gripping();
+
+        void close_gripper(double width, double force);
+        void open_gripper(double width);
+        void stop();
+
+    private:
+        franka::GripperState state;
+        franka::Gripper *gripper;
+        double maxWidth;
+    };
+
+
     /**
      * @brief The Robot class
      * Simple wrapper around orl::Robot class
@@ -127,6 +150,8 @@ namespace JcnsFranka {
          * orl::Robot instance
          */
         orl::Robot *robot;
+
+        Gripper *gripper;
 
         /**
          * @brief amax

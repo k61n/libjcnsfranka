@@ -17,9 +17,10 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(${Boost_INCLUDE_DIRS})
 
 add_library(jcnsfranka SHARED
-  jcnsfranka.cpp
-  c_calls.cpp
   jcnsfranka.h
+  robot.cpp
+  robot_c.cpp
+  gripper.cpp
 )
 
 target_compile_definitions(jcnsfranka PUBLIC JCNSFRANKA_LIBRARY)
