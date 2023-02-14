@@ -17,5 +17,11 @@ Usage
 from pyjcnsfranka.robot import FrankaRobot
 
 robot = FrankaRobot('192.168.201.2')
-robot.communication_test()
+robot.go_home()
+```
+
+```python
+from pyjcnsfranka.robot import comtest
+
+comtest('192.168.201.2')
 ```

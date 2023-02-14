@@ -7,11 +7,11 @@ functionality for motion in cartesian space.
 
 Requirements
 ------------
-* LibORL [https://github.com/k61n/liborl.git][https://github.com/marcbone/liborl].
+* LibORL [https://forge.frm2.tum.de/review/jcns/mirror/liborl].
   * Eigen3
   * Boost
   * GoogleTest
-* libfranka [https://github.com/frankaemika/libfranka.git]
+* libfranka [https://forge.frm2.tum.de/review/jcns/mirror/libfranka]
   * Eigen3
   * Poco
 
@@ -24,7 +24,7 @@ apt install libpoco-dev libeigen3-dev libboost-dev libgtest-dev
 
 Build and install release version of libfranka locally.
 ```bash
-git clone --recursive https://github.com/frankaemika/libfranka.git
+git clone --recursive https://forge.frm2.tum.de/review/jcns/mirror/libfranka
 cd libfranka
 git checkout 0.9.2
 git submodule update
@@ -38,7 +38,7 @@ dpkg -i libfranka*
 
 Build and install release version of LibORL locally.
 ```bash
-git clone https://github.com/k61n/liborl.git
+git clone "https://forge.frm2.tum.de/review/jcns/mirror/liborl"
 cd liborl
 mkdir build
 cd build
@@ -56,8 +56,7 @@ mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 cmake --build . --parallel=4
-cpack -G DEB
-dpkg -i jcnsfranka*
+cmake --install .
 ```
 
 Usage
