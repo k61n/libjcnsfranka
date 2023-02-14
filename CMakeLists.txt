@@ -18,9 +18,12 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 add_library(jcnsfranka SHARED
   jcnsfranka.h
+  robot.h
   robot.cpp
   robot_c.cpp
+  comtest.h
   comtest.cpp
+  gripper.h
   gripper.cpp
 )
 
@@ -35,6 +38,10 @@ install(TARGETS jcnsfranka
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES jcnsfranka.h robot.h comtest.h gripper.h
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jcnsfranka)
+install(DIRECTORY pyjcnsfranka/pyjcnsfranka
+        DESTINATION "${Python3_SITELIB}")
 
 # cmake targets
 set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/jcnsfranka)
@@ -48,13 +55,11 @@ configure_package_config_file(cmake/jcnsfrankaConfig.cmake.in
         INSTALL_DESTINATION ${INSTALL_CONFIGDIR})
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/jcnsfrankaConfig.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/jcnsfrankaConfigVersion.cmake"
-        DESTINATION ${INSTALL_CONFIGDIR}        )
+        DESTINATION ${INSTALL_CONFIGDIR})
 install(EXPORT jcnsfrankaTargets
         FILE jcnsfrankaTargets.cmake
         NAMESPACE jcnsfranka::
-        DESTINATION ${INSTALL_CONFIGDIR}        )
-install(DIRECTORY pyjcnsfranka/pyjcnsfranka
-        DESTINATION "${Python3_SITELIB}")
+        DESTINATION ${INSTALL_CONFIGDIR})
 
 ## Packaging
 set(CPACK_PACKAGE_VENDOR "FZJ GmbH")

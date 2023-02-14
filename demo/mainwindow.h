@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <jcnsfranka.h>
+#include "jcnsfranka/jcnsfranka.h"
 #include "qspinbox.h"
 
 QT_BEGIN_NAMESPACE

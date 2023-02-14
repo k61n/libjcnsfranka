@@ -1,4 +1,5 @@
-#include <jcnsfranka.h>
+#include "robot.h"
+#include "comtest.h"
 
 extern "C"
 {

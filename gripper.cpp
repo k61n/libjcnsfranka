@@ -1,4 +1,4 @@
-#include <jcnsfranka.h>
+#include "gripper.h"
 #include <iostream>
 #include <thread>
 

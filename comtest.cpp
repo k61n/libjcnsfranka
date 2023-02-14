@@ -1,4 +1,4 @@
-#include <jcnsfranka.h>
+#include "comtest.h"
 #include <iostream>
 #include <thread>
 
@@ -12,9 +12,9 @@ uint64_t JcnsFranka::communicationTest(char *ip)
     uint64_t time = 0;
 
     std::string ipstring(ip);
-    franka::Robot *robot = new franka::Robot(ipstring, franka::RealtimeConfig::kEnforce);
 
     try {
+        franka::Robot *robot = new franka::Robot(ipstring, franka::RealtimeConfig::kEnforce);
         franka::Torques zero_torques{{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}};
         robot->control([&time, &counter, &avg_success_rate, &min_success_rate, &max_success_rate, zero_torques](
                                           const franka::RobotState& robot_state, franka::Duration period) -> franka::Torques {
@@ -48,6 +48,7 @@ uint64_t JcnsFranka::communicationTest(char *ip)
             return zero_torques;
             },
             false, 1000);
+        delete robot;
     }
     catch (franka::Exception const& e) {
         std::cout << std::string(e.what());
