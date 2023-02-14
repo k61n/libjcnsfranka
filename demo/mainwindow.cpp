@@ -1,7 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QFile>
+#include <QFileDialog>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -35,6 +38,31 @@ void MainWindow::on_connectBtn_clicked()
 {
     std::string ip = ui->ipLine->text().toStdString();
     this->robot = new JcnsFranka::Robot(ip.data());
+}
+
+
+void MainWindow::on_setloadBtn_clicked()
+{
+    QJsonDocument doc;
+    QString filename = QFileDialog::getOpenFileName(this, "Select JSON file", "", "JSON files (*.json)");
+    if (!filename.isEmpty()) {
+        ui->setloadLabel->setText(filename.split('/').last());
+        QFile file(filename);
+        file.open(QIODevice::ReadOnly | QIODevice::Text);
+        doc = QJsonDocument::fromJson(file.readAll());
+    }
+    QJsonObject obj = doc.object();
+
+    double mass = obj["mass"].toDouble();
+    QJsonArray arg2 = obj["F_x_Cload"].toArray();
+    std::array<double, 3> F_x_Cload;
+    for (int i = 0; i < arg2.size(); i++)
+        F_x_Cload[i] = arg2[i].toDouble();
+    QJsonArray arg3 = obj["load_inertia"].toArray();
+    std::array<double, 9> load_inertia;
+    for (int i = 0; i < arg3.size(); i++)
+        load_inertia[i] = arg3[i].toDouble();
+    robot->set_load(mass, F_x_Cload, load_inertia);
 }
 
 

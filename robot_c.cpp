@@ -15,6 +15,16 @@ extern "C"
             result[i + 7] = state.xyz[i];
         return result;
     }
+    void set_load(JcnsFranka::Robot* self, double mass, double* F_x_Cload, double* load_inertia)
+    {
+        std::array<double, 3> arg2;
+        std::array<double, 9> arg3;
+        for (int i=0; i < 3; i++)
+            arg2[i] = F_x_Cload[i];
+        for (int i = 0; i < 9; i++)
+            arg3[i] = load_inertia[i];
+        self->set_load(mass, arg2, arg3);
+    }
     void goHome(JcnsFranka::Robot* self) {self->goHome();}
     void moveJoints(JcnsFranka::Robot* self, double* joints)
     {

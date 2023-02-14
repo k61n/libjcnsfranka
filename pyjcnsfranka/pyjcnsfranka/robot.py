@@ -22,6 +22,9 @@ class FrankaRobot:
         self.lib.readState.argtypes = [c_void_p]
         self.lib.readState.restype = POINTER(c_double)
 
+        self.lib.set_load.argtypes = [c_void_p, c_double, POINTER(c_double), POINTER(c_double)]
+        self.lib.set_load.restype = None
+
         self.lib.goHome.argtypes = [c_void_p]
         self.lib.goHome.restype = None
 
@@ -67,6 +70,19 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
         return [result[i] for i in range(10)]
+
+    def set_load(self, mass, F_x_Cload, load_inertia):
+        """
+        Sets dynamic parameters of a payload
+        :param mass: mass of the load in [kg].
+        :param F_x_Cload: translation from flange to center of mass of load in [m].
+        :param load_inertia: Inertia matrix in [kg*m2], column-major.
+        """
+        arg2 = (c_double * len(F_x_Cload))(*F_x_Cload)
+        arg3 = (c_double * len(load_inertia))(*load_inertia)
+        self.lib.set_load(self.obj, mass, arg2, arg3)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
 
     def go_home(self):
         """

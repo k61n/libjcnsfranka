@@ -19,6 +19,7 @@ public:
 
 private slots:
     void on_connectBtn_clicked();
+    void on_setloadBtn_clicked();
     void on_stateChanged();
     void on_homeBtn_clicked();
     void on_clearBtn_clicked();

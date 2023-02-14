@@ -39,6 +39,17 @@ namespace JcnsFranka {
         Coordinates readState();
 
         /**
+         * @brief set_load
+         * Sets dynamic parameters of a payload
+         * @param load_mass Mass of the load in [kg]
+         * @param F_x_Cload Translation from flange to center of mass of load in [m]
+         * @param load_inertia Inertia matrix in [kg*m2], column-major
+         */
+        void set_load(double load_mass,
+                      const std::array<double, 3>& F_x_Cload,
+                      const std::array<double, 9>& load_inertia);
+
+        /**
          * @brief goHome
          * Moves the Franka robot to a homing position and resets the end-effector
          * Home position is { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad]
