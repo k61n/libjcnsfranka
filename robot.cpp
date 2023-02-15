@@ -31,7 +31,7 @@ Robot::~Robot()
 }
 
 
-Coordinates Robot::readState()
+Coordinates Robot::read_state()
 {
     Coordinates result;
     orl::Pose pose;
@@ -69,7 +69,7 @@ void Robot::set_load(double load_mass,
 }
 
 
-void Robot::goHome()
+void Robot::go_home()
 {
     try {
         robot->get_franka_robot().stop();
@@ -77,7 +77,7 @@ void Robot::goHome()
         std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4}};
         double speed_factor = 0.5;
         robot->joint_motion(q_goal, speed_factor);
-        robot->get_franka_gripper().homing();
+        gripper->go_home();
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
@@ -86,7 +86,7 @@ void Robot::goHome()
 }
 
 
-void Robot::moveJoints(std::array<double, 7> joints)
+void Robot::move_joints(std::array<double, 7> joints)
 {
     try {
         double speed_factor = 0.5;
@@ -99,7 +99,7 @@ void Robot::moveJoints(std::array<double, 7> joints)
 }
 
 
-void Robot::moveRelative(double dx, double dy, double dz)
+void Robot::move_relative(double dx, double dy, double dz)
 {
     double s = sqrt(dx*dx + dy*dy + dz*dz);
     double t = s/vmax + vmax/amax;
@@ -116,9 +116,9 @@ void Robot::moveRelative(double dx, double dy, double dz)
 }
 
 
-void Robot::moveAbsolute(double x, double y, double z)
+void Robot::move_absolute(double x, double y, double z)
 {
-    Coordinates state = this->readState();
+    Coordinates state = this->read_state();
     double x0 = state.xyz[0];
     double y0 = state.xyz[1];
     double z0 = state.xyz[2];
@@ -137,7 +137,7 @@ void Robot::moveAbsolute(double x, double y, double z)
 }
 
 
-bool Robot::isGripping()
+bool Robot::is_gripping()
 {
     bool state;
     try {
@@ -163,10 +163,10 @@ void Robot::close_gripper(double width, double force)
 }
 
 
-void Robot::open_gripper(double width)
+void Robot::move_gripper(double width)
 {
     try {
-        gripper->open_gripper(width);
+        gripper->move_gripper(width);
         frankaerror = "";
     }
     catch (franka::Exception const& e) {

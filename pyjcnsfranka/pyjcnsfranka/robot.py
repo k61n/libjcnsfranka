@@ -19,32 +19,32 @@ class FrankaRobot:
         self.lib.deinit.argtypes = [c_void_p]
         self.lib.deinit.restype = None
 
-        self.lib.readState.argtypes = [c_void_p]
-        self.lib.readState.restype = POINTER(c_double)
+        self.lib.read_state.argtypes = [c_void_p]
+        self.lib.read_state.restype = POINTER(c_double)
 
         self.lib.set_load.argtypes = [c_void_p, c_double, POINTER(c_double), POINTER(c_double)]
         self.lib.set_load.restype = None
 
-        self.lib.goHome.argtypes = [c_void_p]
-        self.lib.goHome.restype = None
+        self.lib.go_home.argtypes = [c_void_p]
+        self.lib.go_home.restype = None
 
-        self.lib.moveJoints.argtypes = [c_void_p, POINTER(c_double)]
-        self.lib.moveJoints.restype = None
+        self.lib.move_joints.argtypes = [c_void_p, POINTER(c_double)]
+        self.lib.move_joints.restype = None
 
-        self.lib.moveRelative.argtypes = [c_void_p, c_double, c_double, c_double]
-        self.lib.moveRelative.restype = None
+        self.lib.move_relative.argtypes = [c_void_p, c_double, c_double, c_double]
+        self.lib.move_relative.restype = None
 
-        self.lib.moveAbsolute.argtypes = [c_void_p, c_double, c_double, c_double]
-        self.lib.moveAbsolute.restype = None
+        self.lib.move_absolute.argtypes = [c_void_p, c_double, c_double, c_double]
+        self.lib.move_absolute.restype = None
 
-        self.lib.isGripping.argtypes = [c_void_p]
-        self.lib.isGripping.restype = c_bool
+        self.lib.is_gripping.argtypes = [c_void_p]
+        self.lib.is_gripping.restype = c_bool
 
         self.lib.close_gripper.argtypes = [c_void_p, c_double, c_double]
         self.lib.close_gripper.restype = None
 
-        self.lib.open_gripper.argtypes = [c_void_p, c_double]
-        self.lib.open_gripper.restype = None
+        self.lib.move_gripper.argtypes = [c_void_p, c_double]
+        self.lib.move_gripper.restype = None
 
         self.lib.is_in_error_mode.argtypes = [c_void_p]
         self.lib.is_in_error_mode.restype = c_bool
@@ -66,7 +66,7 @@ class FrankaRobot:
         Reads current joints and end-effector positions.
         :return: Current joints and end-effector positions.
         """
-        result = self.lib.readState(self.obj)
+        result = self.lib.read_state(self.obj)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
         return [result[i] for i in range(10)]
@@ -90,7 +90,7 @@ class FrankaRobot:
         Home position is { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad].
         :return: True when homing is finished.
         """
-        self.lib.goHome(self.obj)
+        self.lib.go_home(self.obj)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
@@ -100,7 +100,7 @@ class FrankaRobot:
         :param joints: joints an array with angles for the joints [rad].
         """
         input = (c_double * len(joints))(*joints)
-        self.lib.moveJoints(self.obj, input)
+        self.lib.move_joints(self.obj, input)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
@@ -111,7 +111,7 @@ class FrankaRobot:
         :param dy: relative displacement in Y axis [m].
         :param dz: relative displacement in Z axis [m].
         """
-        self.lib.moveRelative(self.obj, dx, dy, dz)
+        self.lib.move_relative(self.obj, dx, dy, dz)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
@@ -122,7 +122,7 @@ class FrankaRobot:
         :param y: coordinate in cartesian space [m].
         :param z: coordinate in cartesian space [m].
         """
-        self.lib.moveAbsolute(self.obj, x, y, z)
+        self.lib.move_absolute(self.obj, x, y, z)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
@@ -131,7 +131,7 @@ class FrankaRobot:
         Check gripping status of the end-effecor.
         :return: True if end-effector is closed.
         """
-        result = self.lib.isGripping(self.obj)
+        result = self.lib.is_gripping(self.obj)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
         return result
@@ -144,11 +144,11 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
-    def open_gripper(self, width):
+    def move_gripper(self, width):
         """
         Method to release an object.
         """
-        self.lib.open_gripper(self.obj, width)
+        self.lib.move_gripper(self.obj, width)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
@@ -176,6 +176,6 @@ class FrankaRobot:
 def comtest(ip):
     lib = CDLL('libjcnsfranka.so', **mode)
     buffer = create_string_buffer(ip.encode('utf-8'))
-    lib.communicationTest.argtypes = [c_char_p]
-    lib.communicationTest.restype = c_uint64
-    lib.communicationTest(buffer)
+    lib.communication_test.argtypes = [c_char_p]
+    lib.communication_test.restype = c_uint64
+    lib.communication_test(buffer)

@@ -55,11 +55,16 @@ namespace JcnsFranka {
         void close_gripper(double width, double force);
 
         /**
-         * @brief open_gripper
+         * @brief move_gripper
          * Opens gripper to a desired width
          * @param width
          */
-        void open_gripper(double width);
+        void move_gripper(double width);
+
+        /**
+         * @brief stop
+         * Stops the movement
+         */
         void stop();
 
     private:

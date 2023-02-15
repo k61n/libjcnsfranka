@@ -7,11 +7,11 @@
 
 namespace JcnsFranka {
     /**
-     * @brief communicationTest
-     * Method sends 10k empty commands to the Franka robot and checks the response
+     * @brief communication_test
+     * Method sends 10k empty commands and controls the response
      * @return number of lost states
      */
-    uint64_t communicationTest(char *ip);
+    uint64_t communication_test(char *ip);
 }
 
 

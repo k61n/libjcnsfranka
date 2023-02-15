@@ -36,7 +36,7 @@ namespace JcnsFranka {
          * Reads current joints and end-effector positions
          * @return Current joints and end-effector positions
          */
-        Coordinates readState();
+        Coordinates read_state();
 
         /**
          * @brief set_load
@@ -55,14 +55,14 @@ namespace JcnsFranka {
          * Home position is { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad]
          * @return True when homing is finished
          */
-        void goHome();
+        void go_home();
 
         /**
          * @brief moveJoints
          * Sets the Franka robot in a position that corresponds to passed joint angles
          * @param joints an array with angles for the joints [rad]
          */
-        void moveJoints(std::array<double, 7> joints);
+        void move_joints(std::array<double, 7> joints);
 
         /**
          * @brief moveRelative
@@ -71,7 +71,7 @@ namespace JcnsFranka {
          * @param dy relative displacement in Y axis [m]
          * @param dz relative displacement in Z axis [m]
          */
-        void moveRelative(double dx, double dy, double dz);
+        void move_relative(double dx, double dy, double dz);
 
         /**
          * @brief moveAbsolute
@@ -80,26 +80,29 @@ namespace JcnsFranka {
          * @param y target Y coordinate in cartesian space [m]
          * @param z target Z coordinate in cartesian space [m]
          */
-        void moveAbsolute(double x, double y, double z);
+        void move_absolute(double x, double y, double z);
 
         /**
          * @brief isGripping
          * Check gripping status of the end-effecor
          * @return True if end-effector is closed
          */
-        bool isGripping();
+        bool is_gripping();
 
         /**
-         * @brief grasp
-         * Method to grasp an object
+         * @brief close_gripper
+         * Method to grasp an object with force
+         * @param width
+         * @param force
          */
         void close_gripper(double width, double force);
 
         /**
-         * @brief release
-         * Method to release an object
+         * @brief move_gripper
+         * Controls the distance between gripper's fingers
+         * @param width
          */
-        void open_gripper(double width);
+        void move_gripper(double width);
 
         /**
          * @brief is_in_error_mode

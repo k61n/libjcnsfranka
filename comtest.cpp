@@ -3,7 +3,7 @@
 #include <thread>
 
 
-uint64_t JcnsFranka::communicationTest(char *ip)
+uint64_t JcnsFranka::communication_test(char *ip)
 {
     uint64_t counter = 0;
     double avg_success_rate = 0.0;

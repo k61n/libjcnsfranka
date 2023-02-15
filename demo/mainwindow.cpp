@@ -74,14 +74,14 @@ void MainWindow::on_stateChanged()
     for (int i=0; i<boxList.count(); i++) {
         joints[i] = boxList.at(i)->value() / 180.0 * M_PI;
     }
-    this->robot->moveJoints(joints);
+    this->robot->move_joints(joints);
     check_error();
 }
 
 
 void MainWindow::on_homeBtn_clicked()
 {
-    robot->goHome();
+    robot->go_home();
     check_error();
 }
 
@@ -95,7 +95,7 @@ void MainWindow::on_clearBtn_clicked()
 void MainWindow::on_readBtn_clicked()
 {
     ui->connectionEdit->clear();
-    JcnsFranka::Coordinates state = robot->readState();
+    JcnsFranka::Coordinates state = robot->read_state();
     check_error();
     for (int i=0; i<state.joints.max_size(); i++) {
         double degrees = state.joints[i] / M_PI * 180;
@@ -111,14 +111,14 @@ void MainWindow::on_readBtn_clicked()
 void MainWindow::on_cmtestBtn_clicked()
 {
     std::string ip = ui->ipLine->text().toStdString();
-    JcnsFranka::communicationTest(ip.data());
+    JcnsFranka::communication_test(ip.data());
 }
 
 
 void MainWindow::on_xPlusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->moveRelative(value, 0, 0);
+    robot->move_relative(value, 0, 0);
     check_error();
 }
 
@@ -126,7 +126,7 @@ void MainWindow::on_xPlusBtn_clicked()
 void MainWindow::on_xMinusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->moveRelative(-value, 0, 0);
+    robot->move_relative(-value, 0, 0);
     check_error();
 }
 
@@ -134,7 +134,7 @@ void MainWindow::on_xMinusBtn_clicked()
 void MainWindow::on_yPlusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->moveRelative(0, value, 0);
+    robot->move_relative(0, value, 0);
     check_error();
 }
 
@@ -142,7 +142,7 @@ void MainWindow::on_yPlusBtn_clicked()
 void MainWindow::on_yMinusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->moveRelative(0, -value, 0);
+    robot->move_relative(0, -value, 0);
     check_error();
 }
 
@@ -150,7 +150,7 @@ void MainWindow::on_yMinusBtn_clicked()
 void MainWindow::on_zPlusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->moveRelative(0, 0, value);
+    robot->move_relative(0, 0, value);
     check_error();
 }
 
@@ -158,7 +158,7 @@ void MainWindow::on_zPlusBtn_clicked()
 void MainWindow::on_zMinusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->moveRelative(0, 0, -value);
+    robot->move_relative(0, 0, -value);
     check_error();
 }
 
@@ -168,7 +168,7 @@ void MainWindow::on_moveBtn_clicked()
     double x = ui->xLn->text().toDouble();
     double y = ui->yLn->text().toDouble();
     double z = ui->zLn->text().toDouble();
-    robot->moveAbsolute(x, y, z);
+    robot->move_absolute(x, y, z);
     check_error();
 }
 
@@ -185,7 +185,7 @@ void MainWindow::on_closegripperBtn_clicked()
 void MainWindow::on_opengripperBtn_clicked()
 {
     double width = ui->widthopenLn->text().toDouble();
-    robot->open_gripper(width);
+    robot->move_gripper(width);
     check_error();
 }
 

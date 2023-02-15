@@ -61,7 +61,7 @@ bool Gripper::is_gripping()
 }
 
 
-void Gripper::open_gripper(double width)
+void Gripper::move_gripper(double width)
 {
     gripper->move(width, 0.05);
 }
