@@ -1,3 +1,26 @@
+jcnsfranka (0.2.0) unstable; urgency=medium
+
+  * nicer and more readable code base
+  * consistent method naming in c++, python libs and in demo
+  * demo: added a method to throw an error to the application output and reset the error state
+  * loads config files updated
+  * a method to set the load properties
+  * release routine as a bash script
+  * read.me updates
+  * codebase refactoring
+  * demo: update the codebase to the current jcnsfranka
+  * comunnication test is a method outside classes
+  * docstrings for Gripper class
+  * Gripper is a separate class
+  * Control of width and force parameters of the gripper
+  * demo: consistent dependency definition
+  * CMakeLists: explicit definition of TARGETS
+  * CMakeLists: consistent dependencies with eigen and boost
+  * gitignore: hide CMakeLists.txt.* for QtCreator users
+  * min cmake 3.16 for focal
+
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Wed, 15 Feb 2023 17:55:23 +0100
+
 jcnsfranka (0.1.0) unstable; urgency=medium
 
   * Initial release
