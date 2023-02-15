@@ -15,7 +15,8 @@ extern "C"
             result[i + 7] = state.xyz[i];
         return result;
     }
-    void set_load(JcnsFranka::Robot* self, double mass, double* F_x_Cload, double* load_inertia)
+    void set_load(JcnsFranka::Robot* self, double mass, double* F_x_Cload,
+                  double* load_inertia)
     {
         std::array<double, 3> arg2;
         std::array<double, 9> arg3;
@@ -33,14 +34,20 @@ extern "C"
             joints_arr[i] = joints[i];
         self->move_joints(joints_arr);
     }
-    void move_relative(JcnsFranka::Robot* self, double dx, double dy, double dz) {self->move_relative(dx, dy, dz);}
-    void move_absolute(JcnsFranka::Robot* self, double x, double y, double z) {self->move_absolute(x, y, z);}
+    void move_relative(JcnsFranka::Robot* self, double dx, double dy, double dz)
+        {self->move_relative(dx, dy, dz);}
+    void move_absolute(JcnsFranka::Robot* self, double x, double y, double z)
+        {self->move_absolute(x, y, z);}
     bool is_gripping(JcnsFranka::Robot* self) {return self->is_gripping();}
-    void close_gripper(JcnsFranka::Robot* self, double force, double width) {self->close_gripper(force, width);}
-    void move_gripper(JcnsFranka::Robot* self, double width) {self->move_gripper(width);}
-    bool is_in_error_mode(JcnsFranka::Robot* self) {return self->is_in_error_mode();}
+    void close_gripper(JcnsFranka::Robot* self, double force, double width)
+        {self->close_gripper(force, width);}
+    void move_gripper(JcnsFranka::Robot* self,
+                      double width) {self->move_gripper(width);}
+    bool is_in_error_mode(JcnsFranka::Robot* self)
+        {return self->is_in_error_mode();}
     char* read_error(JcnsFranka::Robot* self) {return self->read_error();}
     void reset_error(JcnsFranka::Robot* self) {self->reset_error();}
 
-    uint64_t communication_test(char *ip) {return JcnsFranka::communication_test(ip);}
+    uint64_t communication_test(char *ip)
+        {return JcnsFranka::communication_test(ip);}
 }

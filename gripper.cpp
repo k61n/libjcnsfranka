@@ -45,8 +45,9 @@ double Gripper::max_width()
 
 void Gripper::close_gripper(double width, double force)
 {
-    // Gripper maintains the force until the target is reached, therefore the deviation
-    // is kept of the size of maxWidth in order to gripper to maintain the force indefinitely
+    // Gripper maintains the force until the target is reached,
+    // therefore the deviation is kept of the size of maxWidth in order
+    // to gripper to maintain the force indefinitely
     double deviation = maxWidth;
     gripper->grasp(width, 0.05, force, deviation, deviation);
 

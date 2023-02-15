@@ -22,7 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
     boxList.append(ui->j7Box);
 
     foreach (const QSpinBox *box, boxList)
-        connect(box, &QSpinBox::valueChanged, this, &MainWindow::on_stateChanged);
+        connect(box, &QSpinBox::valueChanged,
+                this, &MainWindow::on_stateChanged);
 
     this->on_connectBtn_clicked();
 }
@@ -45,7 +46,8 @@ void MainWindow::on_connectBtn_clicked()
 void MainWindow::on_setloadBtn_clicked()
 {
     QJsonDocument doc;
-    QString filename = QFileDialog::getOpenFileName(this, "Select JSON file", "", "JSON files (*.json)");
+    QString filename = QFileDialog::getOpenFileName(this, "Select JSON file",
+                                                    "", "JSON files (*.json)");
     if (!filename.isEmpty()) {
         ui->setloadLabel->setText(filename.split('/').last());
         QFile file(filename);
@@ -99,12 +101,18 @@ void MainWindow::on_readBtn_clicked()
     check_error();
     for (int i=0; i<state.joints.max_size(); i++) {
         double degrees = state.joints[i] / M_PI * 180;
-        ui->connectionEdit->appendPlainText("j" + QString::number(i) + " = " + QString::number(state.joints[i], 'g', 6) + "\t" + QString::number((int)degrees));
+        ui->connectionEdit->appendPlainText("j" + QString::number(i) +
+            " = " +
+            QString::number(state.joints[i], 'g', 6) + "\t" +
+            QString::number((int)degrees));
     }
     ui->connectionEdit->appendPlainText("");
-    ui->connectionEdit->appendPlainText("X = " + QString::number(state.xyz[0], 'g', 3));
-    ui->connectionEdit->appendPlainText("Y = " + QString::number(state.xyz[1], 'g', 3));
-    ui->connectionEdit->appendPlainText("Z = " + QString::number(state.xyz[2], 'g', 3));
+    ui->connectionEdit->appendPlainText("X = " +
+                                        QString::number(state.xyz[0], 'g', 3));
+    ui->connectionEdit->appendPlainText("Y = " +
+                                        QString::number(state.xyz[1], 'g', 3));
+    ui->connectionEdit->appendPlainText("Z = " +
+                                        QString::number(state.xyz[2], 'g', 3));
 }
 
 

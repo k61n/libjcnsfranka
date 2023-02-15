@@ -74,7 +74,8 @@ void Robot::go_home()
     try {
         robot->get_franka_robot().stop();
         reset_error();
-        std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4}};
+        std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0,
+                                         M_PI_2, M_PI_4}};
         double speed_factor = 0.5;
         robot->joint_motion(q_goal, speed_factor);
         gripper->go_home();

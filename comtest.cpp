@@ -14,10 +14,13 @@ uint64_t JcnsFranka::communication_test(char *ip)
     std::string ipstring(ip);
 
     try {
-        franka::Robot *robot = new franka::Robot(ipstring, franka::RealtimeConfig::kEnforce);
+        franka::Robot *robot = new franka::Robot(ipstring,
+                                                 franka::RealtimeConfig::kEnforce);
         franka::Torques zero_torques{{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}};
-        robot->control([&time, &counter, &avg_success_rate, &min_success_rate, &max_success_rate, zero_torques](
-                                          const franka::RobotState& robot_state, franka::Duration period) -> franka::Torques {
+        robot->control([&time, &counter, &avg_success_rate, &min_success_rate,
+                       &max_success_rate, zero_torques](
+                            const franka::RobotState& robot_state,
+                            franka::Duration period) -> franka::Torques {
             time += period.toMSec();
             if (time == 0.0) {
             return zero_torques;
@@ -26,7 +29,8 @@ uint64_t JcnsFranka::communication_test(char *ip)
 
             if (counter % 100 == 0) {
             std::cout << "#" << counter
-                      << " Current success rate: " << robot_state.control_command_success_rate
+                      << " Current success rate: "
+                      << robot_state.control_command_success_rate
                       << std::endl;
             }
             std::this_thread::sleep_for(std::chrono::microseconds(100));
@@ -40,11 +44,14 @@ uint64_t JcnsFranka::communication_test(char *ip)
             }
 
             if (time >= 10000) {
-            std::cout << std::endl << "Finished test, shutting down example" << std::endl;
+            std::cout << std::endl
+                      << "Finished test, shutting down example"
+                      << std::endl;
             return franka::MotionFinished(zero_torques);
             }
 
-            // Sending zero torques - if EE is configured correctly, robot should not move
+            // Sending zero torques - if EE is configured correctly,
+            // robot should not move
             return zero_torques;
             },
             false, 1000);
@@ -53,11 +60,22 @@ uint64_t JcnsFranka::communication_test(char *ip)
     catch (franka::Exception const& e) {
         std::cout << std::string(e.what());
     }
-    std::cout << std::endl << std::endl << "#######################################################" << std::endl;
+    std::cout << std::endl
+              << std::endl
+              << "#######################################################"
+              << std::endl;
     uint64_t lost_robot_states = time - counter;
     if (lost_robot_states > 0) {
-        std::cout << "The control loop did not get executed " << lost_robot_states << " times in the" << std::endl
-                  << "last " << time << " milliseconds! (lost " << lost_robot_states << " robot states)" << std::endl << std::endl;
+        std::cout << "The control loop did not get executed "
+                  << lost_robot_states << " times in the"
+                  << std::endl
+                  << "last "
+                  << time
+                  << " milliseconds! (lost "
+                  << lost_robot_states
+                  << " robot states)"
+                  << std::endl
+                  << std::endl;
     }
     return lost_robot_states;
 }

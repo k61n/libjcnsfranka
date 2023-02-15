@@ -32,7 +32,7 @@ namespace JcnsFranka {
         ~Robot();
 
         /**
-         * @brief readState
+         * @brief read_state
          * Reads current joints and end-effector positions
          * @return Current joints and end-effector positions
          */
@@ -41,16 +41,16 @@ namespace JcnsFranka {
         /**
          * @brief set_load
          * Sets dynamic parameters of a payload
-         * @param load_mass Mass of the load in [kg]
-         * @param F_x_Cload Translation from flange to center of mass of load in [m]
-         * @param load_inertia Inertia matrix in [kg*m2], column-major
+         * @param load_mass mass of the load in [kg]
+         * @param F_x_Cload translation from flange to center of mass of load [m]
+         * @param load_inertia inertia matrix in [kg*m2], column-major
          */
         void set_load(double load_mass,
                       const std::array<double, 3>& F_x_Cload,
                       const std::array<double, 9>& load_inertia);
 
         /**
-         * @brief goHome
+         * @brief go_home
          * Moves the Franka robot to a homing position and resets the end-effector
          * Home position is { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad]
          * @return True when homing is finished
@@ -58,14 +58,14 @@ namespace JcnsFranka {
         void go_home();
 
         /**
-         * @brief moveJoints
+         * @brief move_joints
          * Sets the Franka robot in a position that corresponds to passed joint angles
          * @param joints an array with angles for the joints [rad]
          */
         void move_joints(std::array<double, 7> joints);
 
         /**
-         * @brief moveRelative
+         * @brief move_relative
          * Perform relative motion of the Franka robot in cartesian space
          * @param dx relative displacement in X axis [m]
          * @param dy relative displacement in Y axis [m]
@@ -74,7 +74,7 @@ namespace JcnsFranka {
         void move_relative(double dx, double dy, double dz);
 
         /**
-         * @brief moveAbsolute
+         * @brief move_absolute
          * Perform motion of the Franka robot to a given coordinate in cartesian space
          * @param x target X coordinate in cartesian space [m]
          * @param y target Y coordinate in cartesian space [m]
@@ -83,7 +83,7 @@ namespace JcnsFranka {
         void move_absolute(double x, double y, double z);
 
         /**
-         * @brief isGripping
+         * @brief is_gripping
          * Check gripping status of the end-effecor
          * @return True if end-effector is closed
          */
