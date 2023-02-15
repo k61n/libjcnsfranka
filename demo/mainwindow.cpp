@@ -38,6 +38,7 @@ void MainWindow::on_connectBtn_clicked()
 {
     std::string ip = ui->ipLine->text().toStdString();
     this->robot = new JcnsFranka::Robot(ip.data());
+    check_error();
 }
 
 
@@ -63,6 +64,7 @@ void MainWindow::on_setloadBtn_clicked()
     for (int i = 0; i < arg3.size(); i++)
         load_inertia[i] = arg3[i].toDouble();
     robot->set_load(mass, F_x_Cload, load_inertia);
+    check_error();
 }
 
 
@@ -73,12 +75,14 @@ void MainWindow::on_stateChanged()
         joints[i] = boxList.at(i)->value() / 180.0 * M_PI;
     }
     this->robot->moveJoints(joints);
+    check_error();
 }
 
 
 void MainWindow::on_homeBtn_clicked()
 {
     robot->goHome();
+    check_error();
 }
 
 
@@ -92,6 +96,7 @@ void MainWindow::on_readBtn_clicked()
 {
     ui->connectionEdit->clear();
     JcnsFranka::Coordinates state = robot->readState();
+    check_error();
     for (int i=0; i<state.joints.max_size(); i++) {
         double degrees = state.joints[i] / M_PI * 180;
         ui->connectionEdit->appendPlainText("j" + QString::number(i) + " = " + QString::number(state.joints[i], 'g', 6) + "\t" + QString::number((int)degrees));
@@ -114,6 +119,7 @@ void MainWindow::on_xPlusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
     robot->moveRelative(value, 0, 0);
+    check_error();
 }
 
 
@@ -121,6 +127,7 @@ void MainWindow::on_xMinusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
     robot->moveRelative(-value, 0, 0);
+    check_error();
 }
 
 
@@ -128,6 +135,7 @@ void MainWindow::on_yPlusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
     robot->moveRelative(0, value, 0);
+    check_error();
 }
 
 
@@ -135,6 +143,7 @@ void MainWindow::on_yMinusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
     robot->moveRelative(0, -value, 0);
+    check_error();
 }
 
 
@@ -142,6 +151,7 @@ void MainWindow::on_zPlusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
     robot->moveRelative(0, 0, value);
+    check_error();
 }
 
 
@@ -149,6 +159,7 @@ void MainWindow::on_zMinusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
     robot->moveRelative(0, 0, -value);
+    check_error();
 }
 
 
@@ -158,6 +169,7 @@ void MainWindow::on_moveBtn_clicked()
     double y = ui->yLn->text().toDouble();
     double z = ui->zLn->text().toDouble();
     robot->moveAbsolute(x, y, z);
+    check_error();
 }
 
 
@@ -166,6 +178,7 @@ void MainWindow::on_closegripperBtn_clicked()
     double width = ui->widthcloseLn->text().toDouble();
     double force = ui->forceLn->text().toDouble();
     robot->close_gripper(width, force);
+    check_error();
 }
 
 
@@ -173,4 +186,13 @@ void MainWindow::on_opengripperBtn_clicked()
 {
     double width = ui->widthopenLn->text().toDouble();
     robot->open_gripper(width);
+    check_error();
+}
+
+void MainWindow::check_error()
+{
+    QString error = QString::fromUtf8(robot->read_error());
+    if (error != "")
+        qDebug() << error;
+        robot->reset_error();
 }

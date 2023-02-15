@@ -37,6 +37,8 @@ private slots:
     void on_closegripperBtn_clicked();
     void on_opengripperBtn_clicked();
 
+    void check_error();
+
 private:
     Ui::MainWindow *ui;
     JcnsFranka::Robot *robot;
