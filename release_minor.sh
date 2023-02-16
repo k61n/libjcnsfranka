@@ -19,5 +19,6 @@ mv debian/changelog.new debian/changelog
 git add debian/changelog
 git add CMakeLists.txt
 git commit -m "Update changelog for $new_tag release"
+git push origin master
 git tag -a -m "" $new_tag
 git push --tags origin master
