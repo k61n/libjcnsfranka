@@ -41,7 +41,7 @@ namespace JcnsFranka {
 
         /**
          * @brief is_gripping
-         * @return Check gripping status
+         * @return Checks gripping status
          * @return True is gripping
          */
         bool is_gripping();
@@ -68,12 +68,6 @@ namespace JcnsFranka {
         void stop();
 
     private:
-        /**
-         * @brief state
-         * Variable to store gripper state from libfranka
-         */
-        franka::GripperState state;
-
         /**
          * @brief gripper
          * Gripper instance from libfranka

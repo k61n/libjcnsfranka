@@ -1,5 +1,4 @@
 #include "comtest.h"
-#include <iostream>
 #include <thread>
 
 
@@ -12,10 +11,9 @@ uint64_t JcnsFranka::communication_test(char *ip)
     uint64_t time = 0;
 
     std::string ipstring(ip);
-
+    franka::Robot *robot;
     try {
-        franka::Robot *robot = new franka::Robot(ipstring,
-                                                 franka::RealtimeConfig::kEnforce);
+        robot = new franka::Robot(ipstring, franka::RealtimeConfig::kEnforce);
         franka::Torques zero_torques{{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}};
         robot->control([&time, &counter, &avg_success_rate, &min_success_rate,
                        &max_success_rate, zero_torques](
@@ -55,11 +53,11 @@ uint64_t JcnsFranka::communication_test(char *ip)
             return zero_torques;
             },
             false, 1000);
-        delete robot;
     }
     catch (franka::Exception const& e) {
         std::cout << std::string(e.what());
     }
+    delete robot;
     std::cout << std::endl
               << std::endl
               << "#######################################################"
@@ -67,7 +65,8 @@ uint64_t JcnsFranka::communication_test(char *ip)
     uint64_t lost_robot_states = time - counter;
     if (lost_robot_states > 0) {
         std::cout << "The control loop did not get executed "
-                  << lost_robot_states << " times in the"
+                  << lost_robot_states
+                  << " times in the"
                   << std::endl
                   << "last "
                   << time

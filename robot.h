@@ -34,7 +34,7 @@ namespace JcnsFranka {
         /**
          * @brief read_state
          * Reads current joints and end-effector positions
-         * @return Current joints and end-effector positions
+         * @return current joints and end-effector positions
          */
         Coordinates read_state();
 
@@ -51,22 +51,22 @@ namespace JcnsFranka {
 
         /**
          * @brief go_home
-         * Moves the Franka robot to a homing position and resets the end-effector
-         * Home position is { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad]
+         * Moves the Franka robot to homing position and resets the end-effector
+         * Home position: { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad]
          * @return True when homing is finished
          */
         void go_home();
 
         /**
          * @brief move_joints
-         * Sets the Franka robot in a position that corresponds to passed joint angles
+         * Sets the robot in a position that corresponds to passed joint angles
          * @param joints an array with angles for the joints [rad]
          */
         void move_joints(std::array<double, 7> joints);
 
         /**
          * @brief move_relative
-         * Perform relative motion of the Franka robot in cartesian space
+         * Performs relative motion of the Franka robot in cartesian space
          * @param dx relative displacement in X axis [m]
          * @param dy relative displacement in Y axis [m]
          * @param dz relative displacement in Z axis [m]
@@ -75,9 +75,9 @@ namespace JcnsFranka {
 
         /**
          * @brief move_linear
-         * Perform relative motion in cartesian space but ensure its
+         * Performs relative motion in cartesian space but ensures its
          * linear tajectory. As a consequence this movement might be
-         * particularly slow.
+         * particularly slow
          * @param dx relative displacement in X axis [m]
          * @param dy relative displacement in Y axis [m]
          * @param dz relative displacement in Z axis [m]
@@ -86,7 +86,7 @@ namespace JcnsFranka {
 
         /**
          * @brief move_absolute
-         * Perform motion of the Franka robot to a given coordinate in cartesian space
+         * Performs motion of robot to a given coordinate in cartesian space
          * @param x target X coordinate in cartesian space [m]
          * @param y target Y coordinate in cartesian space [m]
          * @param z target Z coordinate in cartesian space [m]
@@ -95,7 +95,7 @@ namespace JcnsFranka {
 
         /**
          * @brief is_gripping
-         * Check gripping status of the end-effecor
+         * Checks gripping status of the end-effecor
          * @return True if end-effector is closed
          */
         bool is_gripping();
@@ -110,7 +110,7 @@ namespace JcnsFranka {
 
         /**
          * @brief move_gripper
-         * Controls the distance between gripper's fingers
+         * Opens gripper to a desired width
          * @param width
          */
         void move_gripper(double width);
@@ -131,7 +131,7 @@ namespace JcnsFranka {
 
         /**
          * @brief reset_error
-         * Resets current error.
+         * Resets current error
          */
         void reset_error();
 
@@ -156,7 +156,7 @@ namespace JcnsFranka {
 
         /**
          * @brief vmax
-         * Maximum velocuty of the Franka robot when moved in cartesian space
+         * Maximum velocity of the Franka robot when moved in cartesian space
          */
         double vmax = 1.7;  // [m s^-1]
 

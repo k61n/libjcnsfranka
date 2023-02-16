@@ -1,6 +1,4 @@
 #include "gripper.h"
-#include <iostream>
-#include <thread>
 
 
 using namespace JcnsFranka;

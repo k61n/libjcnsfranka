@@ -67,7 +67,7 @@ class FrankaRobot:
     def read_state(self):
         """
         Reads current joints and end-effector positions.
-        :return: Current joints and end-effector positions.
+        :return: current joints and end-effector positions.
         """
         result = self.lib.read_state(self.obj)
         if self.is_in_error_mode():
@@ -76,7 +76,7 @@ class FrankaRobot:
 
     def set_load(self, mass, F_x_Cload, load_inertia):
         """
-        Sets dynamic parameters of a payload
+        Sets dynamic parameters of a payload.
         :param mass: mass of the load in [kg].
         :param F_x_Cload: translation from flange to center of mass of load in [m].
         :param load_inertia: Inertia matrix in [kg*m2], column-major.
@@ -89,8 +89,8 @@ class FrankaRobot:
 
     def go_home(self):
         """
-        Moves the Franka robot to a homing position and resets the end-effector.
-        Home position is { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad].
+        Moves the Franka robot to homing position and resets the end-effector.
+        Home position: { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad].
         :return: True when homing is finished.
         """
         self.lib.go_home(self.obj)
@@ -99,8 +99,8 @@ class FrankaRobot:
 
     def move_joints(self, joints):
         """
-        Sets the Franka robot in a position that corresponds to passed joint angles.
-        :param joints: joints an array with angles for the joints [rad].
+        Sets the robot in a position that corresponds to passed joint angles.
+        :param joints: an array with angles for the joints [rad].
         """
         input = (c_double * len(joints))(*joints)
         self.lib.move_joints(self.obj, input)
@@ -109,7 +109,7 @@ class FrankaRobot:
 
     def move_relative(self, dx, dy, dz):
         """
-        Perform relative motion of the Franka robot in cartesian space.
+        Performs relative motion of the Franka robot in cartesian space.
         :param dx: relative displacement in X axis [m].
         :param dy: relative displacement in Y axis [m].
         :param dz: relative displacement in Z axis [m].
@@ -120,7 +120,7 @@ class FrankaRobot:
 
     def move_linear(self, dx, dy, dz):
         """
-        Perform relative motion in cartesian space but ensure its linear
+        Performs relative motion in cartesian space but ensures its linear
         tajectory. As a consequence this movement might be particularly slow.
         :param dx: relative displacement in X axis [m].
         :param dy: relative displacement in Y axis [m].
@@ -132,10 +132,10 @@ class FrankaRobot:
 
     def move_absolute(self, x, y, z):
         """
-        Perform motion of the Franka robot to a given coordinate in cartesian space.
+        Perform motion of the robot to a given coordinate in cartesian space.
         :param x: target X coordinate in cartesian space [m].
-        :param y: coordinate in cartesian space [m].
-        :param z: coordinate in cartesian space [m].
+        :param y: target Y coordinate in cartesian space [m].
+        :param z: target Z coordinate in cartesian space [m].
         """
         self.lib.move_absolute(self.obj, x, y, z)
         if self.is_in_error_mode():
@@ -143,7 +143,7 @@ class FrankaRobot:
 
     def is_gripping(self):
         """
-        Check gripping status of the end-effecor.
+        Checks gripping status of the end-effecor.
         :return: True if end-effector is closed.
         """
         result = self.lib.is_gripping(self.obj)
@@ -153,7 +153,9 @@ class FrankaRobot:
 
     def close_gripper(self, width, force):
         """
-        Method to grasp an object.
+        Method to grasp an object with force.
+        :param width: width.
+        :param force: force.
         """
         self.lib.close_gripper(self.obj, width, force)
         if self.is_in_error_mode():
@@ -161,7 +163,8 @@ class FrankaRobot:
 
     def move_gripper(self, width):
         """
-        Method to release an object.
+        Opens gripper to a desired width.
+        :param width: width.
         """
         self.lib.move_gripper(self.obj, width)
         if self.is_in_error_mode():
@@ -177,7 +180,7 @@ class FrankaRobot:
     def read_error(self):
         """
         Class method to return recent error if any.
-        :return: error message.
+        :return: error message obtained from libfranka exception.
         """
         return self.lib.read_error(self.obj).decode('utf-8')
 
@@ -189,6 +192,11 @@ class FrankaRobot:
 
 
 def comtest(ip):
+    """
+    Sends 10k empty commands and controls the response.
+    :param ip: name or ip address of the robot.
+    :return: number of lost states.
+    """
     lib = CDLL('libjcnsfranka.so', **mode)
     buffer = create_string_buffer(ip.encode('utf-8'))
     lib.communication_test.argtypes = [c_char_p]

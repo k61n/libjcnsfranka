@@ -1,7 +1,5 @@
 #include "robot.h"
-#include <iostream>
 #include <cmath>
-#include <thread>
 
 
 using namespace JcnsFranka;
@@ -17,8 +15,6 @@ Robot::Robot(char* ip)
     }
     catch (franka::Exception const& e) {
         frankaerror = std::string(e.what());
-//        std::strcpy(frankaerror, e.what());
-//        strlcpy(frankaerror, e.what(), sizeof(e.what()));
     }
 }
 
@@ -108,7 +104,7 @@ void Robot::move_relative(double dx, double dy, double dz)
 
     try {
         // t is the fastest time for franka to perform a movement
-        // 4 * t is empirical value to allow franja move smooth yet fast
+        // 4 * t is empirical value to allow franka move smooth yet fast
         robot->relative_cart_motion(dx, dy, dz, 4 * t);
         frankaerror = "";
     }
@@ -143,7 +139,7 @@ void Robot::move_absolute(double x, double y, double z)
 
     try {
         // t is the fastest time for franka to perform a movement
-        // 4 * t is empirical value to allow franja move smooth yet fast
+        // 4 * t is empirical value to allow franka move smooth yet fast
         robot->absolute_cart_motion(x, y, z, 4 * t);
         frankaerror = "";
     }
