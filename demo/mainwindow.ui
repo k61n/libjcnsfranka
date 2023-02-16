@@ -322,23 +322,17 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="2">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="ipLabel">
         <property name="text">
          <string>Franka IP address:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QPushButton" name="readBtn">
+        <property name="text">
+         <string>Read state</string>
         </property>
        </widget>
       </item>
@@ -355,38 +349,42 @@
         </property>
        </spacer>
       </item>
-      <item row="6" column="1">
-       <widget class="QPushButton" name="clearBtn">
-        <property name="minimumSize">
-         <size>
-          <width>118</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Clear</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="connectBtn">
-        <property name="text">
-         <string>Connect</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QPushButton" name="cmtestBtn">
-        <property name="minimumSize">
-         <size>
-          <width>118</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>CommTest</string>
-        </property>
-       </widget>
+      <item row="2" column="2">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="connectBtn">
+          <property name="text">
+           <string>Connect</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="cmtestBtn">
+          <property name="minimumSize">
+           <size>
+            <width>118</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>CommTest</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
       <item row="7" column="0" colspan="4">
        <widget class="QPlainTextEdit" name="connectionEdit">
@@ -404,144 +402,14 @@
         </property>
        </widget>
       </item>
-      <item row="13" column="1">
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QLabel" name="displacementLabel">
-          <property name="text">
-           <string>Displacement: [m]</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="displacementLine">
-          <property name="text">
-           <string>0.01</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="14" column="2">
-       <layout class="QGridLayout" name="gridLayout_6">
-        <item row="2" column="0">
-         <widget class="QPushButton" name="opengripperBtn">
-          <property name="text">
-           <string>Open gripper</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLineEdit" name="forceLn">
-          <property name="text">
-           <string>1</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Width</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="widthopenLn">
-          <property name="text">
-           <string>0.1</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="closegripperBtn">
-          <property name="minimumSize">
-           <size>
-            <width>118</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Close gripper</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="widthcloseLn">
-          <property name="text">
-           <string>0.0</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Force</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="6" column="0">
-       <widget class="QPushButton" name="readBtn">
-        <property name="text">
-         <string>Read state</string>
-        </property>
-       </widget>
-      </item>
-      <item row="13" column="2">
-       <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="3">
-         <widget class="QPushButton" name="zPlusBtn">
-          <property name="text">
-           <string>z +</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="xMinusBtn">
-          <property name="text">
-           <string>x -</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
-         <widget class="QPushButton" name="zMinusBtn">
-          <property name="text">
-           <string>z -</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="xPlusBtn">
-          <property name="text">
-           <string>x +</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="yMinusBtn">
-          <property name="text">
-           <string>y -</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="yPlusBtn">
-          <property name="text">
-           <string>y +</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="16" column="2">
+      <item row="14" column="1">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="setloadLabel">
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>25</height>
+            <height>50</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -557,7 +425,7 @@
            <string/>
           </property>
           <property name="alignment">
-           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+           <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -592,14 +460,64 @@
         </item>
        </layout>
       </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="ipLine">
-        <property name="text">
-         <string>192.168.1.2</string>
-        </property>
-       </widget>
+      <item row="13" column="1">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="0">
+           <widget class="QLabel" name="dxLbl">
+            <property name="text">
+             <string>dx[m]</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="dxLn">
+            <property name="text">
+             <string>0.01</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="dzLn">
+            <property name="text">
+             <string>0.01</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="dyLbl">
+            <property name="text">
+             <string>dy[m]</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="dzLbl">
+            <property name="text">
+             <string>dz[m]</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="dyLn">
+            <property name="text">
+             <string>0.01</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QPushButton" name="movelnBtn">
+            <property name="text">
+             <string>Move linear</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </item>
-      <item row="14" column="0">
+      <item row="13" column="0">
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="1" column="0">
          <widget class="QLabel" name="yLbl">
@@ -652,54 +570,170 @@
         </item>
        </layout>
       </item>
-      <item row="14" column="1">
-       <layout class="QGridLayout" name="gridLayout_8">
-        <item row="0" column="0">
-         <widget class="QLabel" name="dxLbl">
+      <item row="14" column="2">
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="widthopenLn">
           <property name="text">
-           <string>dx[m]</string>
+           <string>0.1</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="dxLn">
+         <widget class="QLabel" name="label">
           <property name="text">
-           <string>0.01</string>
+           <string>Width</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="dzLn">
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>0.01</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="dyLbl">
-          <property name="text">
-           <string>dy[m]</string>
+           <string>Force</string>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QLabel" name="dzLbl">
+         <widget class="QPushButton" name="opengripperBtn">
           <property name="text">
-           <string>dz[m]</string>
+           <string>Open gripper</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="dyLn">
+         <widget class="QLineEdit" name="widthcloseLn">
+          <property name="text">
+           <string>0.0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="closegripperBtn">
+          <property name="minimumSize">
+           <size>
+            <width>118</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Close gripper</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="forceLn">
+          <property name="text">
+           <string>1</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="13" column="2">
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="3" column="3">
+         <widget class="QPushButton" name="zMinusBtn">
+          <property name="text">
+           <string>z -</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QPushButton" name="zPlusBtn">
+          <property name="text">
+           <string>z +</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2" colspan="2">
+         <widget class="QLineEdit" name="displacementLine">
           <property name="text">
            <string>0.01</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QPushButton" name="movelnBtn">
+        <item row="0" column="0" colspan="2">
+         <widget class="QLabel" name="displacementLabel">
           <property name="text">
-           <string>Move linear</string>
+           <string>Displacement: [m]</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="xPlusBtn">
+          <property name="text">
+           <string>x +</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="yPlusBtn">
+          <property name="text">
+           <string>y +</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="yMinusBtn">
+          <property name="text">
+           <string>y -</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QPushButton" name="xMinusBtn">
+          <property name="text">
+           <string>x -</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="ipLine">
+        <property name="text">
+         <string>192.168.1.2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="clearBtn">
+          <property name="minimumSize">
+           <size>
+            <width>118</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Clear output</string>
           </property>
          </widget>
         </item>
