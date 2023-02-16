@@ -1,3 +1,13 @@
+jcnsfranka (0.2.1) unstable; urgency=medium
+
+  * release patch routine
+  * fixed crash when open window for json load file was cancelled
+  * demo: ui change
+  * fix typos, fix docstrings, delete comments, more readable C calls
+  * a method to ensure linear trajectory during movement
+
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Thu, 16 Feb 2023 19:09:22 +0100
+
 jcnsfranka (0.2.0) unstable; urgency=medium
 
   * nicer and more readable code base
