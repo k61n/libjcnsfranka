@@ -53,20 +53,20 @@ void MainWindow::on_setloadBtn_clicked()
         QFile file(filename);
         file.open(QIODevice::ReadOnly | QIODevice::Text);
         doc = QJsonDocument::fromJson(file.readAll());
-    }
-    QJsonObject obj = doc.object();
+        QJsonObject obj = doc.object();
 
-    double mass = obj["mass"].toDouble();
-    QJsonArray arg2 = obj["F_x_Cload"].toArray();
-    std::array<double, 3> F_x_Cload;
-    for (int i = 0; i < arg2.size(); i++)
-        F_x_Cload[i] = arg2[i].toDouble();
-    QJsonArray arg3 = obj["load_inertia"].toArray();
-    std::array<double, 9> load_inertia;
-    for (int i = 0; i < arg3.size(); i++)
-        load_inertia[i] = arg3[i].toDouble();
-    robot->set_load(mass, F_x_Cload, load_inertia);
-    check_error();
+        double mass = obj["mass"].toDouble();
+        QJsonArray arg2 = obj["F_x_Cload"].toArray();
+        std::array<double, 3> F_x_Cload;
+        for (int i = 0; i < arg2.size(); i++)
+            F_x_Cload[i] = arg2[i].toDouble();
+        QJsonArray arg3 = obj["load_inertia"].toArray();
+        std::array<double, 9> load_inertia;
+        for (int i = 0; i < arg3.size(); i++)
+            load_inertia[i] = arg3[i].toDouble();
+        robot->set_load(mass, F_x_Cload, load_inertia);
+        check_error();
+    }
 }
 
 
