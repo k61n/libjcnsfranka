@@ -4,8 +4,8 @@ tag=$(git describe --tags --abbrev=0)
 major=$(echo $tag | cut -d. -f1)
 minor=$(echo $tag | cut -d. -f2)
 patch=$(echo $tag | cut -d. -f3)
-new_minor=$((minor + 1))
-new_tag="${major}.${new_minor}.0"
+new_patch=$((patch + 1))
+new_tag="$major.$minor.$new_patch"
 
 sed "s/VERSION ${tag#v}/VERSION ${new_tag#v}/" CMakeLists.txt > CMakeLists.txt.new
 mv CMakeLists.txt.new CMakeLists.txt
