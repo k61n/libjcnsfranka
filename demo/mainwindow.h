@@ -34,6 +34,7 @@ private slots:
     void on_zMinusBtn_clicked();
 
     void on_moveBtn_clicked();
+    void on_movelnBtn_clicked();
     void on_closegripperBtn_clicked();
     void on_opengripperBtn_clicked();
 

@@ -1,5 +1,6 @@
 #include "robot.h"
 #include <iostream>
+#include <cmath>
 #include <thread>
 
 
@@ -114,6 +115,20 @@ void Robot::move_relative(double dx, double dy, double dz)
     catch (franka::Exception const& e) {
         frankaerror = std::string(e.what());
     }
+}
+
+
+void Robot::move_linear(double dx, double dy, double dz)
+{
+    double distance = sqrt(dx*dx + dy*dy + dz*dz);
+    double step = 0.001;
+    int n = std::ceil(distance / step);
+    double ddx = dx / n;
+    double ddy = dy / n;
+    double ddz = dz / n;
+
+    for (int i = 0; i < n; i++)
+        this->move_relative(ddx, ddy, ddz);
 }
 
 

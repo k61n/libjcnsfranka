@@ -34,6 +34,9 @@ class FrankaRobot:
         self.lib.move_relative.argtypes = [c_void_p, c_double, c_double, c_double]
         self.lib.move_relative.restype = None
 
+        self.lib.move_linear.argtypes = [c_void_p, c_double, c_double, c_double]
+        self.lib.move_linear.restype = None
+
         self.lib.move_absolute.argtypes = [c_void_p, c_double, c_double, c_double]
         self.lib.move_absolute.restype = None
 
@@ -112,6 +115,18 @@ class FrankaRobot:
         :param dz: relative displacement in Z axis [m].
         """
         self.lib.move_relative(self.obj, dx, dy, dz)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
+
+    def move_linear(self, dx, dy, dz):
+        """
+        Perform relative motion in cartesian space but ensure its linear
+        tajectory. As a consequence this movement might be particularly slow.
+        :param dx: relative displacement in X axis [m].
+        :param dy: relative displacement in Y axis [m].
+        :param dz: relative displacement in Z axis [m].
+        """
+        self.lib.move_linear(self.obj, dx, dy, dz)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 

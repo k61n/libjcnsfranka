@@ -181,6 +181,16 @@ void MainWindow::on_moveBtn_clicked()
 }
 
 
+void MainWindow::on_movelnBtn_clicked()
+{
+    double x = ui->dxLn->text().toDouble();
+    double y = ui->dyLn->text().toDouble();
+    double z = ui->dzLn->text().toDouble();
+    robot->move_linear(x, y, z);
+    check_error();
+}
+
+
 void MainWindow::on_closegripperBtn_clicked()
 {
     double width = ui->widthcloseLn->text().toDouble();

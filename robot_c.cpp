@@ -36,6 +36,8 @@ extern "C"
     }
     void move_relative(JcnsFranka::Robot* self, double dx, double dy, double dz)
         {self->move_relative(dx, dy, dz);}
+    void move_linear(JcnsFranka::Robot* self, double dx, double dy, double dz)
+        {self->move_linear(dx, dy, dz);}
     void move_absolute(JcnsFranka::Robot* self, double x, double y, double z)
         {self->move_absolute(x, y, z);}
     bool is_gripping(JcnsFranka::Robot* self) {return self->is_gripping();}

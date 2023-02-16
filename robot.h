@@ -74,6 +74,17 @@ namespace JcnsFranka {
         void move_relative(double dx, double dy, double dz);
 
         /**
+         * @brief move_linear
+         * Perform relative motion in cartesian space but ensure its
+         * linear tajectory. As a consequence this movement might be
+         * particularly slow.
+         * @param dx relative displacement in X axis [m]
+         * @param dy relative displacement in Y axis [m]
+         * @param dz relative displacement in Z axis [m]
+         */
+        void move_linear(double dx, double dy, double dz);
+
+        /**
          * @brief move_absolute
          * Perform motion of the Franka robot to a given coordinate in cartesian space
          * @param x target X coordinate in cartesian space [m]
