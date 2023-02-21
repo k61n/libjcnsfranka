@@ -17,14 +17,14 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(${Boost_INCLUDE_DIRS})
 
 add_library(jcnsfranka SHARED
-  jcnsfranka.h
-  robot.h
-  robot.cpp
-  robot_c.cpp
-  comtest.h
-  comtest.cpp
-  gripper.h
-  gripper.cpp
+        src/jcnsfranka.h
+        src/robot.h
+        src/robot.cpp
+        src/robot_c.cpp
+        src/comtest.h
+        src/comtest.cpp
+        src/gripper.h
+        src/gripper.cpp
 )
 
 target_compile_definitions(jcnsfranka PUBLIC JCNSFRANKA_LIBRARY)
@@ -38,7 +38,7 @@ install(TARGETS jcnsfranka
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(FILES jcnsfranka.h robot.h comtest.h gripper.h
+install(FILES src/jcnsfranka.h src/robot.h src/comtest.h src/gripper.h
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jcnsfranka)
 install(DIRECTORY pyjcnsfranka/pyjcnsfranka
         DESTINATION "${Python3_SITELIB}")
