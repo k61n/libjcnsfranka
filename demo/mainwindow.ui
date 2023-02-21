@@ -658,20 +658,6 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="2" colspan="2">
-         <widget class="QLineEdit" name="displacementLine">
-          <property name="text">
-           <string>0.01</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="displacementLabel">
-          <property name="text">
-           <string>Displacement: [m]</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="1">
          <widget class="QPushButton" name="xPlusBtn">
           <property name="text">
@@ -697,6 +683,34 @@
          <widget class="QPushButton" name="xMinusBtn">
           <property name="text">
            <string>x -</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="displacementLabel">
+          <property name="text">
+           <string>Displ.: [m]</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="displacementLine">
+          <property name="text">
+           <string>0.01</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="dtLbl">
+          <property name="text">
+           <string>dt [s]:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLineEdit" name="dtLine">
+          <property name="text">
+           <string>0</string>
           </property>
          </widget>
         </item>
@@ -749,7 +763,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

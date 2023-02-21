@@ -10,6 +10,11 @@ class FrankaRobot:
     Python wrapper of JcnsFranka::Robot class in JcnsFranka C++ library.
     """
     def __init__(self, ip):
+        # max acceleration when moving in Cartesian space [m s^-2]
+        self.amax = 13
+        # max velocity when moving in Cartesian space [m s^-1]
+        self.vmax = 1.7
+
         self.lib = CDLL('libjcnsfranka.so', **mode)
         self.lib.init.argtypes = [c_char_p]
         self.lib.init.restype = c_void_p
@@ -31,7 +36,8 @@ class FrankaRobot:
         self.lib.move_joints.argtypes = [c_void_p, POINTER(c_double)]
         self.lib.move_joints.restype = None
 
-        self.lib.move_relative.argtypes = [c_void_p, c_double, c_double, c_double]
+        self.lib.move_relative.argtypes = [c_void_p, c_double, c_double,
+                                           c_double, c_double]
         self.lib.move_relative.restype = None
 
         self.lib.move_linear.argtypes = [c_void_p, c_double, c_double, c_double]
@@ -107,14 +113,15 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
-    def move_relative(self, dx, dy, dz):
+    def move_relative(self, dx, dy, dz, dt=0):
         """
         Performs relative motion of the Franka robot in cartesian space.
         :param dx: relative displacement in X axis [m].
         :param dy: relative displacement in Y axis [m].
         :param dz: relative displacement in Z axis [m].
+        :param dt: time to complete the movement [s].
         """
-        self.lib.move_relative(self.obj, dx, dy, dz)
+        self.lib.move_relative(self.obj, dx, dy, dz, dt)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 

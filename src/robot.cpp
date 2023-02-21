@@ -97,15 +97,16 @@ void Robot::move_joints(std::array<double, 7> joints)
 }
 
 
-void Robot::move_relative(double dx, double dy, double dz)
+void Robot::move_relative(double dx, double dy, double dz, double dt)
 {
-    double s = sqrt(dx*dx + dy*dy + dz*dz);
-    double t = s/vmax + vmax/amax;
-
+    if (dt == 0) {
+        double s = sqrt(dx*dx + dy*dy + dz*dz);
+        // fastest time for franka to perform a movement
+        dt = s/vmax + vmax/amax;
+    }
     try {
-        // t is the fastest time for franka to perform a movement
-        // 4 * t is empirical value to allow franka move smooth yet fast
-        robot->relative_cart_motion(dx, dy, dz, 4 * t);
+        // 10 * t is empirical value to allow franka move smooth yet fast
+        robot->relative_cart_motion(dx, dy, dz, 10 * dt);
         frankaerror = "";
     }
     catch (franka::Exception const& e) {

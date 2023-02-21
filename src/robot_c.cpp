@@ -43,8 +43,9 @@ extern "C"
         self->move_joints(joints_arr);
     }
 
-    void move_relative(JcnsFranka::Robot* self, double dx, double dy, double dz) {
-        self->move_relative(dx, dy, dz);
+    void move_relative(JcnsFranka::Robot* self, double dx, double dy,
+                       double dz, double dt) {
+        self->move_relative(dx, dy, dz, dt);
     }
 
     void move_linear(JcnsFranka::Robot* self, double dx, double dy, double dz) {

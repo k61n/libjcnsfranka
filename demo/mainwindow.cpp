@@ -126,7 +126,8 @@ void MainWindow::on_cmtestBtn_clicked()
 void MainWindow::on_xPlusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->move_relative(value, 0, 0);
+    double dt = ui->dtLine->text().toDouble();
+    robot->move_relative(value, 0, 0, dt);
     check_error();
 }
 
@@ -134,7 +135,8 @@ void MainWindow::on_xPlusBtn_clicked()
 void MainWindow::on_xMinusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->move_relative(-value, 0, 0);
+    double dt = ui->dtLine->text().toDouble();
+    robot->move_relative(-value, 0, 0, dt);
     check_error();
 }
 
@@ -142,7 +144,8 @@ void MainWindow::on_xMinusBtn_clicked()
 void MainWindow::on_yPlusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->move_relative(0, value, 0);
+    double dt = ui->dtLine->text().toDouble();
+    robot->move_relative(0, value, 0, dt);
     check_error();
 }
 
@@ -150,7 +153,8 @@ void MainWindow::on_yPlusBtn_clicked()
 void MainWindow::on_yMinusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->move_relative(0, -value, 0);
+    double dt = ui->dtLine->text().toDouble();
+    robot->move_relative(0, -value, 0, dt);
     check_error();
 }
 
@@ -158,7 +162,8 @@ void MainWindow::on_yMinusBtn_clicked()
 void MainWindow::on_zPlusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->move_relative(0, 0, value);
+    double dt = ui->dtLine->text().toDouble();
+    robot->move_relative(0, 0, value, dt);
     check_error();
 }
 
@@ -166,7 +171,8 @@ void MainWindow::on_zPlusBtn_clicked()
 void MainWindow::on_zMinusBtn_clicked()
 {
     double value = ui->displacementLine->text().toDouble();
-    robot->move_relative(0, 0, -value);
+    double dt = ui->dtLine->text().toDouble();
+    robot->move_relative(0, 0, -value, dt);
     check_error();
 }
 

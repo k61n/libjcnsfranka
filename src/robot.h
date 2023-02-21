@@ -70,8 +70,9 @@ namespace JcnsFranka {
          * @param dx relative displacement in X axis [m]
          * @param dy relative displacement in Y axis [m]
          * @param dz relative displacement in Z axis [m]
+         * @param dt time to complete the movement [s]
          */
-        void move_relative(double dx, double dy, double dz);
+        void move_relative(double dx, double dy, double dz, double dt=0);
 
         /**
          * @brief move_linear
