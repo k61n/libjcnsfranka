@@ -31,7 +31,7 @@ git submodule update
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF
-cmake --build . --parallel=4
+cmake --build . --parallel 4
 cpack -G DEB
 dpkg -i libfranka*
 ```
@@ -43,7 +43,7 @@ cd liborl
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF
-cmake --build . --parallel=4
+cmake --build . --parallel 4
 cpack -G DEB
 dpkg -i liborl*
 ```
@@ -55,7 +55,7 @@ cd franka
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
-cmake --build . --parallel=4
+cmake --build . --parallel 4
 cmake --install .
 ```
 
@@ -74,10 +74,10 @@ cd demo
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/path/to/Qt/6.3.1/gcc_64
-cmake --build . --parallel=4
+cmake --build . --parallel 4
 ./franka_demo
 ```
 
 PyJcnsFranka
 ------------
-PyJcnsFranka is a python wrapper for JcnsFranka C++ library.
+PyJcnsFranka is a [python wrapper](pyjcnsfranka/readme.md) for JcnsFranka C++ library.
