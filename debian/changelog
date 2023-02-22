@@ -1,3 +1,12 @@
+jcnsfranka (0.2.3) unstable; urgency=medium
+
+  * jcnsfranka: move_relative takes time to finish the movement as an argument
+  * rfc: source files moved to src folder
+  * readme.md: update
+  * release routines trigger the jenkins job
+
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Wed, 22 Feb 2023 09:12:19 +0100
+
 jcnsfranka (0.2.2) unstable; urgency=medium
 
   * fix release routines
