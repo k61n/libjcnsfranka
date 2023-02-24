@@ -141,7 +141,7 @@ void Robot::move_absolute(double x, double y, double z)
     try {
         // t is the fastest time for franka to perform a movement
         // 4 * t is empirical value to allow franka move smooth yet fast
-        robot->absolute_cart_motion(x, y, z, 4 * t);
+        robot->absolute_cart_motion(x, y, z, 10 * t);
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
