@@ -1,3 +1,9 @@
+jcnsfranka (0.2.4) unstable; urgency=medium
+
+  * comtest: setting rate limiter and low-pass filter is optional
+
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Fri, 24 Feb 2023 13:21:39 +0100
+
 jcnsfranka (0.2.3) unstable; urgency=medium
 
   * jcnsfranka: move_relative takes time to finish the movement as an argument
