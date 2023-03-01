@@ -108,11 +108,11 @@ void MainWindow::on_readBtn_clicked()
     }
     ui->connectionEdit->appendPlainText("");
     ui->connectionEdit->appendPlainText("X = " +
-                                        QString::number(state.xyz[0], 'g', 3));
+                                        QString::number(state.xyz[0], 'g', 6));
     ui->connectionEdit->appendPlainText("Y = " +
-                                        QString::number(state.xyz[1], 'g', 3));
+                                        QString::number(state.xyz[1], 'g', 6));
     ui->connectionEdit->appendPlainText("Z = " +
-                                        QString::number(state.xyz[2], 'g', 3));
+                                        QString::number(state.xyz[2], 'g', 6));
 }
 
 
