@@ -76,7 +76,8 @@ void MainWindow::on_stateChanged()
     for (int i=0; i<boxList.count(); i++) {
         joints[i] = boxList.at(i)->value() / 180.0 * M_PI;
     }
-    this->robot->move_joints(joints);
+    double speed_factor = ui->speedFactorLn->text().toDouble();
+    this->robot->move_joints(joints, 0.1);
     check_error();
 }
 

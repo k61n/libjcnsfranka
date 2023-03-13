@@ -16,7 +16,7 @@ if __name__ == '__main__':
     robot.go_home()
     robot.move_gripper(0.03)
     joints = [-math.pi/2, -math.pi/4, 0, -3/4 * math.pi, 0, math.pi/2, math.pi/4]
-    robot.move_joints(joints)
+    robot.move_joints(joints, 0.1)
 
     # move to sample
     pos = robot.read_state()[7:]
@@ -29,17 +29,17 @@ if __name__ == '__main__':
     # turn robot pi/2 before going down for demo
     joints = robot.read_state()[:7]
     joints[0] = 0
-    robot.move_joints(joints)
+    robot.move_joints(joints, 0.1)
     robot.move_absolute(bottom[0], bottom[1], bottom[2])
     sleep(5)
     # go back up
-    robot.move_joints(joints)
+    robot.move_joints(joints, 0.1)
 
     # place sample back
     joints = [0, -math.pi/4, 0, -3/4 * math.pi, 0, math.pi/2, math.pi/4]
-    robot.move_joints(joints)
+    robot.move_joints(joints, 0.1)
     joints[0] = -math.pi/2
-    robot.move_joints(joints)
+    robot.move_joints(joints, 0.1)
     pos = robot.read_state()[7:]
     robot.move_absolute(sample1[0], sample1[1], pos[2])
     robot.move_absolute(sample1[0], sample1[1], sample1[2] + 0.04)
@@ -48,4 +48,4 @@ if __name__ == '__main__':
     robot.move_gripper(0.03)
     robot.move_absolute(sample1[0], sample1[1], pos[2])
     joints[0] = 0
-    robot.move_joints(joints)
+    robot.move_joints(joints, 0.1)

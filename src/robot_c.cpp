@@ -36,11 +36,12 @@ extern "C"
         self->go_home();
     }
 
-    void move_joints(JcnsFranka::Robot* self, double* joints) {
+    void move_joints(JcnsFranka::Robot* self, double* joints,
+                     double speed_factor) {
         std::array<double, 7> joints_arr;
         for (int i = 0; i < 7; i++)
             joints_arr[i] = joints[i];
-        self->move_joints(joints_arr);
+        self->move_joints(joints_arr, speed_factor);
     }
 
     void move_relative(JcnsFranka::Robot* self, double dx, double dy,

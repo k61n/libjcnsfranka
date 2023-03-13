@@ -33,7 +33,7 @@ class FrankaRobot:
         self.lib.go_home.argtypes = [c_void_p]
         self.lib.go_home.restype = None
 
-        self.lib.move_joints.argtypes = [c_void_p, POINTER(c_double)]
+        self.lib.move_joints.argtypes = [c_void_p, POINTER(c_double), c_double]
         self.lib.move_joints.restype = None
 
         self.lib.move_relative.argtypes = [c_void_p, c_double, c_double,
@@ -103,13 +103,14 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
-    def move_joints(self, joints):
+    def move_joints(self, joints, speed_factor):
         """
         Sets the robot in a position that corresponds to passed joint angles.
         :param joints: an array with angles for the joints [rad].
+        :param speed_factor: fraction of max joint speed [a.u.].
         """
         input = (c_double * len(joints))(*joints)
-        self.lib.move_joints(self.obj, input)
+        self.lib.move_joints(self.obj, input, speed_factor)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 

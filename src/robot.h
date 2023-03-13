@@ -61,8 +61,9 @@ namespace JcnsFranka {
          * @brief move_joints
          * Sets the robot in a position that corresponds to passed joint angles
          * @param joints an array with angles for the joints [rad]
+         * @param speed_factor fraction of max joint speed [a.u.]
          */
-        void move_joints(std::array<double, 7> joints);
+        void move_joints(std::array<double, 7> joints, double speed_factor);
 
         /**
          * @brief move_relative

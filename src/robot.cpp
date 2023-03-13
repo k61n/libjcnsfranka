@@ -73,7 +73,7 @@ void Robot::go_home()
         reset_error();
         std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0,
                                          M_PI_2, M_PI_4}};
-        double speed_factor = 0.5;
+        double speed_factor = 0.1;
         robot->joint_motion(q_goal, speed_factor);
         gripper->go_home();
         frankaerror = "";
@@ -84,12 +84,15 @@ void Robot::go_home()
 }
 
 
-void Robot::move_joints(std::array<double, 7> joints)
+void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
 {
     try {
-        double speed_factor = 0.5;
-        robot->joint_motion(joints, speed_factor);
-        frankaerror = "";
+        if ((speed_factor > 0) && (speed_factor <= 1)) {
+            robot->joint_motion(joints, speed_factor);
+            frankaerror = "";
+        } else {
+            frankaerror = "jcnsfranka: speed_factor must be in range 0..1";
+        }
     }
     catch (franka::Exception const& e) {
         frankaerror = std::string(e.what());
