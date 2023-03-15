@@ -21,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     boxList.append(ui->j6Box);
     boxList.append(ui->j7Box);
 
-    foreach (const QSpinBox *box, boxList)
-        connect(box, &QSpinBox::valueChanged,
+    foreach (const QDoubleSpinBox *box, boxList)
+        connect(box, &QDoubleSpinBox::valueChanged,
                 this, &MainWindow::on_stateChanged);
 
     this->on_connectBtn_clicked();
@@ -77,7 +77,7 @@ void MainWindow::on_stateChanged()
         joints[i] = boxList.at(i)->value() / 180.0 * M_PI;
     }
     double speed_factor = ui->speedFactorLn->text().toDouble();
-    this->robot->move_joints(joints, 0.1);
+    this->robot->move_joints(joints, speed_factor);
     check_error();
 }
 

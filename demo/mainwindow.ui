@@ -27,7 +27,7 @@
         </property>
        </widget>
       </item>
-      <item row="15" column="0">
+      <item row="16" column="0">
        <widget class="QSlider" name="j7Slider">
         <property name="minimum">
          <number>-360</number>
@@ -43,7 +43,7 @@
         </property>
        </widget>
       </item>
-      <item row="7" column="0">
+      <item row="8" column="0">
        <widget class="QSlider" name="j3Slider">
         <property name="minimum">
          <number>-360</number>
@@ -53,35 +53,6 @@
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QSpinBox" name="j2Box">
-        <property name="minimum">
-         <number>-360</number>
-        </property>
-        <property name="maximum">
-         <number>360</number>
-        </property>
-        <property name="value">
-         <number>-45</number>
-        </property>
-       </widget>
-      </item>
-      <item row="15" column="1">
-       <widget class="QSpinBox" name="j7Box">
-        <property name="minimum">
-         <number>-360</number>
-        </property>
-        <property name="maximum">
-         <number>360</number>
-        </property>
-        <property name="stepType">
-         <enum>QAbstractSpinBox::DefaultStepType</enum>
-        </property>
-        <property name="value">
-         <number>45</number>
         </property>
        </widget>
       </item>
@@ -95,7 +66,7 @@
         </property>
        </widget>
       </item>
-      <item row="16" column="0">
+      <item row="17" column="0">
        <spacer name="verticalSpacer_2">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -108,7 +79,7 @@
         </property>
        </spacer>
       </item>
-      <item row="10" column="0">
+      <item row="11" column="0">
        <widget class="QLabel" name="j5Label">
         <property name="text">
          <string>J5</string>
@@ -134,7 +105,7 @@
         </property>
        </widget>
       </item>
-      <item row="8" column="0">
+      <item row="9" column="0">
        <widget class="QLabel" name="j4Label">
         <property name="text">
          <string>J4</string>
@@ -144,7 +115,7 @@
         </property>
        </widget>
       </item>
-      <item row="12" column="0">
+      <item row="13" column="0">
        <widget class="QLabel" name="j6Label">
         <property name="text">
          <string>J6</string>
@@ -154,30 +125,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="j1Box">
-        <property name="minimum">
-         <number>-360</number>
-        </property>
-        <property name="maximum">
-         <number>360</number>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="1">
-       <widget class="QSpinBox" name="j4Box">
-        <property name="minimum">
-         <number>-360</number>
-        </property>
-        <property name="maximum">
-         <number>360</number>
-        </property>
-        <property name="value">
-         <number>-135</number>
-        </property>
-       </widget>
-      </item>
-      <item row="14" column="0">
+      <item row="15" column="0">
        <widget class="QLabel" name="j7Label">
         <property name="text">
          <string>J7</string>
@@ -187,20 +135,7 @@
         </property>
        </widget>
       </item>
-      <item row="13" column="1">
-       <widget class="QSpinBox" name="j6Box">
-        <property name="minimum">
-         <number>-360</number>
-        </property>
-        <property name="maximum">
-         <number>360</number>
-        </property>
-        <property name="value">
-         <number>90</number>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="0">
+      <item row="12" column="0">
        <widget class="QSlider" name="j5Slider">
         <property name="maximum">
          <number>360</number>
@@ -213,7 +148,17 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Speed_factor [a.u.]:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
        <widget class="QLabel" name="j3Label">
         <property name="text">
          <string>J3</string>
@@ -236,7 +181,7 @@
         </property>
        </widget>
       </item>
-      <item row="13" column="0">
+      <item row="14" column="0">
        <widget class="QSlider" name="j6Slider">
         <property name="maximum">
          <number>360</number>
@@ -249,27 +194,7 @@
         </property>
        </widget>
       </item>
-      <item row="11" column="1">
-       <widget class="QSpinBox" name="j5Box">
-        <property name="minimum">
-         <number>-360</number>
-        </property>
-        <property name="maximum">
-         <number>360</number>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QSpinBox" name="j3Box">
-        <property name="minimum">
-         <number>-360</number>
-        </property>
-        <property name="maximum">
-         <number>360</number>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="0">
+      <item row="10" column="0">
        <widget class="QSlider" name="j4Slider">
         <property name="minimum">
          <number>-360</number>
@@ -285,7 +210,20 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="2">
+      <item row="1" column="2">
+       <widget class="QLineEdit" name="speedFactorLn">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>0.1</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="3">
        <widget class="QLabel" name="pandaLabel">
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
@@ -304,26 +242,106 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="speedFactorLn">
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
+      <item row="3" column="2">
+       <widget class="QDoubleSpinBox" name="j1Box">
+        <property name="minimum">
+         <double>-360.000000000000000</double>
         </property>
-        <property name="text">
-         <string>0.1</string>
+        <property name="maximum">
+         <double>360.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.500000000000000</double>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>Speed_factor [a.u.]:</string>
+      <item row="5" column="2">
+       <widget class="QDoubleSpinBox" name="j2Box">
+        <property name="minimum">
+         <double>-360.000000000000000</double>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <property name="maximum">
+         <double>360.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+        <property name="value">
+         <double>-45.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QDoubleSpinBox" name="j3Box">
+        <property name="minimum">
+         <double>-360.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>360.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="2">
+       <widget class="QDoubleSpinBox" name="j4Box">
+        <property name="minimum">
+         <double>-360.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>360.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+        <property name="value">
+         <double>-135.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="2">
+       <widget class="QDoubleSpinBox" name="j5Box">
+        <property name="minimum">
+         <double>-360.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>360.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="14" column="2">
+       <widget class="QDoubleSpinBox" name="j6Box">
+        <property name="minimum">
+         <double>-360.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>360.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+        <property name="value">
+         <double>90.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="16" column="2">
+       <widget class="QDoubleSpinBox" name="j7Box">
+        <property name="minimum">
+         <double>-360.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>360.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.500000000000000</double>
+        </property>
+        <property name="value">
+         <double>45.000000000000000</double>
         </property>
        </widget>
       </item>
@@ -830,230 +848,5 @@
  <resources>
   <include location="res.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>j1Slider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j1Box</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>591</x>
-     <y>542</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>753</x>
-     <y>535</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j2Slider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j2Box</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>618</x>
-     <y>596</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>744</x>
-     <y>603</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j3Slider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j3Box</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>667</x>
-     <y>649</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>758</x>
-     <y>665</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j4Slider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j4Box</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>697</x>
-     <y>714</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>754</x>
-     <y>708</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j5Slider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j5Box</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>666</x>
-     <y>772</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>753</x>
-     <y>772</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j6Slider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j6Box</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>654</x>
-     <y>826</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>746</x>
-     <y>828</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j7Slider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j7Box</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>682</x>
-     <y>885</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>766</x>
-     <y>893</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j1Box</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j1Slider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>761</x>
-     <y>550</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>624</x>
-     <y>541</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j2Box</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j2Slider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>758</x>
-     <y>595</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>708</x>
-     <y>590</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j3Box</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j3Slider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>757</x>
-     <y>652</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>693</x>
-     <y>652</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j4Box</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j4Slider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>765</x>
-     <y>717</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>678</x>
-     <y>713</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j5Box</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j5Slider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>771</x>
-     <y>772</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>637</x>
-     <y>769</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j6Box</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j6Slider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>766</x>
-     <y>831</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>642</x>
-     <y>828</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>j7Box</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>j7Slider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>759</x>
-     <y>888</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>657</x>
-     <y>883</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
