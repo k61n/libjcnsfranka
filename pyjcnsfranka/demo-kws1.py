@@ -4,19 +4,18 @@ from time import sleep
 
 from pyjcnsfranka.robot import FrankaRobot
 
-
-sample1 = [-0.107702, -0.302816, 0.281]
-#sample2
-bottom = [0.3, 0, -0.2]
+sample1 = [-0.0489999, -0.301708, 0.279]
+above_magnet = [0.387569, 0.244744, 0.636882]
+in_magnet = [0.387569, 0.254744, 0.401882]
 
 if __name__ == '__main__':
     robot = FrankaRobot('192.168.1.2')
+    home_pose = [0, -math.pi/4, 0, -3/4*math.pi, 0, math.pi/2, math.pi/4]
+    grab_pose = [-math.pi/2, -math.pi/4, 0, -3/4*math.pi, -1.5/180*math.pi, 91/180*math.pi, 3/4*math.pi]
 
     # move robot to the sample side
-    robot.go_home()
+    robot.move_joints(grab_pose, 0.1)
     robot.move_gripper(0.03)
-    joints = [-math.pi/2, -math.pi/4, 0, -3/4 * math.pi, 0, math.pi/2, math.pi/4]
-    robot.move_joints(joints, 0.1)
 
     # move to sample
     pos = robot.read_state()[7:]
@@ -24,28 +23,32 @@ if __name__ == '__main__':
     robot.move_absolute(sample1[0], sample1[1], sample1[2])
     robot.close_gripper(0, 20)
     for i in range(8):
+        # if i == 5:
+        #     robot.move_relative(-0.005, 0, 0)
         robot.move_relative(0, 0, 0.005)
 
-    # turn robot pi/2 before going down for demo
-    joints = robot.read_state()[:7]
-    joints[0] = 0
-    robot.move_joints(joints, 0.1)
-    robot.move_absolute(bottom[0], bottom[1], bottom[2])
-    sleep(5)
-    # go back up
-    robot.move_joints(joints, 0.1)
-
-    # place sample back
-    joints = [0, -math.pi/4, 0, -3/4 * math.pi, 0, math.pi/2, math.pi/4]
-    robot.move_joints(joints, 0.1)
-    joints[0] = -math.pi/2
-    robot.move_joints(joints, 0.1)
+    # lift up the sample
+    robot.move_joints(home_pose, 0.1)
     pos = robot.read_state()[7:]
-    robot.move_absolute(sample1[0], sample1[1], pos[2])
+    robot.move_absolute(pos[0], pos[1], above_magnet[2])
+
+    # align to magnet
+    robot.move_absolute(above_magnet[0], above_magnet[1], above_magnet[2])
+
+    # get in
+    robot.move_absolute(in_magnet[0], in_magnet[1], in_magnet[2])
+    sleep(5)
+
+    # lift up
+    robot.move_absolute(above_magnet[0], above_magnet[1], above_magnet[2] + 0.05)
+
+    # put sample back
+    robot.move_joints(grab_pose, 0.1)
     robot.move_absolute(sample1[0], sample1[1], sample1[2] + 0.04)
+    # robot.move_relative(-0.005, 0, 0)
     for i in range(8):
+        # if i == 5:
+        #     robot.move_relative(0.005, 0, 0)
         robot.move_relative(0, 0, -0.005)
-    robot.move_gripper(0.03)
+    robot.move_gripper(0.1)
     robot.move_absolute(sample1[0], sample1[1], pos[2])
-    joints[0] = 0
-    robot.move_joints(joints, 0.1)
