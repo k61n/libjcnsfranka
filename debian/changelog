@@ -1,3 +1,16 @@
+jcnsfranka (0.2.5) unstable; urgency=medium
+
+  * demo: joints support double values
+  * kws1: modified demo
+  * move_joints() accepts speed_factor argument
+  * jcnsfranka: rfc is_in_error_mode() method
+  * demo for kws-1
+  * load and unload sample demo for cryo setup 2
+  * load and unload sample demo for cryo setup
+  * demo: 6 digit precision for coordinate reads
+
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Mon, 20 Mar 2023 10:29:15 +0100
+
 jcnsfranka (0.2.4) unstable; urgency=medium
 
   * comtest: setting rate limiter and low-pass filter is optional
