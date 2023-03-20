@@ -190,10 +190,7 @@ void Robot::move_gripper(double width)
 
 bool Robot::is_in_error_mode()
 {
-    if (frankaerror == "")
-        return false;
-    else
-        return true;
+    return !frankaerror.empty();
 }
 
 
