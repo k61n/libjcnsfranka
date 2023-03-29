@@ -7,10 +7,6 @@ using namespace JcnsFranka;
 Gripper::Gripper(std::string ip)
 {
     gripper = new franka::Gripper(ip);
-    this->go_home();
-    franka::GripperState state;
-    state = gripper->readOnce();
-    maxWidth = state.max_width;
 }
 
 
@@ -24,6 +20,9 @@ Gripper::~Gripper()
 void Gripper::go_home()
 {
     gripper->homing();
+    franka::GripperState state;
+    state = gripper->readOnce();
+    maxWidth = state.max_width;
 }
 
 
