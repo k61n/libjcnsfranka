@@ -21,9 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     boxList.append(ui->j6Box);
     boxList.append(ui->j7Box);
 
-    foreach (const QDoubleSpinBox *box, boxList)
-        connect(box, &QDoubleSpinBox::valueChanged,
-                this, &MainWindow::on_stateChanged);
+    connect(ui->moveJBtn, &QPushButton::clicked, this, &MainWindow::on_stateChanged);
 
     this->on_connectBtn_clicked();
 }
@@ -82,6 +80,17 @@ void MainWindow::on_stateChanged()
 }
 
 
+void MainWindow::on_updJBtn_clicked()
+{
+    JcnsFranka::Coordinates state = robot->read_state();
+    int i = 0;
+    foreach (QDoubleSpinBox *box, boxList) {
+        box->setValue(state.joints[i] / M_PI * 180.0);
+        i++;
+    }
+}
+
+
 void MainWindow::on_homeBtn_clicked()
 {
     robot->go_home();
@@ -105,7 +114,7 @@ void MainWindow::on_readBtn_clicked()
         ui->connectionEdit->appendPlainText("j" + QString::number(i) +
             " = " +
             QString::number(state.joints[i], 'g', 6) + "\t" +
-            QString::number((int)degrees));
+            QString::number(degrees, 'g', 3));
     }
     ui->connectionEdit->appendPlainText("");
     ui->connectionEdit->appendPlainText("X = " +
@@ -223,3 +232,4 @@ void MainWindow::check_error()
         qDebug() << error;
         robot->reset_error();
 }
+
