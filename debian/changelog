@@ -9,13 +9,13 @@ jcnsfranka (0.2.5) unstable; urgency=medium
   * load and unload sample demo for cryo setup
   * demo: 6 digit precision for coordinate reads
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Mon, 20 Mar 2023 10:29:15 +0100
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Mon, 20 Mar 2023 10:29:15 +0100
 
 jcnsfranka (0.2.4) unstable; urgency=medium
 
   * comtest: setting rate limiter and low-pass filter is optional
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Fri, 24 Feb 2023 13:21:39 +0100
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Fri, 24 Feb 2023 13:21:39 +0100
 
 jcnsfranka (0.2.3) unstable; urgency=medium
 
@@ -24,13 +24,13 @@ jcnsfranka (0.2.3) unstable; urgency=medium
   * readme.md: update
   * release routines trigger the jenkins job
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Wed, 22 Feb 2023 09:12:19 +0100
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Wed, 22 Feb 2023 09:12:19 +0100
 
 jcnsfranka (0.2.2) unstable; urgency=medium
 
   * fix release routines
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Thu, 16 Feb 2023 19:13:35 +0100
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Thu, 16 Feb 2023 19:13:35 +0100
 
 jcnsfranka (0.2.1) unstable; urgency=medium
 
@@ -40,7 +40,7 @@ jcnsfranka (0.2.1) unstable; urgency=medium
   * fix typos, fix docstrings, delete comments, more readable C calls
   * a method to ensure linear trajectory during movement
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Thu, 16 Feb 2023 19:09:22 +0100
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Thu, 16 Feb 2023 19:09:22 +0100
 
 jcnsfranka (0.2.0) unstable; urgency=medium
 
@@ -63,7 +63,7 @@ jcnsfranka (0.2.0) unstable; urgency=medium
   * gitignore: hide CMakeLists.txt.* for QtCreator users
   * min cmake 3.16 for focal
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Wed, 15 Feb 2023 17:55:23 +0100
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Wed, 15 Feb 2023 17:55:23 +0100
 
 jcnsfranka (0.1.0) unstable; urgency=medium
 
