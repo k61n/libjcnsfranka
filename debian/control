@@ -4,8 +4,8 @@ Maintainer: Konstantin Kholostov <k.kholostov@fz-juelich.de>
 Build-Depends: debhelper (>=13~),
  dh-python,
  python3 (>= 3.6),
- qt5-base-dev,
  cmake,
+ qtbase5-dev,
  liborl-dev
 Standards-Version: 4.5.1
 Section: libs
