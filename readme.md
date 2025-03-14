@@ -24,38 +24,31 @@ apt install libpoco-dev libeigen3-dev libboost-dev libgtest-dev
 
 Build and install release version of libfranka locally.
 ```bash
-git clone --recursive https://forge.frm2.tum.de/review/jcns/mirror/libfranka
+git clone --recurse-submodules https://forge.frm2.tum.de/review/plugins/gitiles/jcns/mirror/libfranka
 cd libfranka
-git checkout 0.9.2
-git submodule update
-mkdir build
-cd build
+mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF
-cmake --build . --parallel 4
-cpack -G DEB
-dpkg -i libfranka*
+cmake --build . --parallel $(nproc)
+cmake --install .
 ```
 
 Build and install release version of LibORL locally.
 ```bash
-git clone "https://forge.frm2.tum.de/review/jcns/mirror/liborl"
+git clone https://forge.frm2.tum.de/review/plugins/gitiles/jcns/mirror/liborl
 cd liborl
-mkdir build
-cd build
+mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF
-cmake --build . --parallel 4
-cpack -G DEB
-dpkg -i liborl*
+cmake --build . --parallel $(nproc)
+cmake --install .
 ```
 
 Build and install release version of JcnsFranka library.
 ```bash
-git clone "https://forge.frm2.tum.de/review/jcns/tango/franka"
+git clone https://forge.frm2.tum.de/review/plugins/gitiles/jcns/tango/franka
 cd franka
-mkdir build
-cd build
+mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
-cmake --build . --parallel 4
+cmake --build . --parallel $(nproc)
 cmake --install .
 ```
 
@@ -67,15 +60,9 @@ find_package(jcnsfranka REQUIRED)
 
 Demo
 ----
-Demo is an example of JcnsFranka library build in a Qt application.
-To run demo Qt6.3.1 would be necessary. To build demo
+jcnsfranka-demo is built against Qt5/6 and installed with libjcnsfranka.
 ```bash
-cd demo
-mkdir build
-cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/path/to/Qt/6.3.1/gcc_64
-cmake --build . --parallel 4
-./franka_demo
+jcnsfranka-demo
 ```
 
 PyJcnsFranka
