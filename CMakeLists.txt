@@ -10,39 +10,42 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(orl REQUIRED)
 find_package(Eigen3 REQUIRED)
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED CONFIG)
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
 include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_library(jcnsfranka SHARED
-    src/jcnsfranka.h
-    src/robot.h
-    src/robot.cpp
-    src/robot_c.cpp
-    src/comtest.h
-    src/comtest.cpp
-    src/gripper.h
-    src/gripper.cpp
-)
-
+# libjcnsfranka
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
+add_library(jcnsfranka SHARED ${SOURCES})
+set_target_properties(jcnsfranka PROPERTIES
+    VERSION ${jcnsfranka_VERSION}
+    SOVERSION ${jcnsfranka_VERSION_MAJOR}
+    OUTPUT_NAME "jcnsfranka")
 target_compile_definitions(jcnsfranka PUBLIC JCNSFRANKA_LIBRARY)
 target_link_libraries(jcnsfranka orl::orl)
 
+# jcnsfranka-demo
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/demo)
+qt6_add_resources(DEMO_RES ${DEMO_RES})
+add_executable(jcnsfranka-demo ${DEMO_SOURCES} ${DEMO_RES})
+target_link_libraries(jcnsfranka-demo Qt6::Widgets orl::orl jcnsfranka)
+
 # Installation
 include(GNUInstallDirs)
-install(TARGETS jcnsfranka
+install(TARGETS jcnsfranka jcnsfranka-demo
     EXPORT jcnsfrankaTargets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(FILES src/jcnsfranka.h src/robot.h src/comtest.h src/gripper.h
+install(FILES ${HEADERS}
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jcnsfranka)
-install(DIRECTORY pyjcnsfranka/pyjcnsfranka
-    DESTINATION "${Python3_SITELIB}")
-
 # cmake targets
 set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/jcnsfranka)
 include(CMakePackageConfigHelpers)
@@ -60,6 +63,9 @@ install(EXPORT jcnsfrankaTargets
     FILE jcnsfrankaTargets.cmake
     NAMESPACE jcnsfranka::
     DESTINATION ${INSTALL_CONFIGDIR})
+# python library
+install(DIRECTORY pyjcnsfranka/pyjcnsfranka
+    DESTINATION "${Python3_SITELIB}")
 
 ## Packaging
 set(CPACK_PACKAGE_VENDOR "FZJ GmbH")

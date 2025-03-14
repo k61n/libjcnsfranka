@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "jcnsfranka/jcnsfranka.h"
 #include "qspinbox.h"
+#include "jcnsfranka.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

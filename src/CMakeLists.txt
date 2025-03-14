@@ -1,0 +1,14 @@
+
+set(HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/jcnsfranka.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/robot.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/comtest.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/gripper.h
+    PARENT_SCOPE)
+
+set(SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/robot.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/robot_c.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/comtest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/gripper.cpp
+    PARENT_SCOPE)
