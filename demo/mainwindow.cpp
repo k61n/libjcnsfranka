@@ -232,4 +232,3 @@ void MainWindow::check_error()
         qDebug() << error;
         robot->reset_error();
 }
-
