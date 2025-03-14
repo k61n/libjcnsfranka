@@ -4,6 +4,7 @@ Maintainer: Konstantin Kholostov <k.kholostov@fz-juelich.de>
 Build-Depends: debhelper (>=13~),
  dh-python,
  python3 (>= 3.6),
+ qt5-base-dev,
  cmake,
  liborl-dev
 Standards-Version: 4.5.1
@@ -12,6 +13,6 @@ Section: libs
 Package: jcnsfranka
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, python3
-Description: JCNS adapter library for Franka robots
- JCNS adapter library for Franka robots using libfranka/liborl
- including Python package.
+Description: JCNS adapter libraries for Franka Emika Panda robot
+ This package contains jcnsfranka-demo, libjcnsfranka c++ adapter library and
+ development files, and pyjcnsfranka python wrapper module.
