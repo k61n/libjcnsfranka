@@ -74,7 +74,7 @@ install(EXPORT jcnsfrankaTargets
     NAMESPACE jcnsfranka::
     DESTINATION ${INSTALL_CONFIGDIR})
 # python library
-install(DIRECTORY pyjcnsfranka/pyjcnsfranka
+install(DIRECTORY python/pyjcnsfranka
     DESTINATION "${Python3_SITELIB}")
 
 ## Packaging
