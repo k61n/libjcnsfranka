@@ -76,6 +76,8 @@ install(EXPORT jcnsfrankaTargets
 # python library
 install(DIRECTORY python/pyjcnsfranka
     DESTINATION "${Python3_SITELIB}")
+install(FILES python/bin/jcnsfranka-comtest
+    DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 ## Packaging
 set(CPACK_PACKAGE_VENDOR "FZJ GmbH")
