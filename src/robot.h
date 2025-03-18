@@ -28,7 +28,7 @@ namespace JcnsFranka {
          * Establishes the connection to the Franka robot
          * @param ip name or ip of the Franka robot
          */
-        Robot(char *ip);
+        explicit Robot(char *ip);
         ~Robot();
 
         /**
@@ -166,7 +166,7 @@ namespace JcnsFranka {
          * @brief frankaerror
          * Description of error from libfranka
          */
-        std::string frankaerror = "";
+        std::string frankaerror;
     };
 }
 

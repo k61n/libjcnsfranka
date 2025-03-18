@@ -55,11 +55,11 @@ void MainWindow::on_setloadBtn_clicked()
 
         double mass = obj["mass"].toDouble();
         QJsonArray arg2 = obj["F_x_Cload"].toArray();
-        std::array<double, 3> F_x_Cload;
+        std::array<double, 3> F_x_Cload{};
         for (int i = 0; i < arg2.size(); i++)
             F_x_Cload[i] = arg2[i].toDouble();
         QJsonArray arg3 = obj["load_inertia"].toArray();
-        std::array<double, 9> load_inertia;
+        std::array<double, 9> load_inertia{};
         for (int i = 0; i < arg3.size(); i++)
             load_inertia[i] = arg3[i].toDouble();
         robot->set_load(mass, F_x_Cload, load_inertia);
@@ -70,7 +70,7 @@ void MainWindow::on_setloadBtn_clicked()
 
 void MainWindow::on_stateChanged()
 {
-    std::array<double, 7> joints;
+    std::array<double, 7> joints{};
     for (int i=0; i<boxList.count(); i++) {
         joints[i] = boxList.at(i)->value() / 180.0 * M_PI;
     }

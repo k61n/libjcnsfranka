@@ -18,7 +18,7 @@ namespace JcnsFranka {
          * Connects to the gripper by name or ip address of the Franka robot
          * @param ip name or ip of the Franka robot
          */
-        Gripper(std::string ip);
+        explicit Gripper(const std::string& ip);
         ~Gripper();
 
         /**
@@ -37,7 +37,7 @@ namespace JcnsFranka {
          * @brief max_width
          * @return max width of the gripper
          */
-        double max_width();
+        double max_width() const;
 
         /**
          * @brief is_gripping
@@ -78,7 +78,7 @@ namespace JcnsFranka {
          * @brief maxWidth
          * Once gripper is initialized its max width is stored
          */
-        double maxWidth;
+        double maxWidth{};
     };
 }
 

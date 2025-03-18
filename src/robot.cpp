@@ -30,7 +30,7 @@ Robot::~Robot()
 
 Coordinates Robot::read_state()
 {
-    Coordinates result;
+    Coordinates result{};
     orl::Pose pose;
 
     try {
@@ -52,7 +52,7 @@ void Robot::set_load(double load_mass,
                      const std::array<double, 3>& F_x_Cload,
                      const std::array<double, 9>& load_inertia)
 {
-    orl::Payload payload;
+    orl::Payload payload{};
     payload.mass = load_mass;
     payload.pos_wrt_flange = F_x_Cload;
     payload.inertia_matrix = load_inertia;

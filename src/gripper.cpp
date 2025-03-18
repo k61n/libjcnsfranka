@@ -4,7 +4,7 @@
 using namespace JcnsFranka;
 
 
-Gripper::Gripper(std::string ip)
+Gripper::Gripper(const std::string& ip)
 {
     gripper = new franka::Gripper(ip);
 }
@@ -34,7 +34,7 @@ double Gripper::read_width()
 }
 
 
-double Gripper::max_width()
+double Gripper::max_width() const
 {
     return maxWidth;
 }
