@@ -28,23 +28,24 @@ Robot::~Robot()
 }
 
 
-Coordinates Robot::read_state()
+const Coordinates& Robot::read_state()
 {
-    Coordinates result{};
-    orl::Pose pose;
-
-    try {
-        result.joints = robot->get_current_Joints();
-        pose = robot->get_current_pose();
-        frankaerror = "";
+    if (!is_moving)
+    {
+        orl::Pose pose;
+        try {
+            state.joints = robot->get_current_Joints();
+            pose = robot->get_current_pose();
+            frankaerror = "";
+        }
+        catch (franka::Exception const& e) {
+            frankaerror = std::string(e.what());
+        }
+        state.xyz[0] = pose.getPosition()[0];
+        state.xyz[1] = pose.getPosition()[1];
+        state.xyz[2] = pose.getPosition()[2];
     }
-    catch (franka::Exception const& e) {
-        frankaerror = std::string(e.what());
-    }
-    result.xyz[0] = pose.getPosition()[0];
-    result.xyz[1] = pose.getPosition()[1];
-    result.xyz[2] = pose.getPosition()[2];
-    return result;
+    return state;
 }
 
 
@@ -68,27 +69,42 @@ void Robot::set_load(double load_mass,
 
 void Robot::go_home()
 {
+    is_moving = true;
     try {
         robot->get_franka_robot().stop();
         reset_error();
         std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0,
                                          M_PI_2, M_PI_4}};
         double speed_factor = 0.1;
-        robot->joint_motion(q_goal, speed_factor);
+        robot->joint_motion([&](const franka::RobotState& frankastate) {
+            state.joints = frankastate.q;
+            auto pose = orl::Pose(frankastate.O_T_EE_c);
+            state.xyz[0] = pose.getPosition()[0];
+            state.xyz[1] = pose.getPosition()[1];
+            state.xyz[2] = pose.getPosition()[2];
+            }, q_goal, speed_factor);
         gripper->go_home();
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
         frankaerror = std::string(e.what());
     }
+    is_moving = false;
 }
 
 
 void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
 {
+    is_moving = true;
     try {
         if ((speed_factor > 0) && (speed_factor <= 1)) {
-            robot->joint_motion(joints, speed_factor);
+            robot->joint_motion([&](const franka::RobotState& frankastate) {
+                state.joints = frankastate.q;
+                auto pose = orl::Pose(frankastate.O_T_EE_c);
+                state.xyz[0] = pose.getPosition()[0];
+                state.xyz[1] = pose.getPosition()[1];
+                state.xyz[2] = pose.getPosition()[2];
+            }, joints, speed_factor);
             frankaerror = "";
         } else {
             frankaerror = "jcnsfranka: speed_factor must be in range 0..1";
@@ -97,11 +113,13 @@ void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
     catch (franka::Exception const& e) {
         frankaerror = std::string(e.what());
     }
+    is_moving = false;
 }
 
 
 void Robot::move_relative(double dx, double dy, double dz, double dt)
 {
+    is_moving = true;
     if (dt == 0) {
         double s = sqrt(dx*dx + dy*dy + dz*dz);
         // fastest time for franka to perform a movement
@@ -109,12 +127,19 @@ void Robot::move_relative(double dx, double dy, double dz, double dt)
     }
     try {
         // 10 * t is empirical value to allow franka move smooth yet fast
-        robot->relative_cart_motion(dx, dy, dz, 10 * dt);
+        robot->relative_cart_motion([&](const franka::RobotState& frankastate) {
+            state.joints = frankastate.q;
+            auto pose = orl::Pose(frankastate.O_T_EE_c);
+            state.xyz[0] = pose.getPosition()[0];
+            state.xyz[1] = pose.getPosition()[1];
+            state.xyz[2] = pose.getPosition()[2];
+        }, dx, dy, dz, 10 * dt);
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
         frankaerror = std::string(e.what());
     }
+    is_moving = false;
 }
 
 
@@ -134,36 +159,44 @@ void Robot::move_linear(double dx, double dy, double dz)
 
 void Robot::move_absolute(double x, double y, double z)
 {
-    Coordinates state = this->read_state();
-    double x0 = state.xyz[0];
-    double y0 = state.xyz[1];
-    double z0 = state.xyz[2];
+    auto current_state = read_state();
+    double x0 = current_state.xyz[0];
+    double y0 = current_state.xyz[1];
+    double z0 = current_state.xyz[2];
     double s = sqrt(pow((x - x0), 2) + pow((y - y0), 2) + pow((z - z0), 2));
     double t = s/vmax + vmax/amax;
 
+    is_moving = true;
     try {
         // t is the fastest time for franka to perform a movement
         // 4 * t is empirical value to allow franka move smooth yet fast
-        robot->absolute_cart_motion(x, y, z, 10 * t);
+        robot->absolute_cart_motion([&](const franka::RobotState& frankastate) {
+            state.joints = frankastate.q;
+            auto pose = orl::Pose(frankastate.O_T_EE_c);
+            state.xyz[0] = pose.getPosition()[0];
+            state.xyz[1] = pose.getPosition()[1];
+            state.xyz[2] = pose.getPosition()[2];
+        }, x, y, z, 4 * t);
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
         frankaerror = std::string(e.what());
     }
+    is_moving = false;
 }
 
 
 bool Robot::is_gripping()
 {
-    bool state;
+    bool gripper_state;
     try {
-        state = gripper->is_gripping();
+        gripper_state = gripper->is_gripping();
         frankaerror = "";
     }
     catch (franka::Exception const& e) {
         frankaerror = std::string(e.what());
     }
-    return state;
+    return gripper_state;
 }
 
 

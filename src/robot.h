@@ -36,7 +36,7 @@ namespace JcnsFranka {
          * Reads current joints and end-effector positions
          * @return current joints and end-effector positions
          */
-        Coordinates read_state();
+        const Coordinates& read_state();
 
         /**
          * @brief set_load
@@ -167,6 +167,18 @@ namespace JcnsFranka {
          * Description of error from libfranka
          */
         std::string frankaerror;
+
+        /**
+         * @brief is_moving
+         * Stores if robot is in motion
+         */
+        bool is_moving = false;
+
+        /**
+         * @brief is_moving
+         * Stores current robot state
+         */
+        Coordinates state{};
     };
 }
 
