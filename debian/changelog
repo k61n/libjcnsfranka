@@ -1,3 +1,13 @@
+jcnsfranka (0.4.0) unstable; urgency=medium
+
+  * implement robot pose reading through a callback function in liborl when the robot is moving
+  * jcnsfranka-demo: upd jcnsfranka-comtest
+  * jcnsfranka-demo: clang-tidy
+  * libjcnsfranka: close_gripper had wrong argument order
+  * clang-tidy libjcnsfranka
+
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Wed, 20 Aug 2025 16:57:50 +0200
+
 jcnsfranka (0.3.0) unstable; urgency=medium
 
   * upd release scripts
