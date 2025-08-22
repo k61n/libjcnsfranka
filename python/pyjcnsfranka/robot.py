@@ -1,8 +1,4 @@
 from ctypes import *
-import platform
-
-
-mode = dict(winmode=0) if platform.python_version() >= '3.8' else dict()
 
 
 class FrankaRobot:
@@ -10,12 +6,8 @@ class FrankaRobot:
     Python wrapper of JcnsFranka::Robot class in JcnsFranka C++ library.
     """
     def __init__(self, ip):
-        # max acceleration when moving in Cartesian space [m s^-2]
-        self.amax = 13
-        # max velocity when moving in Cartesian space [m s^-1]
-        self.vmax = 1.7
 
-        self.lib = CDLL('libjcnsfranka.so', **mode)
+        self.lib = CDLL('libjcnsfranka.so', winmode=0)
         self.lib.init.argtypes = [c_char_p]
         self.lib.init.restype = c_void_p
         buffer = create_string_buffer(ip.encode('utf-8'))
@@ -207,7 +199,7 @@ def comtest(ip, limit_rate, cutoff_frequency):
     :param cutoff_frequency: 1000 or low-pass filtered 100 [Hz].
     :return: number of lost states.
     """
-    lib = CDLL('libjcnsfranka.so', **mode)
+    lib = CDLL('libjcnsfranka.so', winmode=0)
     buffer = create_string_buffer(ip.encode('utf-8'))
     lib.communication_test.argtypes = [c_char_p, c_bool, c_double]
     lib.communication_test.restype = c_uint64
