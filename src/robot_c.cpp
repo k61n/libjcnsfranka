@@ -13,7 +13,7 @@ extern "C"
 
     double* read_state(JcnsFranka::Robot* self) {
         JcnsFranka::Coordinates state = self->read_state();
-        auto *result = new double[10];
+        auto result = new double[10];
         for (int i = 0; i < 7; i++)
             result[i] = state.joints[i];
         for (int i = 0; i < 3; i++)

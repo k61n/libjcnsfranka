@@ -77,11 +77,7 @@ void Robot::go_home()
                                          M_PI_2, M_PI_4}};
         double speed_factor = 0.1;
         robot->joint_motion([&](const franka::RobotState& frankastate) {
-            state.joints = frankastate.q;
-            auto pose = orl::Pose(frankastate.O_T_EE_c);
-            state.xyz[0] = pose.getPosition()[0];
-            state.xyz[1] = pose.getPosition()[1];
-            state.xyz[2] = pose.getPosition()[2];
+            copy_state(frankastate);
             }, q_goal, speed_factor);
         gripper->go_home();
         frankaerror = "";
@@ -99,11 +95,7 @@ void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
     try {
         if ((speed_factor > 0) && (speed_factor <= 1)) {
             robot->joint_motion([&](const franka::RobotState& frankastate) {
-                state.joints = frankastate.q;
-                auto pose = orl::Pose(frankastate.O_T_EE_c);
-                state.xyz[0] = pose.getPosition()[0];
-                state.xyz[1] = pose.getPosition()[1];
-                state.xyz[2] = pose.getPosition()[2];
+                copy_state(frankastate);
             }, joints, speed_factor);
             frankaerror = "";
         } else {
@@ -128,11 +120,7 @@ void Robot::move_relative(double dx, double dy, double dz, double dt)
     try {
         // 10 * t is empirical value to allow franka move smooth yet fast
         robot->relative_cart_motion([&](const franka::RobotState& frankastate) {
-            state.joints = frankastate.q;
-            auto pose = orl::Pose(frankastate.O_T_EE_c);
-            state.xyz[0] = pose.getPosition()[0];
-            state.xyz[1] = pose.getPosition()[1];
-            state.xyz[2] = pose.getPosition()[2];
+            copy_state(frankastate);
         }, dx, dy, dz, 10 * dt);
         frankaerror = "";
     }
@@ -171,11 +159,7 @@ void Robot::move_absolute(double x, double y, double z)
         // t is the fastest time for franka to perform a movement
         // 4 * t is empirical value to allow franka move smooth yet fast
         robot->absolute_cart_motion([&](const franka::RobotState& frankastate) {
-            state.joints = frankastate.q;
-            auto pose = orl::Pose(frankastate.O_T_EE_c);
-            state.xyz[0] = pose.getPosition()[0];
-            state.xyz[1] = pose.getPosition()[1];
-            state.xyz[2] = pose.getPosition()[2];
+            copy_state(frankastate);
         }, x, y, z, 4 * t);
         frankaerror = "";
     }
@@ -240,4 +224,16 @@ void Robot::reset_error()
 {
     robot->get_franka_robot().automaticErrorRecovery();
     frankaerror = "";
+}
+
+
+void Robot::copy_state(const franka::RobotState &frankastate)
+{
+    Coordinates temp{};
+    temp.joints = frankastate.q;
+    auto pose = orl::Pose(frankastate.O_T_EE_c);
+    temp.xyz[0] = pose.getPosition()[0];
+    temp.xyz[1] = pose.getPosition()[1];
+    temp.xyz[2] = pose.getPosition()[2];
+    state = temp;
 }
