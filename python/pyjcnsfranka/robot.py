@@ -1,4 +1,12 @@
+
 from ctypes import *
+
+
+class FrankaState(Structure):
+    _fields_ = [("joints", c_double * 7), ("xyz", c_double * 3)]
+
+    def to_dict(self):
+        return {'joints': list(self.joints), 'xyz': list(self.xyz)}
 
 
 class FrankaRobot:
@@ -17,7 +25,7 @@ class FrankaRobot:
         self.lib.deinit.restype = None
 
         self.lib.read_state.argtypes = [c_void_p]
-        self.lib.read_state.restype = POINTER(c_double)
+        self.lib.read_state.restype = FrankaState
 
         self.lib.set_load.argtypes = [c_void_p, c_double, POINTER(c_double), POINTER(c_double)]
         self.lib.set_load.restype = None
@@ -70,7 +78,7 @@ class FrankaRobot:
         result = self.lib.read_state(self.obj)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
-        return [result[i] for i in range(10)]
+        return result.to_dict()
 
     def set_load(self, mass, F_x_Cload, load_inertia):
         """

@@ -11,13 +11,20 @@ extern "C"
         delete self;
     }
 
-    double* read_state(JcnsFranka::Robot* self) {
+    struct JcnsFrankaState
+    {
+        double joints[7];
+        double xyz[3];
+    };
+
+    JcnsFrankaState read_state(JcnsFranka::Robot* self)
+    {
         JcnsFranka::Coordinates state = self->read_state();
-        auto result = new double[10];
+        JcnsFrankaState result{};
         for (int i = 0; i < 7; i++)
-            result[i] = state.joints[i];
+            result.joints[i] = state.joints[i];
         for (int i = 0; i < 3; i++)
-            result[i + 7] = state.xyz[i];
+            result.xyz[i] = state.xyz[i];
         return result;
     }
 
