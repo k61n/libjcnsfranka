@@ -27,6 +27,9 @@ class FrankaRobot:
         self.lib.read_state.argtypes = [c_void_p]
         self.lib.read_state.restype = FrankaState
 
+        self.lib.is_moving.argtypes = [c_void_p]
+        self.lib.is_moving.restype = c_bool
+
         self.lib.set_load.argtypes = [c_void_p, c_double, POINTER(c_double), POINTER(c_double)]
         self.lib.set_load.restype = None
 
@@ -79,6 +82,16 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
         return result.to_dict()
+
+    def is_moving(self):
+        """
+        Reads if robot is currently moving.
+        :return: true if robot is moving.
+        """
+        result = self.lib.is_moving(self.obj)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
+        return result
 
     def set_load(self, mass, F_x_Cload, load_inertia):
         """

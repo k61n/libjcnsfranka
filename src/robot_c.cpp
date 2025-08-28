@@ -31,6 +31,11 @@ extern "C"
         return result;
     }
 
+    bool is_moving(JcnsFranka::Robot* self)
+    {
+        return self->is_moving();
+    }
+
     void set_load(JcnsFranka::Robot* self, double mass, const double* F_x_Cload, const double* load_inertia)
     {
         std::array<double, 3> arg2{};

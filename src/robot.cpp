@@ -28,7 +28,7 @@ Robot::~Robot()
 
 const Coordinates& Robot::read_state()
 {
-    if (!is_moving)
+    if (!is_moving())
     {
         orl::Pose pose;
         try
@@ -46,6 +46,11 @@ const Coordinates& Robot::read_state()
         state.xyz[2] = pose.getPosition()[2];
     }
     return state;
+}
+
+bool Robot::is_moving() const
+{
+    return moving;
 }
 
 void Robot::set_load(double load_mass, const std::array<double, 3>& F_x_Cload,
@@ -68,7 +73,7 @@ void Robot::set_load(double load_mass, const std::array<double, 3>& F_x_Cload,
 
 void Robot::go_home()
 {
-    is_moving = true;
+    moving = true;
     try
     {
         robot->get_franka_robot().stop();
@@ -88,12 +93,12 @@ void Robot::go_home()
     {
         frankaerror = std::string(e.what());
     }
-    is_moving = false;
+    moving = false;
 }
 
 void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
 {
-    is_moving = true;
+    moving = true;
     try
     {
         if ((speed_factor > 0) && (speed_factor <= 1))
@@ -114,12 +119,12 @@ void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
     {
         frankaerror = std::string(e.what());
     }
-    is_moving = false;
+    moving = false;
 }
 
 void Robot::move_relative(double dx, double dy, double dz, double dt)
 {
-    is_moving = true;
+    moving = true;
     if (dt == 0)
     {
         double s = sqrt(dx * dx + dy * dy + dz * dz);
@@ -141,7 +146,7 @@ void Robot::move_relative(double dx, double dy, double dz, double dt)
     {
         frankaerror = std::string(e.what());
     }
-    is_moving = false;
+    moving = false;
 }
 
 void Robot::move_linear(double dx, double dy, double dz)
@@ -166,7 +171,7 @@ void Robot::move_absolute(double x, double y, double z)
     double s = sqrt(pow((x - x0), 2) + pow((y - y0), 2) + pow((z - z0), 2));
     double t = s / vmax + vmax / amax;
 
-    is_moving = true;
+    moving = true;
     try
     {
         // t is the fastest time for franka to perform a movement
@@ -183,7 +188,7 @@ void Robot::move_absolute(double x, double y, double z)
     {
         frankaerror = std::string(e.what());
     }
-    is_moving = false;
+    moving = false;
 }
 
 bool Robot::is_gripping()
@@ -203,6 +208,7 @@ bool Robot::is_gripping()
 
 void Robot::close_gripper(double width, double force)
 {
+    moving = true;
     try
     {
         gripper->close_gripper(width, force);
@@ -212,10 +218,12 @@ void Robot::close_gripper(double width, double force)
     {
         frankaerror = std::string(e.what());
     }
+    moving = false;
 }
 
 void Robot::move_gripper(double width)
 {
+    moving = true;
     try
     {
         gripper->move_gripper(width);
@@ -225,6 +233,7 @@ void Robot::move_gripper(double width)
     {
         frankaerror = std::string(e.what());
     }
+    moving = false;
 }
 
 bool Robot::is_in_error_mode()

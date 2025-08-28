@@ -39,6 +39,13 @@ namespace JcnsFranka {
         const Coordinates& read_state();
 
         /**
+         * @brief is_moving
+         * Reads if robot is currently moving
+         * @return true if robot is moving
+         */
+        bool is_moving() const;
+
+        /**
          * @brief set_load
          * Sets dynamic parameters of a payload
          * @param load_mass mass of the load in [kg]
@@ -169,10 +176,10 @@ namespace JcnsFranka {
         std::string frankaerror;
 
         /**
-         * @brief is_moving
+         * @brief moving
          * Stores if robot is in motion
          */
-        bool is_moving = false;
+        bool moving = false;
 
         /**
          * @brief state
