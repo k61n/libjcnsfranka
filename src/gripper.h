@@ -1,11 +1,10 @@
 #ifndef GRIPPER_H
 #define GRIPPER_H
 
-
 #include "liborl/liborl.h"
 
-
-namespace JcnsFranka {
+namespace JcnsFranka 
+{
     /**
      * @brief The Gripper class
      * Simple wrapper around franka::Gripper class
@@ -81,6 +80,5 @@ namespace JcnsFranka {
         double maxWidth{};
     };
 }
-
 
 #endif // GRIPPER_H

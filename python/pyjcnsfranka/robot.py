@@ -129,7 +129,7 @@ class FrankaRobot:
     def move_linear(self, dx, dy, dz):
         """
         Performs relative motion in cartesian space but ensures its linear
-        tajectory. As a consequence this movement might be particularly slow.
+        trajectory. As a consequence this movement might be particularly slow.
         :param dx: relative displacement in X axis [m].
         :param dy: relative displacement in Y axis [m].
         :param dz: relative displacement in Z axis [m].
@@ -151,7 +151,7 @@ class FrankaRobot:
 
     def is_gripping(self):
         """
-        Checks gripping status of the end-effecor.
+        Checks gripping status of the end-effector.
         :return: True if end-effector is closed.
         """
         result = self.lib.is_gripping(self.obj)

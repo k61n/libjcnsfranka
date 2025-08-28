@@ -1,21 +1,18 @@
+
 #include "gripper.h"
 
-
 using namespace JcnsFranka;
-
 
 Gripper::Gripper(const std::string& ip)
 {
     gripper = new franka::Gripper(ip);
 }
 
-
 Gripper::~Gripper()
 {
     gripper->stop();
     delete gripper;
 }
-
 
 void Gripper::go_home()
 {
@@ -25,7 +22,6 @@ void Gripper::go_home()
     maxWidth = state.max_width;
 }
 
-
 double Gripper::read_width()
 {
     franka::GripperState state;
@@ -33,12 +29,10 @@ double Gripper::read_width()
     return state.width;
 }
 
-
 double Gripper::max_width() const
 {
     return maxWidth;
 }
-
 
 void Gripper::close_gripper(double width, double force)
 {
@@ -47,9 +41,7 @@ void Gripper::close_gripper(double width, double force)
     // to gripper to maintain the force indefinitely
     double deviation = maxWidth;
     gripper->grasp(width, 0.05, force, deviation, deviation);
-
 }
-
 
 bool Gripper::is_gripping()
 {
@@ -58,12 +50,10 @@ bool Gripper::is_gripping()
     return state.is_grasped;
 }
 
-
 void Gripper::move_gripper(double width)
 {
     gripper->move(width, 0.05);
 }
-
 
 void Gripper::stop()
 {

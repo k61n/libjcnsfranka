@@ -78,7 +78,7 @@ namespace JcnsFranka {
         /**
          * @brief move_linear
          * Performs relative motion in cartesian space but ensures its
-         * linear tajectory. As a consequence this movement might be
+         * linear trajectory. As a consequence this movement might be
          * particularly slow
          * @param dx relative displacement in X axis [m]
          * @param dy relative displacement in Y axis [m]
@@ -97,7 +97,7 @@ namespace JcnsFranka {
 
         /**
          * @brief is_gripping
-         * Checks gripping status of the end-effecor
+         * Checks gripping status of the end-effector
          * @return True if end-effector is closed
          */
         bool is_gripping();
