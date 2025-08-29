@@ -1,3 +1,16 @@
+jcnsfranka (0.4.1) unstable; urgency=medium
+
+  * upd release script
+  * do not use `input` variable
+  * add comment regarding `move_linear` method
+  * add call to return if robot is moving
+  * fix formatting and typos
+  * return robot state as a structure
+  * jcnsfranka: simplify code to read states
+  * pyjcnsfranka: python < 3.8 is not relevant
+
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Fri, 29 Aug 2025 16:06:14 +0200
+
 jcnsfranka (0.4.0) unstable; urgency=medium
 
   * implement robot pose reading through a callback function in liborl when the robot is moving
