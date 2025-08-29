@@ -122,8 +122,8 @@ class FrankaRobot:
         :param joints: an array with angles for the joints [rad].
         :param speed_factor: fraction of max joint speed [a.u.].
         """
-        input = (c_double * len(joints))(*joints)
-        self.lib.move_joints(self.obj, input, speed_factor)
+        j = (c_double * len(joints))(*joints)
+        self.lib.move_joints(self.obj, j, speed_factor)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
