@@ -152,7 +152,7 @@ void Robot::move_relative(double dx, double dy, double dz, double dt)
 void Robot::move_linear(double dx, double dy, double dz)
 {
     double distance = sqrt(dx * dx + dy * dy + dz * dz);
-    double step = 0.001;
+    double step = 0.001; // steps are 1 mm
     int n = std::ceil(distance / step);
     double ddx = dx / n;
     double ddy = dy / n;
