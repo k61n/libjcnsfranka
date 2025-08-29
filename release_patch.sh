@@ -23,7 +23,7 @@ git push origin master
 git tag -a -m "" $new_tag
 git push --tags origin master
 
+ssh jenkins.admin.frm2.tum.de -p 29417 build docker/MLZDebianPackage -s -p PROJECT=jcns/tango/franka -p BASEIMAGE=mlzbase/trixie -p BUILDFROM=build -p BRANCH=master > /dev/null 2>&1 &
 ssh jenkins.admin.frm2.tum.de -p 29417 build docker/MLZDebianPackage -s -p PROJECT=jcns/tango/franka -p BASEIMAGE=mlzbase/bookworm -p BUILDFROM=build -p BRANCH=master > /dev/null 2>&1 &
-ssh jenkins.admin.frm2.tum.de -p 29417 build docker/MLZDebianPackage -s -p PROJECT=jcns/tango/franka -p BASEIMAGE=mlzbase/bullseye -p BUILDFROM=build -p BRANCH=master > /dev/null 2>&1 &
-ssh jenkins.admin.frm2.tum.de -p 29417 build docker/MLZDebianPackage -s -p PROJECT=jcns/tango/franka -p BASEIMAGE=mlzbase/jammy -p BUILDFROM=build -p BRANCH=master > /dev/null 2>&1 &
-ssh jenkins.admin.frm2.tum.de -p 29417 build docker/MLZDebianPackage -s -p PROJECT=jcns/tango/franka -p BASEIMAGE=mlzbase/focal -p BUILDFROM=build -p BRANCH=master > /dev/null 2>&1 &
+#ssh jenkins.admin.frm2.tum.de -p 29417 build docker/MLZDebianPackage -s -p PROJECT=jcns/tango/franka -p BASEIMAGE=mlzbase/noble -p BUILDFROM=build -p BRANCH=master > /dev/null 2>&1 &
+#ssh jenkins.admin.frm2.tum.de -p 29417 build docker/MLZDebianPackage -s -p PROJECT=jcns/tango/franka -p BASEIMAGE=mlzbase/jammy -p BUILDFROM=build -p BRANCH=master > /dev/null 2>&1 &
