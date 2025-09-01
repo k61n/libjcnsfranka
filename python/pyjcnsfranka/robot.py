@@ -52,6 +52,12 @@ class FrankaRobot:
         self.lib.is_gripping.argtypes = [c_void_p]
         self.lib.is_gripping.restype = c_bool
 
+        self.lib.read_gripper_force.argtypes = [c_void_p]
+        self.lib.read_gripper_force.restype = c_double
+
+        self.lib.read_gripper_width.argtypes = [c_void_p]
+        self.lib.read_gripper_width.restype = c_double
+
         self.lib.close_gripper.argtypes = [c_void_p, c_double, c_double]
         self.lib.close_gripper.restype = None
 
@@ -168,6 +174,26 @@ class FrankaRobot:
         :return: True if end-effector is closed.
         """
         result = self.lib.is_gripping(self.obj)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
+        return result
+
+    def read_gripper_force(self):
+        """
+        Returns last applied gripper force.
+        :return: last applied gripper force [N].
+        """
+        result = self.lib.read_gripper_force(self.obj)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
+        return result
+
+    def read_gripper_width(self):
+        """
+        Reads current gripper opening width.
+        :return: current gripper opening width [m].
+        """
+        result = self.lib.read_gripper_width(self.obj)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
         return result

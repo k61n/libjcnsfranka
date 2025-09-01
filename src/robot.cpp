@@ -87,6 +87,7 @@ void Robot::go_home()
             },
             q_goal, speed_factor);
         gripper->go_home();
+        gripperforce = 0;
         frankaerror = "";
     }
     catch (franka::Exception const& e)
@@ -206,16 +207,40 @@ bool Robot::is_gripping()
     return gripper_state;
 }
 
+double Robot::read_gripper_force() const
+{
+    return gripperforce;
+}
+
+double Robot::read_gripper_width()
+{
+    if (!is_moving())
+    {
+        try
+        {
+            gripperwidth = gripper->read_width();
+            frankaerror = "";
+        }
+        catch (franka::Exception const &e)
+        {
+            frankaerror = std::string(e.what());
+        }
+    }
+    return gripperwidth;
+}
+
 void Robot::close_gripper(double width, double force)
 {
     moving = true;
     try
     {
+        gripperforce = force;
         gripper->close_gripper(width, force);
         frankaerror = "";
     }
     catch (franka::Exception const& e)
     {
+        gripperforce = 0;
         frankaerror = std::string(e.what());
     }
     moving = false;
@@ -223,6 +248,7 @@ void Robot::close_gripper(double width, double force)
 
 void Robot::move_gripper(double width)
 {
+    gripperforce = 0;
     moving = true;
     try
     {

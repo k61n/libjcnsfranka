@@ -80,6 +80,16 @@ extern "C"
         return self->is_gripping();
     }
 
+    double read_gripper_force(JcnsFranka::Robot* self)
+    {
+        return self->read_gripper_force();
+    }
+
+    double read_gripper_width(JcnsFranka::Robot* self)
+    {
+        return self->read_gripper_width();
+    }
+
     void close_gripper(JcnsFranka::Robot* self, double width, double force)
     {
         self->close_gripper(width, force);

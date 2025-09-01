@@ -110,6 +110,20 @@ namespace JcnsFranka {
         bool is_gripping();
 
         /**
+         * @brief read_gripper_force
+         * Returns last applied gripper force [N]
+         * @return last gripper opening width [N]
+         */
+        double read_gripper_force() const;
+
+        /**
+         * @brief read_gripper_width
+         * Reads current gripper opening width [m]
+         * @return current gripper opening width [m]
+         */
+        double read_gripper_width();
+
+        /**
          * @brief close_gripper
          * Method to grasp an object with force
          * @param width
@@ -193,6 +207,18 @@ namespace JcnsFranka {
          * JcnsFranka::Robot::state
          */
         void copy_state(const franka::RobotState& frankastate);
+
+        /**
+         * @brief gripperwidth
+         * Last set gripper force.
+         */
+        double gripperforce = 0;
+
+        /**
+         * @brief gripperwidth
+         * Last set gripper width.
+         */
+        double gripperwidth = 0;
     };
 }
 
