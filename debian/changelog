@@ -1,3 +1,9 @@
+jcnsfranka (0.4.2) unstable; urgency=medium
+
+  * rewrite handling of gripper states
+
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Mon, 01 Sep 2025 15:53:42 +0200
+
 jcnsfranka (0.4.1) unstable; urgency=medium
 
   * upd release script
