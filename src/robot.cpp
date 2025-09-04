@@ -30,20 +30,20 @@ const Coordinates& Robot::read_state()
 {
     if (!is_moving())
     {
-        orl::Pose pose;
         try
         {
-            state.joints = robot->get_current_Joints();
-            pose = robot->get_current_pose();
+            franka::RobotState s = robot->get_franka_robot().readOnce();
+            state.joints = s.q;
+            auto pose = orl::Pose(s.O_T_EE);
+            state.xyz[0] = pose.getPosition()[0];
+            state.xyz[1] = pose.getPosition()[1];
+            state.xyz[2] = pose.getPosition()[2];
             frankaerror = "";
         }
         catch (franka::Exception const& e)
         {
             frankaerror = std::string(e.what());
         }
-        state.xyz[0] = pose.getPosition()[0];
-        state.xyz[1] = pose.getPosition()[1];
-        state.xyz[2] = pose.getPosition()[2];
     }
     return state;
 }
@@ -282,7 +282,7 @@ void Robot::copy_state(const franka::RobotState &frankastate)
 {
     Coordinates temp{};
     temp.joints = frankastate.q;
-    auto pose = orl::Pose(frankastate.O_T_EE_c);
+    auto pose = orl::Pose(frankastate.O_T_EE);
     temp.xyz[0] = pose.getPosition()[0];
     temp.xyz[1] = pose.getPosition()[1];
     temp.xyz[2] = pose.getPosition()[2];
