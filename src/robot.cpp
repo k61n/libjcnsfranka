@@ -131,16 +131,17 @@ void Robot::move_relative(double dx, double dy, double dz, double dt)
         double s = sqrt(dx * dx + dy * dy + dz * dz);
         // fastest time for franka to perform a movement
         dt = s/vmax + vmax/amax;
+        // 10 * t is empirical value to allow franka move smooth yet fast
+        dt *= 10;
     }
     try
     {
-        // 10 * t is empirical value to allow franka move smooth yet fast
         robot->relative_cart_motion(
             [&](const franka::RobotState& frankastate)
             {
                 copy_state(frankastate);
             },
-            dx, dy, dz, 10 * dt);
+            dx, dy, dz, dt);
         frankaerror = "";
     }
     catch (franka::Exception const& e)
