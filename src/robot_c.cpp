@@ -14,16 +14,16 @@ extern "C"
         delete self;
     }
 
-    struct JcnsFrankaState
+    struct JcnsFrankaPose
     {
         double joints[7];
         double xyz[3];
     };
 
-    JcnsFrankaState read_state(JcnsFranka::Robot* self)
+    JcnsFrankaPose read_state(JcnsFranka::Robot* self)
     {
-        JcnsFranka::Coordinates state = self->read_state();
-        JcnsFrankaState result{};
+        JcnsFranka::Pose state = self->read_state();
+        JcnsFrankaPose result{};
         for (int i = 0; i < 7; i++)
             result.joints[i] = state.joints[i];
         for (int i = 0; i < 3; i++)

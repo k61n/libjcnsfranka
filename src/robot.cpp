@@ -26,26 +26,27 @@ Robot::~Robot()
     delete robot;
 }
 
-const Coordinates& Robot::read_state()
+Pose Robot::read_state()
 {
     if (!is_moving())
     {
         try
         {
-            franka::RobotState s = robot->get_franka_robot().readOnce();
-            state.joints = s.q;
-            auto pose = orl::Pose(s.O_T_EE);
-            state.xyz[0] = pose.getPosition()[0];
-            state.xyz[1] = pose.getPosition()[1];
-            state.xyz[2] = pose.getPosition()[2];
-            frankaerror = "";
+            state = robot->get_franka_robot().readOnce();
         }
         catch (franka::Exception const& e)
         {
             frankaerror = std::string(e.what());
         }
     }
-    return state;
+    Pose pose{};
+    pose.joints = state.q;
+    auto orlpose = orl::Pose(state.O_T_EE);
+    pose.xyz[0] = orlpose.getPosition()[0];
+    pose.xyz[1] = orlpose.getPosition()[1];
+    pose.xyz[2] = orlpose.getPosition()[2];
+    frankaerror = "";
+    return pose;
 }
 
 bool Robot::is_moving() const
@@ -83,7 +84,7 @@ void Robot::go_home()
         robot->joint_motion(
             [&](const franka::RobotState& frankastate)
             {
-                copy_state(frankastate);
+                state = frankastate;
             },
             q_goal, speed_factor);
         gripper->go_home();
@@ -107,7 +108,7 @@ void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
             robot->joint_motion(
                 [&](const franka::RobotState& frankastate)
                 {
-                    copy_state(frankastate);
+                    state = frankastate;
                 },
                 joints, speed_factor);
             frankaerror = "";
@@ -139,7 +140,7 @@ void Robot::move_relative(double dx, double dy, double dz, double dt)
         robot->relative_cart_motion(
             [&](const franka::RobotState& frankastate)
             {
-                copy_state(frankastate);
+                state = frankastate;
             },
             dx, dy, dz, dt);
         frankaerror = "";
@@ -181,7 +182,7 @@ void Robot::move_absolute(double x, double y, double z)
         robot->absolute_cart_motion(
             [&](const franka::RobotState& frankastate)
             {
-                copy_state(frankastate);
+                state = frankastate;
             },
             x, y, z, 10 * t);
         frankaerror = "";
@@ -277,15 +278,4 @@ void Robot::reset_error()
 {
     robot->get_franka_robot().automaticErrorRecovery();
     frankaerror = "";
-}
-
-void Robot::copy_state(const franka::RobotState &frankastate)
-{
-    Coordinates temp{};
-    temp.joints = frankastate.q;
-    auto pose = orl::Pose(frankastate.O_T_EE);
-    temp.xyz[0] = pose.getPosition()[0];
-    temp.xyz[1] = pose.getPosition()[1];
-    temp.xyz[2] = pose.getPosition()[2];
-    state = temp;
 }

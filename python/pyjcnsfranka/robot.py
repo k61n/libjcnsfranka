@@ -2,7 +2,7 @@
 from ctypes import *
 
 
-class FrankaState(Structure):
+class FrankaPose(Structure):
     _fields_ = [("joints", c_double * 7), ("xyz", c_double * 3)]
 
     def to_dict(self):
@@ -25,7 +25,7 @@ class FrankaRobot:
         self.lib.deinit.restype = None
 
         self.lib.read_state.argtypes = [c_void_p]
-        self.lib.read_state.restype = FrankaState
+        self.lib.read_state.restype = FrankaPose
 
         self.lib.is_moving.argtypes = [c_void_p]
         self.lib.is_moving.restype = c_bool

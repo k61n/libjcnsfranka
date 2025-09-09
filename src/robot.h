@@ -10,7 +10,7 @@ namespace JcnsFranka {
      * @brief The Coordinates class
      * Used to output the state functions.
      */
-    struct Coordinates {
+    struct Pose {
         std::array<double, 7> joints;
         std::array<double, 3> xyz;
     };
@@ -36,7 +36,7 @@ namespace JcnsFranka {
          * Reads current joints and end-effector positions
          * @return current joints and end-effector positions
          */
-        const Coordinates& read_state();
+        Pose read_state();
 
         /**
          * @brief is_moving
@@ -199,14 +199,7 @@ namespace JcnsFranka {
          * @brief state
          * Stores current robot state
          */
-        Coordinates state{};
-
-        /**
-         * @brief copy_state
-         * Convenience function to copy franka::RobotState to
-         * JcnsFranka::Robot::state
-         */
-        void copy_state(const franka::RobotState& frankastate);
+        franka::RobotState state{};
 
         /**
          * @brief gripperwidth

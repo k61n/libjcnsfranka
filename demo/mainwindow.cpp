@@ -78,7 +78,7 @@ void MainWindow::on_stateChanged()
 
 void MainWindow::on_updJBtn_clicked()
 {
-    JcnsFranka::Coordinates state = robot->read_state();
+    JcnsFranka::Pose state = robot->read_state();
     int i = 0;
     foreach (QDoubleSpinBox *box, boxList)
     {
@@ -101,7 +101,7 @@ void MainWindow::on_clearBtn_clicked()
 void MainWindow::on_readBtn_clicked()
 {
     ui->connectionEdit->clear();
-    JcnsFranka::Coordinates state = robot->read_state();
+    JcnsFranka::Pose state = robot->read_state();
     check_error();
     for (int i=0; i<state.joints.max_size(); i++)
     {
