@@ -1,3 +1,10 @@
+jcnsfranka (0.4.4) unstable; urgency=medium
+
+  * avoid calculations in control loop of FEP
+  * fix `move_relative` dt parameter
+
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Mon, 15 Sep 2025 16:05:37 +0200
+
 jcnsfranka (0.4.3) unstable; urgency=medium
 
   * Measure end-effector pose for calculating cartesian coordinates
