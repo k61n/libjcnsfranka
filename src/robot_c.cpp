@@ -70,9 +70,9 @@ extern "C"
         self->move_linear(dx, dy, dz);
     }
 
-    void move_absolute(JcnsFranka::Robot* self, double x, double y, double z)
+    void move_absolute(JcnsFranka::Robot* self, double x, double y, double z, double dt)
     {
-        self->move_absolute(x, y, z);
+        self->move_absolute(x, y, z, dt);
     }
 
     bool is_gripping(JcnsFranka::Robot* self)
