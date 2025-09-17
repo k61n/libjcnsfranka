@@ -105,13 +105,20 @@ void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
     {
         if ((speed_factor > 0) && (speed_factor <= 1))
         {
-            robot->joint_motion(
-                [&](const franka::RobotState& frankastate)
-                {
-                    state = frankastate;
-                },
-                joints, speed_factor);
-            frankaerror = "";
+            try
+            {
+                robot->joint_motion(
+                    [&](const franka::RobotState& frankastate)
+                    {
+                        state = frankastate;
+                    },
+                    joints, speed_factor);
+                frankaerror = "";
+            }
+            catch (franka::Exception const& e)
+            {
+                frankaerror = std::string(e.what());
+            }
         } else
         {
             frankaerror = "jcnsfranka: speed_factor must be in range 0..1";
