@@ -11,7 +11,6 @@ Robot::Robot(char* ip)
     {
         robot = new orl::Robot(ipstring);
         gripper = new Gripper(ipstring);
-        frankaerror = "";
     }
     catch (franka::Exception const& e) {
         frankaerror = std::string(e.what());
@@ -45,7 +44,6 @@ Pose Robot::read_state()
     pose.xyz[0] = orlpose.getPosition()[0];
     pose.xyz[1] = orlpose.getPosition()[1];
     pose.xyz[2] = orlpose.getPosition()[2];
-    frankaerror = "";
     return pose;
 }
 
@@ -64,7 +62,6 @@ void Robot::set_load(double load_mass, const std::array<double, 3>& F_x_Cload,
     try
     {
         robot->setLoad(payload);
-        frankaerror = "";
     }
     catch (franka::Exception const& e)
     {
@@ -89,7 +86,6 @@ void Robot::go_home()
             q_goal, speed_factor);
         gripper->go_home();
         gripperforce = 0;
-        frankaerror = "";
     }
     catch (franka::Exception const& e)
     {
@@ -113,7 +109,6 @@ void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
                         state = frankastate;
                     },
                     joints, speed_factor);
-                frankaerror = "";
             }
             catch (franka::Exception const& e)
             {
@@ -150,7 +145,6 @@ void Robot::move_relative(double dx, double dy, double dz, double dt)
                 state = frankastate;
             },
             dx, dy, dz, dt);
-        frankaerror = "";
     }
     catch (franka::Exception const& e)
     {
@@ -195,7 +189,6 @@ void Robot::move_absolute(double x, double y, double z, double dt)
                 state = frankastate;
             },
             x, y, z, dt);
-        frankaerror = "";
     }
     catch (franka::Exception const& e)
     {
@@ -210,7 +203,6 @@ bool Robot::is_gripping()
     try
     {
         gripper_state = gripper->is_gripping();
-        frankaerror = "";
     }
     catch (franka::Exception const& e)
     {
@@ -231,7 +223,6 @@ double Robot::read_gripper_width()
         try
         {
             gripperwidth = gripper->read_width();
-            frankaerror = "";
         }
         catch (franka::Exception const &e)
         {
@@ -248,7 +239,6 @@ void Robot::close_gripper(double width, double force)
     {
         gripperforce = force;
         gripper->close_gripper(width, force);
-        frankaerror = "";
     }
     catch (franka::Exception const& e)
     {
@@ -265,7 +255,6 @@ void Robot::move_gripper(double width)
     try
     {
         gripper->move_gripper(width);
-        frankaerror = "";
     }
     catch (franka::Exception const& e)
     {
