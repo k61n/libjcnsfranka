@@ -46,7 +46,8 @@ class FrankaRobot:
         self.lib.move_linear.argtypes = [c_void_p, c_double, c_double, c_double]
         self.lib.move_linear.restype = None
 
-        self.lib.move_absolute.argtypes = [c_void_p, c_double, c_double, c_double]
+        self.lib.move_absolute.argtypes = [c_void_p, c_double, c_double,
+                                           c_double, c_double]
         self.lib.move_absolute.restype = None
 
         self.lib.is_gripping.argtypes = [c_void_p]
@@ -157,14 +158,15 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
-    def move_absolute(self, x, y, z):
+    def move_absolute(self, x, y, z, dt=0):
         """
         Perform motion of the robot to a given coordinate in cartesian space.
         :param x: target X coordinate in cartesian space [m].
         :param y: target Y coordinate in cartesian space [m].
         :param z: target Z coordinate in cartesian space [m].
+        :param dt: time to complete the movement [s].
         """
-        self.lib.move_absolute(self.obj, x, y, z)
+        self.lib.move_absolute(self.obj, x, y, z, dt)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 

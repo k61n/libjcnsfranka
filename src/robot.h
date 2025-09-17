@@ -99,8 +99,9 @@ namespace JcnsFranka {
          * @param x target X coordinate in cartesian space [m]
          * @param y target Y coordinate in cartesian space [m]
          * @param z target Z coordinate in cartesian space [m]
+         * @param dt time to complete the movement [s]
          */
-        void move_absolute(double x, double y, double z);
+        void move_absolute(double x, double y, double z, double dt=0);
 
         /**
          * @brief is_gripping
