@@ -13,13 +13,13 @@ class FrankaRobot:
     """
     Python wrapper of JcnsFranka::Robot class in JcnsFranka C++ library.
     """
-    def __init__(self, ip):
+    def __init__(self, ip, realtime_config=False):
 
         self.lib = CDLL('libjcnsfranka.so', winmode=0)
-        self.lib.init.argtypes = [c_char_p]
+        self.lib.init.argtypes = [c_char_p, c_int8]
         self.lib.init.restype = c_void_p
         buffer = create_string_buffer(ip.encode('utf-8'))
-        self.obj = self.lib.init(buffer)
+        self.obj = self.lib.init(buffer, int(not realtime_config))
 
         self.lib.deinit.argtypes = [c_void_p]
         self.lib.deinit.restype = None

@@ -4,9 +4,9 @@
 
 extern "C"
 {
-    JcnsFranka::Robot* init(char *ip)
+    JcnsFranka::Robot* init(char *ip, int realtime_config)
     {
-        return new JcnsFranka::Robot(ip);
+        return new JcnsFranka::Robot(ip, realtime_config);
     }
 
     void deinit(JcnsFranka::Robot* self)

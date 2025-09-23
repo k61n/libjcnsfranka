@@ -4,17 +4,22 @@
 
 using namespace JcnsFranka;
 
-Robot::Robot(char* ip)
+Robot::Robot(char* ip, franka::RealtimeConfig realtime_config)
 {
     std::string ipstring(ip);
     try
     {
-        robot = new orl::Robot(ipstring);
+        robot = new orl::Robot(ipstring, realtime_config);
         gripper = new Gripper(ipstring);
     }
-    catch (franka::Exception const& e) {
+    catch (franka::Exception const& e)
+    {
         frankaerror = std::string(e.what());
     }
+}
+
+Robot::Robot(char *ip, int realtime_config) : Robot(ip, static_cast<franka::RealtimeConfig>(realtime_config))
+{
 }
 
 Robot::~Robot()

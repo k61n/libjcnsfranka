@@ -27,8 +27,12 @@ namespace JcnsFranka {
          * @brief Robot
          * Establishes the connection to the Franka robot
          * @param ip name or ip of the Franka robot
+         * @param realtime_config if set to Enforce, an exception will be thrown
+         * if realtime priority cannot be set when required.
+         * Setting realtime_config to Ignore disables this behavior.
          */
-        explicit Robot(char *ip);
+        explicit Robot(char *ip, franka::RealtimeConfig realtime_config = franka::RealtimeConfig::kIgnore);
+        explicit Robot(char *ip, int realtime_config);
         ~Robot();
 
         /**
