@@ -27,6 +27,12 @@ class FrankaRobot:
         self.lib.read_state.argtypes = [c_void_p]
         self.lib.read_state.restype = FrankaPose
 
+        self.lib.read_mode.argtypes = [c_void_p]
+        self.lib.read_mode.restype = c_int8
+
+        self.lib.read_csr.argtypes = [c_void_p]
+        self.lib.read_csr.restype = c_double
+
         self.lib.is_moving.argtypes = [c_void_p]
         self.lib.is_moving.restype = c_bool
 
@@ -89,6 +95,27 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
         return result.to_dict()
+
+    def read_mode(self):
+        """
+        Reads current robot mode.
+        :return: robot mode.
+        """
+        result = self.lib.read_mode(self.obj)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
+        return result
+
+    def read_csr(self):
+        """
+        Reads current control command success rate.
+        :return: Percentage of the last 100 control commands that were
+            successfully received by the robot.
+        """
+        result = self.lib.read_csr(self.obj)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
+        return result
 
     def is_moving(self):
         """

@@ -31,6 +31,16 @@ extern "C"
         return result;
     }
 
+    int read_mode(JcnsFranka::Robot* self)
+    {
+        return static_cast<int>(self->read_mode());
+    }
+
+    double read_csr(JcnsFranka::Robot* self)
+    {
+        return self->read_csr();
+    }
+
     bool is_moving(JcnsFranka::Robot* self)
     {
         return self->is_moving();

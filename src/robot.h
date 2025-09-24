@@ -43,6 +43,20 @@ namespace JcnsFranka {
         Pose read_state();
 
         /**
+         * @brief read_mode
+         * @return Current robot mode
+         */
+        franka::RobotMode read_mode() const;
+
+        /**
+         * @brief read_csr
+         * Reads current control command success rate
+         * @return Percentage of the last 100 control commands that were
+         * successfully received by the robot
+         */
+        double read_csr() const;
+
+        /**
          * @brief is_moving
          * Reads if robot is currently moving
          * @return true if robot is moving

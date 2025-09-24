@@ -52,6 +52,16 @@ Pose Robot::read_state()
     return pose;
 }
 
+franka::RobotMode Robot::read_mode() const
+{
+    return state.robot_mode;
+}
+
+double Robot::read_csr() const
+{
+    return state.control_command_success_rate;
+}
+
 bool Robot::is_moving() const
 {
     return moving;
