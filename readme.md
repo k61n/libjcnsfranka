@@ -60,9 +60,18 @@ find_package(jcnsfranka REQUIRED)
 
 Demo
 ----
-jcnsfranka-demo is built against Qt5/6 and installed with libjcnsfranka.
+jcnsfranka-demo is a GUI app to control basic features of the robot.
+It is built against Qt5/6 and installed with libjcnsfranka.
 ```bash
 jcnsfranka-demo
+```
+
+Communication test
+----
+jcnsfranka-comtest is a python script to send 10k commands to robot and report
+success rate. It is installed with libjcnsfranka.
+```bash
+jcnsfranka-comtest -h
 ```
 
 PyJcnsFranka

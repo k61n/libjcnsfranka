@@ -16,12 +16,20 @@ Usage
 ```python
 from pyjcnsfranka.robot import FrankaRobot
 
-robot = FrankaRobot('192.168.201.2')
+
+robot_ip = '192.168.1.2'
+realtime_config = False
+robot = FrankaRobot(robot_ip, realtime_config)
 robot.go_home()
 ```
 
 ```python
 from pyjcnsfranka.robot import comtest
 
-comtest('192.168.201.2')
+
+robot_ip = '192.168.1.2'
+realtime_config = True
+limit_rate = True
+cutoff_frequency = 1000
+comtest(robot_ip, realtime_config, limit_rate, cutoff_frequency)
 ```
