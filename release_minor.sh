@@ -9,6 +9,8 @@ new_tag="${major}.${new_minor}.0"
 
 sed "s/VERSION ${tag#v}/VERSION ${new_tag#v}/" CMakeLists.txt > CMakeLists.txt.new
 mv CMakeLists.txt.new CMakeLists.txt
+sed "s/libjcnsfranka.so.${tag#v}/libjcnsfranka.so.${new_tag#v}/" python/pyjcnsfranka/robot.py > python/pyjcnsfranka/robot.py.new
+mv python/pyjcnsfranka/robot.py.new python/pyjcnsfranka/robot.py
 
 header="jcnsfranka (${new_tag#v}) unstable; urgency=medium\n"
 changelog=$(git log --pretty=format:"  * %s" ${tag}..HEAD)
@@ -18,6 +20,7 @@ mv debian/changelog.new debian/changelog
 
 git add debian/changelog
 git add CMakeLists.txt
+git add python/pyjcnsfranka/robot.py
 git commit -m "Update changelog for $new_tag release"
 git push origin master
 git tag -a -m "" $new_tag

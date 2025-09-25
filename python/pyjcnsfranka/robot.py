@@ -15,7 +15,7 @@ class FrankaRobot:
     """
     def __init__(self, ip, realtime_config=False):
 
-        self.lib = CDLL('libjcnsfranka.so', winmode=0)
+        self.lib = CDLL('libjcnsfranka.so.0.4.5', winmode=0)
         self.lib.init.argtypes = [c_char_p, c_int8]
         self.lib.init.restype = c_void_p
         buffer = create_string_buffer(ip.encode('utf-8'))
