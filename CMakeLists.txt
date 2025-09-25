@@ -74,8 +74,18 @@ install(EXPORT jcnsfrankaTargets
     NAMESPACE jcnsfranka::
     DESTINATION ${INSTALL_CONFIGDIR})
 # python library
+if (APPLE)
+execute_process(
+    COMMAND "${Python3_EXECUTABLE}" -c "import site; print(site.getusersitepackages())"
+    OUTPUT_VARIABLE PY_INSTALL_DIR
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
 install(DIRECTORY python/pyjcnsfranka
-    DESTINATION "${Python3_SITELIB}")
+    DESTINATION "${PY_INSTALL_DIR}")
+else ()
+    install(DIRECTORY python/pyjcnsfranka
+        DESTINATION "${Python3_SITELIB}")
+endif ()
 install(FILES python/bin/jcnsfranka-comtest
     DESTINATION ${CMAKE_INSTALL_BINDIR})
 
