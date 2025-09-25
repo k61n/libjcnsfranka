@@ -9,8 +9,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(orl REQUIRED)
-find_package(Eigen3 REQUIRED)
-find_package(Boost REQUIRED CONFIG)
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 find_package(Qt6 COMPONENTS Widgets QUIET)
 if (${Qt6_FOUND})
@@ -20,15 +18,12 @@ else ()
     set(QtV 5)
 endif ()
 
-include_directories(${EIGEN3_INCLUDE_DIR})
-include_directories(${Boost_INCLUDE_DIRS})
-
 # libjcnsfranka
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
 add_library(jcnsfranka SHARED ${SOURCES})
 set_target_properties(jcnsfranka PROPERTIES
     VERSION ${jcnsfranka_VERSION}
-    SOVERSION ${jcnsfranka_VERSION_MAJOR}
+    SOVERSION ${jcnsfranka_VERSION_MAJOR}.${jcnsfranka_VERSION_MINOR}
     OUTPUT_NAME "jcnsfranka")
 target_compile_definitions(jcnsfranka PUBLIC JCNSFRANKA_LIBRARY)
 target_link_libraries(jcnsfranka orl::orl)
