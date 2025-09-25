@@ -36,7 +36,8 @@ MainWindow::~MainWindow()
 void MainWindow::on_connectBtn_clicked()
 {
     std::string ip = ui->ipLine->text().toStdString();
-    this->robot = new JcnsFranka::Robot(ip.data());
+    bool realtime_config = ui->realtimeBox->isChecked();
+    this->robot = new JcnsFranka::Robot(ip.data(), realtime_config);
     check_error();
 }
 
