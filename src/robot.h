@@ -206,7 +206,7 @@ namespace JcnsFranka {
          * @brief frankaerror
          * Description of error from libfranka
          */
-        std::string frankaerror = "";
+        std::string frankaerror;
 
         /**
          * @brief moving
