@@ -125,8 +125,8 @@ extern "C"
         self->reset_error();
     }
 
-    uint64_t communication_test(char *ip, bool limit_rate, double cutoff_frequency)
+    uint64_t communication_test(char *ip, int realtime_config, bool limit_rate, double cutoff_frequency)
     {
-        return JcnsFranka::communication_test(ip, limit_rate, cutoff_frequency);
+        return JcnsFranka::communication_test(ip, realtime_config, limit_rate, cutoff_frequency);
     }
 }

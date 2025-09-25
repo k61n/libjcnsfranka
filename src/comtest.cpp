@@ -1,8 +1,12 @@
-#include "comtest.h"
+#include <iostream>
 #include <thread>
 
+#include <liborl/liborl.h>
 
-uint64_t JcnsFranka::communication_test(char *ip, bool limit_rate, double cutoff_frequency)
+#include "comtest.h"
+
+uint64_t JcnsFranka::communication_test(char *ip, franka::RealtimeConfig realtime_config, bool limit_rate,
+                                        double cutoff_frequency)
 {
     uint64_t counter = 0;
     double avg_success_rate = 0.0;
@@ -13,7 +17,8 @@ uint64_t JcnsFranka::communication_test(char *ip, bool limit_rate, double cutoff
     std::string ipstring(ip);
     franka::Robot *robot;
     try {
-        robot = new franka::Robot(ipstring, franka::RealtimeConfig::kEnforce);
+        robot = new franka::Robot(ipstring, realtime_config);
+        robot->automaticErrorRecovery();
         franka::Torques zero_torques{{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}};
         robot->control(
             [&time, &counter, &avg_success_rate, &min_success_rate, &max_success_rate, zero_torques]
@@ -57,4 +62,9 @@ uint64_t JcnsFranka::communication_test(char *ip, bool limit_rate, double cutoff
         std::cout << "The control loop did not get executed " << lost_robot_states << " times in the\n"
                   << "last " << time << " milliseconds! (lost " << lost_robot_states << " robot states)\n\n";
     return lost_robot_states;
+}
+
+uint64_t JcnsFranka::communication_test(char *ip, int realtime_config, bool limit_rate, double cutoff_frequency)
+{
+    return communication_test(ip, static_cast<franka::RealtimeConfig>(realtime_config), limit_rate, cutoff_frequency);
 }

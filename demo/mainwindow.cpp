@@ -120,9 +120,10 @@ void MainWindow::on_readBtn_clicked()
 void MainWindow::on_cmtestBtn_clicked()
 {
     std::string ip = ui->ipLine->text().toStdString();
+    bool realtime_config = ui->realtimeBox->isChecked();
     bool limit_rate = ui->limitersBox->isChecked();
     double cutoff_frequency = ui->cutoffBox->currentText().toDouble();
-    JcnsFranka::communication_test(ip.data(), limit_rate, cutoff_frequency);
+    JcnsFranka::communication_test(ip.data(), realtime_config, limit_rate, cutoff_frequency);
 }
 
 void MainWindow::on_xPlusBtn_clicked()

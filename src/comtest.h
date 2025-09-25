@@ -1,8 +1,6 @@
 #ifndef COMTEST_H
 #define COMTEST_H
 
-#include "liborl/liborl.h"
-
 namespace JcnsFranka 
 {
     /**
@@ -13,7 +11,14 @@ namespace JcnsFranka
      * @param cutoff_frequency 1000 or low-pass filtered 100 [Hz]
      * @return number of lost states
      */
-    uint64_t communication_test(char *ip, bool limit_rate, double cutoff_frequency);
+    uint64_t communication_test(char *ip,
+                                franka::RealtimeConfig realtime_config,
+                                bool limit_rate,
+                                double cutoff_frequency);
+    uint64_t communication_test(char *ip,
+                                int realtime_config,
+                                bool limit_rate,
+                                double cutoff_frequency);
 }
 
 #endif // COMTEST_H

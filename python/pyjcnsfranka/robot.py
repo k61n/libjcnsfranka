@@ -267,16 +267,19 @@ class FrankaRobot:
         self.lib.reset_error(self.obj)
 
 
-def comtest(ip, limit_rate, cutoff_frequency):
+def comtest(ip, realtime_config, limit_rate, cutoff_frequency):
     """
     Sends 10k empty commands and controls the response.
     :param ip: name or ip address of the robot.
+    :param realtime_config: enforce True or ignore False the realtime
+        configuration.
     :param limit_rate: whether rate limiters work or not.
     :param cutoff_frequency: 1000 or low-pass filtered 100 [Hz].
     :return: number of lost states.
     """
-    lib = CDLL('libjcnsfranka.so', winmode=0)
+    lib = CDLL('libjcnsfranka.so.0.4.5', winmode=0)
     buffer = create_string_buffer(ip.encode('utf-8'))
-    lib.communication_test.argtypes = [c_char_p, c_bool, c_double]
+    lib.communication_test.argtypes = [c_char_p, c_int, c_bool, c_double]
     lib.communication_test.restype = c_uint64
-    lib.communication_test(buffer, limit_rate, cutoff_frequency)
+    lib.communication_test(buffer, int(not realtime_config), limit_rate,
+                           cutoff_frequency)
