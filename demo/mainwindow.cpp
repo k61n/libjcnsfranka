@@ -23,8 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
     boxList.append(ui->j7Box);
 
     connect(ui->moveJBtn, &QPushButton::clicked, this, &MainWindow::on_stateChanged);
-
-    this->on_connectBtn_clicked();
 }
 
 MainWindow::~MainWindow()
