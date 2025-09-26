@@ -77,7 +77,7 @@ namespace JcnsFranka
          * @brief maxWidth
          * Once gripper is initialized its max width is stored
          */
-        double maxWidth{};
+        double maxWidth = 0.081;
     };
 }
 
