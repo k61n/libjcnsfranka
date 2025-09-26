@@ -1,29 +1,45 @@
+jcnsfranka (0.4.6) unstable; urgency=medium
+
+  * string doesn't need to be initialised with empty string
+  * demo: don't connect automatically to robot
+  * import libjcnsfranka.so with version
+  * cmake: don't need to import boost and eigen
+  * cmake: remove cpack support
+  * cmake: change python installation path on macos
+  * upd readme
+  * comtest can accept realtime config
+  * demo: add passing real-time config
+  * return RobotMode and control success rate
+  * pass realtime configuration to Robot constructor
+
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Fri, 26 Sep 2025 10:22:15 +0200
+
 jcnsfranka (0.4.5) unstable; urgency=medium
 
   * `frankaerror` should not be assigned to empty string all the time
   * add missing exception handling in `move_joints`
   * fix `move_absolute` dt parameter
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Wed, 17 Sep 2025 16:27:49 +0200
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Wed, 17 Sep 2025 16:27:49 +0200
 
 jcnsfranka (0.4.4) unstable; urgency=medium
 
   * avoid calculations in control loop of FEP
   * fix `move_relative` dt parameter
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Mon, 15 Sep 2025 16:05:37 +0200
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Mon, 15 Sep 2025 16:05:37 +0200
 
 jcnsfranka (0.4.3) unstable; urgency=medium
 
   * Measure end-effector pose for calculating cartesian coordinates
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Thu, 04 Sep 2025 12:58:21 +0200
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Thu, 04 Sep 2025 12:58:21 +0200
 
 jcnsfranka (0.4.2) unstable; urgency=medium
 
   * rewrite handling of gripper states
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Mon, 01 Sep 2025 15:53:42 +0200
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Mon, 01 Sep 2025 15:53:42 +0200
 
 jcnsfranka (0.4.1) unstable; urgency=medium
 
@@ -36,7 +52,7 @@ jcnsfranka (0.4.1) unstable; urgency=medium
   * jcnsfranka: simplify code to read states
   * pyjcnsfranka: python < 3.8 is not relevant
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Fri, 29 Aug 2025 16:06:14 +0200
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Fri, 29 Aug 2025 16:06:14 +0200
 
 jcnsfranka (0.4.0) unstable; urgency=medium
 
@@ -46,7 +62,7 @@ jcnsfranka (0.4.0) unstable; urgency=medium
   * libjcnsfranka: close_gripper had wrong argument order
   * clang-tidy libjcnsfranka
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Wed, 20 Aug 2025 16:57:50 +0200
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Wed, 20 Aug 2025 16:57:50 +0200
 
 jcnsfranka (0.3.0) unstable; urgency=medium
 
@@ -69,7 +85,7 @@ jcnsfranka (0.3.0) unstable; urgency=medium
   * demo for cryo: updated routine
   * jcnsfranka: gripper doesn't perform homing on connect
 
- -- Konstantin Kholostov <k.kholostov@fz-juelich.de> Mon, 17 Mar 2025 16:44:09 +0100
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Mon, 17 Mar 2025 16:44:09 +0100
 
 jcnsfranka (0.2.5) unstable; urgency=medium
 

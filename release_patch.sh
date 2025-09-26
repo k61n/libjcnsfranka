@@ -14,7 +14,7 @@ mv python/pyjcnsfranka/robot.py.new python/pyjcnsfranka/robot.py
 
 header="jcnsfranka (${new_tag#v}) unstable; urgency=medium\n"
 changelog=$(git log --pretty=format:"  * %s" ${tag}..HEAD)
-sign="\n -- $(git config user.name) <$(git config user.email)> $(date -R)\n\n"
+sign="\n -- $(git config user.name) <$(git config user.email)>  $(date -R)\n\n"
 echo -e "$header\n$changelog\n$sign$(cat debian/changelog)" > debian/changelog.new
 mv debian/changelog.new debian/changelog
 
