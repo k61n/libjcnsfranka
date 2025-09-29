@@ -15,6 +15,19 @@ namespace JcnsFranka {
         std::array<double, 3> xyz;
     };
 
+    /**
+     * @brief The Load class
+     * describes mass, translation from flange to center of mass of load, and
+     * inertia matrix.
+     * @param mass: mass of the load in [kg]
+     * @param F_x_Cload: translation from flange to center of mass of load in [m]
+     * @param load_inertia: inertia matrix in [kg*m2], column-major
+     */
+    struct Load {
+        double mass;
+        std::array<double, 3> F_x_Cload;
+        std::array<double, 9> load_inertia;
+    };
 
     /**
      * @brief The Robot class
@@ -47,6 +60,13 @@ namespace JcnsFranka {
          * @return Current robot mode
          */
         franka::RobotMode read_mode() const;
+
+        /**
+         * @brief read_load
+         * Reads current load configuration
+         * @return current load configuration
+         */
+        Load read_load() const;
 
         /**
          * @brief read_csr

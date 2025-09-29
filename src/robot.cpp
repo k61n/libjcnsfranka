@@ -57,6 +57,15 @@ franka::RobotMode Robot::read_mode() const
     return state.robot_mode;
 }
 
+Load Robot::read_load() const
+{
+    Load res{};
+    res.mass = state.m_load;
+    res.F_x_Cload = state.F_x_Cload;
+    res.load_inertia = state.I_load;
+    return res;
+}
+
 double Robot::read_csr() const
 {
     return state.control_command_success_rate;

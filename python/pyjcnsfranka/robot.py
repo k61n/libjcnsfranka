@@ -9,6 +9,17 @@ class FrankaPose(Structure):
         return {'joints': list(self.joints), 'xyz': list(self.xyz)}
 
 
+class FrankaLoad(Structure):
+    _fields_ = [('mass', c_double),
+                ('F_x_Cload', c_double * 3),
+                ('load_inertia', c_double * 9)]
+
+    def to_dict(self):
+        return {'mass': float(self.mass),
+                'F_x_Cload': list(self.F_x_Cload),
+                'load_inertia': list(self.load_inertia)}
+
+
 class FrankaRobot:
     """
     Python wrapper of JcnsFranka::Robot class in JcnsFranka C++ library.
@@ -29,6 +40,9 @@ class FrankaRobot:
 
         self.lib.read_mode.argtypes = [c_void_p]
         self.lib.read_mode.restype = c_int8
+
+        self.lib.read_load.argtypes = [c_void_p]
+        self.lib.read_load.restype = FrankaLoad
 
         self.lib.read_csr.argtypes = [c_void_p]
         self.lib.read_csr.restype = c_double
@@ -105,6 +119,19 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
         return result
+
+    def read_load(self):
+        """
+        Reads current end-effector load configuration as a dict with keys:
+            * load_mass - mass of the load in [kg]
+            * F_x_Cload - translation from flange to center of mass of load [m]
+            * load_inertia - inertia matrix in [kg*m2], column-major
+        :return: robot load.
+        """
+        result = self.lib.read_load(self.obj)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
+        return result.to_dict()
 
     def read_csr(self):
         """

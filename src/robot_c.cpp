@@ -36,6 +36,25 @@ extern "C"
         return static_cast<int>(self->read_mode());
     }
 
+    struct JcnsFrankaLoad
+    {
+        double mass;
+        double F_x_Cload[3];
+        double load_inertia[9];
+    };
+
+    JcnsFrankaLoad read_load(JcnsFranka::Robot* self)
+    {
+        JcnsFranka::Load load = self->read_load();
+        JcnsFrankaLoad result{};
+        result.mass = load.mass;
+        for (int i = 0; i < 3; i++)
+            result.F_x_Cload[i] = load.F_x_Cload[i];
+        for (int i = 0; i < 9; i++)
+            result.load_inertia[i] = load.load_inertia[i];
+        return result;
+    };
+
     double read_csr(JcnsFranka::Robot* self)
     {
         return self->read_csr();
