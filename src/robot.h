@@ -6,13 +6,19 @@
 
 
 namespace JcnsFranka {
+
     /**
-     * @brief The Coordinates class
-     * Used to output the state functions.
+     * @brief The Pose class
+     * describes pose as joint angles, as cartesian coordinates,
+     * and as roll, pitch and yaw angles of the end-effector.
+     * @param joints: joint angles
+     * @param xyz: cartesian coordinates in X, Y and Z axes
+     * @param rpy: roll, pitch and yaw angles of the end-effector
      */
     struct Pose {
         std::array<double, 7> joints;
         std::array<double, 3> xyz;
+        std::array<double, 3> rpy;
     };
 
     /**

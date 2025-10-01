@@ -49,6 +49,7 @@ Pose Robot::read_state()
     pose.xyz[0] = orlpose.getPosition()[0];
     pose.xyz[1] = orlpose.getPosition()[1];
     pose.xyz[2] = orlpose.getPosition()[2];
+    orlpose.get_RPY(pose.rpy[0], pose.rpy[1], pose.rpy[2]);
     return pose;
 }
 

@@ -3,10 +3,14 @@ from ctypes import *
 
 
 class FrankaPose(Structure):
-    _fields_ = [("joints", c_double * 7), ("xyz", c_double * 3)]
+    _fields_ = [("joints", c_double * 7),
+                ("xyz", c_double * 3),
+                ("rpy", c_double * 3)]
 
     def to_dict(self):
-        return {'joints': list(self.joints), 'xyz': list(self.xyz)}
+        return {'joints': list(self.joints),
+                'xyz': list(self.xyz),
+                'rpy': list(self.rpy)}
 
 
 class FrankaLoad(Structure):

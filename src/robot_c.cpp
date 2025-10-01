@@ -18,6 +18,7 @@ extern "C"
     {
         double joints[7];
         double xyz[3];
+        double rpy[3];
     };
 
     JcnsFrankaPose read_state(JcnsFranka::Robot* self)
@@ -28,6 +29,8 @@ extern "C"
             result.joints[i] = state.joints[i];
         for (int i = 0; i < 3; i++)
             result.xyz[i] = state.xyz[i];
+        for (int i = 0; i < 3; i++)
+            result.rpy[i] = state.rpy[i];
         return result;
     }
 
