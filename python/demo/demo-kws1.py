@@ -15,13 +15,13 @@ if __name__ == '__main__':
 
     # move robot to the sample side
     robot.move_joints(grab_pose, 0.1)
-    robot.move_gripper(0.03)
+    robot.set_gripper_width(0.03)
 
     # move to sample
-    pos = robot.read_state()[7:]
+    pos = robot.read_pose()[7:]
     robot.move_absolute(sample1[0], sample1[1], pos[2])
     robot.move_absolute(sample1[0], sample1[1], sample1[2])
-    robot.close_gripper(0, 20)
+    robot.grasp(0, 20)
     for i in range(8):
         # if i == 5:
         #     robot.move_relative(-0.005, 0, 0)
@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     # lift up the sample
     robot.move_joints(home_pose, 0.1)
-    pos = robot.read_state()[7:]
+    pos = robot.read_pose()[7:]
     robot.move_absolute(pos[0], pos[1], above_magnet[2])
 
     # align to magnet
@@ -50,5 +50,5 @@ if __name__ == '__main__':
         # if i == 5:
         #     robot.move_relative(0.005, 0, 0)
         robot.move_relative(0, 0, -0.005)
-    robot.move_gripper(0.1)
+    robot.set_gripper_width(0.1)
     robot.move_absolute(sample1[0], sample1[1], pos[2])

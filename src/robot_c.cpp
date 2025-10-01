@@ -4,6 +4,20 @@
 
 extern "C"
 {
+    struct JcnsFrankaPose
+    {
+        double joints[7];
+        double xyz[3];
+        double rpy[3];
+    };
+    
+    struct JcnsFrankaLoad
+    {
+        double mass;
+        double F_x_Cload[3];
+        double load_inertia[9];
+    };
+
     JcnsFranka::Robot* init(char *ip, int realtime_config)
     {
         return new JcnsFranka::Robot(ip, realtime_config);
@@ -14,16 +28,19 @@ extern "C"
         delete self;
     }
 
-    struct JcnsFrankaPose
+    void reference(JcnsFranka::Robot* self)
     {
-        double joints[7];
-        double xyz[3];
-        double rpy[3];
-    };
+        self->reference();
+    }
 
-    JcnsFrankaPose read_state(JcnsFranka::Robot* self)
+    int read_mode(JcnsFranka::Robot* self)
     {
-        JcnsFranka::Pose state = self->read_state();
+        return static_cast<int>(self->read_mode());
+    }
+
+    JcnsFrankaPose read_pose(JcnsFranka::Robot* self)
+    {
+        JcnsFranka::Pose state = self->read_pose();
         JcnsFrankaPose result{};
         for (int i = 0; i < 7; i++)
             result.joints[i] = state.joints[i];
@@ -33,18 +50,6 @@ extern "C"
             result.rpy[i] = state.rpy[i];
         return result;
     }
-
-    int read_mode(JcnsFranka::Robot* self)
-    {
-        return static_cast<int>(self->read_mode());
-    }
-
-    struct JcnsFrankaLoad
-    {
-        double mass;
-        double F_x_Cload[3];
-        double load_inertia[9];
-    };
 
     JcnsFrankaLoad read_load(JcnsFranka::Robot* self)
     {
@@ -56,16 +61,6 @@ extern "C"
         for (int i = 0; i < 9; i++)
             result.load_inertia[i] = load.load_inertia[i];
         return result;
-    };
-
-    double read_csr(JcnsFranka::Robot* self)
-    {
-        return self->read_csr();
-    }
-
-    bool is_moving(JcnsFranka::Robot* self)
-    {
-        return self->is_moving();
     }
 
     void set_load(JcnsFranka::Robot* self, double mass, const double* F_x_Cload, const double* load_inertia)
@@ -79,9 +74,9 @@ extern "C"
         self->set_load(mass, arg2, arg3);
     }
 
-    void go_home(JcnsFranka::Robot* self)
+    double read_csr(JcnsFranka::Robot* self)
     {
-        self->go_home();
+        return self->read_csr();
     }
 
     void move_joints(JcnsFranka::Robot* self, const double* joints, double speed_factor)
@@ -107,14 +102,9 @@ extern "C"
         self->move_absolute(x, y, z, dt);
     }
 
-    bool is_gripping(JcnsFranka::Robot* self)
+    bool is_moving(JcnsFranka::Robot* self)
     {
-        return self->is_gripping();
-    }
-
-    double read_gripper_force(JcnsFranka::Robot* self)
-    {
-        return self->read_gripper_force();
+        return self->is_moving();
     }
 
     double read_gripper_width(JcnsFranka::Robot* self)
@@ -122,19 +112,24 @@ extern "C"
         return self->read_gripper_width();
     }
 
-    void close_gripper(JcnsFranka::Robot* self, double width, double force)
+    void set_gripper_width(JcnsFranka::Robot* self, double width)
     {
-        self->close_gripper(width, force);
+        self->set_gripper_width(width);
     }
 
-    void move_gripper(JcnsFranka::Robot* self, double width)
+    double read_gripper_force(JcnsFranka::Robot* self)
     {
-        self->move_gripper(width);
+        return self->read_gripper_force();
     }
 
-    bool is_in_error_mode(JcnsFranka::Robot* self)
+    void grasp(JcnsFranka::Robot* self, double width, double force)
     {
-        return self->is_in_error_mode();
+        self->grasp(width, force);
+    }
+
+    bool is_gripping(JcnsFranka::Robot* self)
+    {
+        return self->is_gripping();
     }
 
     char* read_error(JcnsFranka::Robot* self)
@@ -145,6 +140,11 @@ extern "C"
     void reset_error(JcnsFranka::Robot* self)
     {
         self->reset_error();
+    }
+
+    bool is_in_error_mode(JcnsFranka::Robot* self)
+    {
+        return self->is_in_error_mode();
     }
 
     uint64_t communication_test(char *ip, int realtime_config, bool limit_rate, double cutoff_frequency)

@@ -20,7 +20,7 @@ from pyjcnsfranka.robot import FrankaRobot
 robot_ip = '192.168.1.2'
 realtime_config = False
 robot = FrankaRobot(robot_ip, realtime_config)
-robot.go_home()
+robot.reference()
 ```
 
 ```python

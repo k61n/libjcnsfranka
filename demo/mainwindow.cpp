@@ -77,18 +77,18 @@ void MainWindow::on_stateChanged()
 
 void MainWindow::on_updJBtn_clicked()
 {
-    JcnsFranka::Pose state = robot->read_state();
+    JcnsFranka::Pose pose = robot->read_pose();
     int i = 0;
     foreach (QDoubleSpinBox *box, boxList)
     {
-        box->setValue(state.joints[i] / M_PI * 180.0);
+        box->setValue(pose.joints[i] / M_PI * 180.0);
         i++;
     }
 }
 
 void MainWindow::on_homeBtn_clicked()
 {
-    robot->go_home();
+    robot->reference();
     check_error();
 }
 
@@ -100,19 +100,19 @@ void MainWindow::on_clearBtn_clicked()
 void MainWindow::on_readBtn_clicked()
 {
     ui->connectionEdit->clear();
-    JcnsFranka::Pose state = robot->read_state();
+    JcnsFranka::Pose pose = robot->read_pose();
     check_error();
-    for (int i=0; i<state.joints.max_size(); i++)
+    for (int i=0; i<pose.joints.max_size(); i++)
     {
-        double degrees = state.joints[i] / M_PI * 180;
+        double degrees = pose.joints[i] / M_PI * 180;
         ui->connectionEdit->appendPlainText("j" + QString::number(i) + " = " +
-                                            QString::number(state.joints[i], 'g', 6) + "\t" +
+                                            QString::number(pose.joints[i], 'g', 6) + "\t" +
                                             QString::number(degrees, 'g', 3));
     }
     ui->connectionEdit->appendPlainText("");
-    ui->connectionEdit->appendPlainText("X = " + QString::number(state.xyz[0], 'g', 6));
-    ui->connectionEdit->appendPlainText("Y = " + QString::number(state.xyz[1], 'g', 6));
-    ui->connectionEdit->appendPlainText("Z = " + QString::number(state.xyz[2], 'g', 6));
+    ui->connectionEdit->appendPlainText("X = " + QString::number(pose.xyz[0], 'g', 6));
+    ui->connectionEdit->appendPlainText("Y = " + QString::number(pose.xyz[1], 'g', 6));
+    ui->connectionEdit->appendPlainText("Z = " + QString::number(pose.xyz[2], 'g', 6));
 }
 
 void MainWindow::on_cmtestBtn_clicked()
@@ -194,14 +194,14 @@ void MainWindow::on_closegripperBtn_clicked()
 {
     double width = ui->widthcloseLn->text().toDouble();
     double force = ui->forceLn->text().toDouble();
-    robot->close_gripper(width, force);
+    robot->grasp(width, force);
     check_error();
 }
 
 void MainWindow::on_opengripperBtn_clicked()
 {
     double width = ui->widthopenLn->text().toDouble();
-    robot->move_gripper(width);
+    robot->set_gripper_width(width);
     check_error();
 }
 

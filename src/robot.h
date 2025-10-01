@@ -55,11 +55,12 @@ namespace JcnsFranka {
         ~Robot();
 
         /**
-         * @brief read_state
-         * Reads current joints and end-effector positions
-         * @return current joints and end-effector positions
+         * @brief reference
+         * Moves the Franka robot to homing position and resets the end-effector
+         * Home position: { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad]
+         * @return True when homing is finished
          */
-        Pose read_state();
+        void reference();
 
         /**
          * @brief read_mode
@@ -68,26 +69,18 @@ namespace JcnsFranka {
         franka::RobotMode read_mode() const;
 
         /**
+         * @brief read_pose
+         * Reads current joints and end-effector positions
+         * @return current joints and end-effector positions
+         */
+        Pose read_pose();
+
+        /**
          * @brief read_load
          * Reads current load configuration
          * @return current load configuration
          */
         Load read_load() const;
-
-        /**
-         * @brief read_csr
-         * Reads current control command success rate
-         * @return Percentage of the last 100 control commands that were
-         * successfully received by the robot
-         */
-        double read_csr() const;
-
-        /**
-         * @brief is_moving
-         * Reads if robot is currently moving
-         * @return true if robot is moving
-         */
-        bool is_moving() const;
 
         /**
          * @brief set_load
@@ -101,12 +94,12 @@ namespace JcnsFranka {
                       const std::array<double, 9>& load_inertia);
 
         /**
-         * @brief go_home
-         * Moves the Franka robot to homing position and resets the end-effector
-         * Home position: { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad]
-         * @return True when homing is finished
+         * @brief read_csr
+         * Reads current control command success rate
+         * @return Percentage of the last 100 control commands that were
+         * successfully received by the robot
          */
-        void go_home();
+        double read_csr() const;
 
         /**
          * @brief move_joints
@@ -148,18 +141,11 @@ namespace JcnsFranka {
         void move_absolute(double x, double y, double z, double dt=0);
 
         /**
-         * @brief is_gripping
-         * Checks gripping status of the end-effector
-         * @return True if end-effector is closed
+         * @brief is_moving
+         * Reads if robot is currently moving
+         * @return true if robot is moving
          */
-        bool is_gripping();
-
-        /**
-         * @brief read_gripper_force
-         * Returns last applied gripper force [N]
-         * @return last gripper opening width [N]
-         */
-        double read_gripper_force() const;
+        bool is_moving() const;
 
         /**
          * @brief read_gripper_width
@@ -169,26 +155,33 @@ namespace JcnsFranka {
         double read_gripper_width();
 
         /**
-         * @brief close_gripper
+         * @brief set_gripper_width
+         * Opens gripper to a desired width
+         * @param width
+         */
+        void set_gripper_width(double width);
+
+        /**
+         * @brief read_gripper_force
+         * Returns last applied gripper force [N]
+         * @return last gripper opening width [N]
+         */
+        double read_gripper_force() const;
+
+        /**
+         * @brief grasp
          * Method to grasp an object with force
          * @param width
          * @param force
          */
-        void close_gripper(double width, double force);
+        void grasp(double width, double force);
 
         /**
-         * @brief move_gripper
-         * Opens gripper to a desired width
-         * @param width
+         * @brief is_gripping
+         * Checks gripping status of the end-effector
+         * @return True if end-effector is closed
          */
-        void move_gripper(double width);
-
-        /**
-         * @brief is_in_error_mode
-         * Class method to check if the robot is in error state
-         * @return True if is in error state
-         */
-        bool is_in_error_mode();
+        bool is_gripping();
 
         /**
          * @brief error
@@ -202,6 +195,13 @@ namespace JcnsFranka {
          * Resets current error
          */
         void reset_error();
+
+        /**
+         * @brief is_in_error_mode
+         * Class method to check if the robot is in error state
+         * @return True if is in error state
+         */
+        bool is_in_error_mode();
 
     private:
         /**
@@ -229,22 +229,16 @@ namespace JcnsFranka {
         double vmax = 1.7;  // [m s^-1]
 
         /**
-         * @brief frankaerror
-         * Description of error from libfranka
+         * @brief state
+         * Stores current robot state
          */
-        std::string frankaerror;
+        franka::RobotState state{};
 
         /**
          * @brief moving
          * Stores if robot is in motion
          */
         bool moving = false;
-
-        /**
-         * @brief state
-         * Stores current robot state
-         */
-        franka::RobotState state{};
 
         /**
          * @brief gripperwidth
@@ -257,6 +251,12 @@ namespace JcnsFranka {
          * Last set gripper width.
          */
         double gripperwidth = 0;
+
+        /**
+         * @brief frankaerror
+         * Description of error from libfranka
+         */
+        std::string frankaerror;
     };
 }
 

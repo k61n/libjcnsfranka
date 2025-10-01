@@ -14,12 +14,17 @@ Gripper::~Gripper()
     delete gripper;
 }
 
-void Gripper::go_home()
+void Gripper::reference()
 {
     gripper->homing();
     franka::GripperState state;
     state = gripper->readOnce();
     maxWidth = state.max_width;
+}
+
+double Gripper::max_width() const
+{
+    return maxWidth;
 }
 
 double Gripper::read_width()
@@ -29,12 +34,12 @@ double Gripper::read_width()
     return state.width;
 }
 
-double Gripper::max_width() const
+void Gripper::set_width(double width)
 {
-    return maxWidth;
+    gripper->move(width, 0.05);
 }
 
-void Gripper::close_gripper(double width, double force)
+void Gripper::grasp(double width, double force)
 {
     // Gripper maintains the force until the target is reached,
     // therefore the deviation is kept of the size of maxWidth in order
@@ -48,11 +53,6 @@ bool Gripper::is_gripping()
     franka::GripperState state;
     state = gripper->readOnce();
     return state.is_grasped;
-}
-
-void Gripper::move_gripper(double width)
-{
-    gripper->move(width, 0.05);
 }
 
 void Gripper::stop()

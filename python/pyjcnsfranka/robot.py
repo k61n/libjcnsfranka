@@ -39,26 +39,23 @@ class FrankaRobot:
         self.lib.deinit.argtypes = [c_void_p]
         self.lib.deinit.restype = None
 
-        self.lib.read_state.argtypes = [c_void_p]
-        self.lib.read_state.restype = FrankaPose
+        self.lib.reference.argtypes = [c_void_p]
+        self.lib.reference.restype = None
 
         self.lib.read_mode.argtypes = [c_void_p]
         self.lib.read_mode.restype = c_int8
 
+        self.lib.read_pose.argtypes = [c_void_p]
+        self.lib.read_pose.restype = FrankaPose
+
         self.lib.read_load.argtypes = [c_void_p]
         self.lib.read_load.restype = FrankaLoad
-
-        self.lib.read_csr.argtypes = [c_void_p]
-        self.lib.read_csr.restype = c_double
-
-        self.lib.is_moving.argtypes = [c_void_p]
-        self.lib.is_moving.restype = c_bool
 
         self.lib.set_load.argtypes = [c_void_p, c_double, POINTER(c_double), POINTER(c_double)]
         self.lib.set_load.restype = None
 
-        self.lib.go_home.argtypes = [c_void_p]
-        self.lib.go_home.restype = None
+        self.lib.read_csr.argtypes = [c_void_p]
+        self.lib.read_csr.restype = c_double
 
         self.lib.move_joints.argtypes = [c_void_p, POINTER(c_double), c_double]
         self.lib.move_joints.restype = None
@@ -74,23 +71,23 @@ class FrankaRobot:
                                            c_double, c_double]
         self.lib.move_absolute.restype = None
 
-        self.lib.is_gripping.argtypes = [c_void_p]
-        self.lib.is_gripping.restype = c_bool
-
-        self.lib.read_gripper_force.argtypes = [c_void_p]
-        self.lib.read_gripper_force.restype = c_double
+        self.lib.is_moving.argtypes = [c_void_p]
+        self.lib.is_moving.restype = c_bool
 
         self.lib.read_gripper_width.argtypes = [c_void_p]
         self.lib.read_gripper_width.restype = c_double
 
-        self.lib.close_gripper.argtypes = [c_void_p, c_double, c_double]
-        self.lib.close_gripper.restype = None
+        self.lib.set_gripper_width.argtypes = [c_void_p, c_double]
+        self.lib.set_gripper_width.restype = None
 
-        self.lib.move_gripper.argtypes = [c_void_p, c_double]
-        self.lib.move_gripper.restype = None
+        self.lib.read_gripper_force.argtypes = [c_void_p]
+        self.lib.read_gripper_force.restype = c_double
 
-        self.lib.is_in_error_mode.argtypes = [c_void_p]
-        self.lib.is_in_error_mode.restype = c_bool
+        self.lib.grasp.argtypes = [c_void_p, c_double, c_double]
+        self.lib.grasp.restype = None
+
+        self.lib.is_gripping.argtypes = [c_void_p]
+        self.lib.is_gripping.restype = c_bool
 
         self.lib.read_error.argtypes = [c_void_p]
         self.lib.read_error.restype = c_char_p
@@ -98,21 +95,24 @@ class FrankaRobot:
         self.lib.reset_error.argtypes = [c_void_p]
         self.lib.reset_error.restype = None
 
+        self.lib.is_in_error_mode.argtypes = [c_void_p]
+        self.lib.is_in_error_mode.restype = c_bool
+
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
     def __del__(self):
         self.lib.deinit(self.obj)
 
-    def read_state(self):
+    def reference(self):
         """
-        Reads current joints and end-effector positions.
-        :return: current joints and end-effector positions.
+        Moves the Franka robot to homing position and resets the end-effector.
+        Home position: { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad].
+        :return: True when homing is finished.
         """
-        result = self.lib.read_state(self.obj)
+        self.lib.reference(self.obj)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
-        return result.to_dict()
 
     def read_mode(self):
         """
@@ -123,6 +123,16 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
         return result
+
+    def read_pose(self):
+        """
+        Reads current joints and end-effector positions.
+        :return: current joints and end-effector positions.
+        """
+        result = self.lib.read_pose(self.obj)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
+        return result.to_dict()
 
     def read_load(self):
         """
@@ -137,27 +147,6 @@ class FrankaRobot:
             raise Exception(self.read_error())
         return result.to_dict()
 
-    def read_csr(self):
-        """
-        Reads current control command success rate.
-        :return: Percentage of the last 100 control commands that were
-            successfully received by the robot.
-        """
-        result = self.lib.read_csr(self.obj)
-        if self.is_in_error_mode():
-            raise Exception(self.read_error())
-        return result
-
-    def is_moving(self):
-        """
-        Reads if robot is currently moving.
-        :return: true if robot is moving.
-        """
-        result = self.lib.is_moving(self.obj)
-        if self.is_in_error_mode():
-            raise Exception(self.read_error())
-        return result
-
     def set_load(self, mass, F_x_Cload, load_inertia):
         """
         Sets dynamic parameters of a payload.
@@ -171,15 +160,16 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
-    def go_home(self):
+    def read_csr(self):
         """
-        Moves the Franka robot to homing position and resets the end-effector.
-        Home position: { 0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4 } [rad].
-        :return: True when homing is finished.
+        Reads current control command success rate.
+        :return: Percentage of the last 100 control commands that were
+            successfully received by the robot.
         """
-        self.lib.go_home(self.obj)
+        result = self.lib.read_csr(self.obj)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
+        return result
 
     def move_joints(self, joints, speed_factor):
         """
@@ -228,22 +218,12 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
-    def is_gripping(self):
+    def is_moving(self):
         """
-        Checks gripping status of the end-effector.
-        :return: True if end-effector is closed.
+        Reads if robot is currently moving.
+        :return: true if robot is moving.
         """
-        result = self.lib.is_gripping(self.obj)
-        if self.is_in_error_mode():
-            raise Exception(self.read_error())
-        return result
-
-    def read_gripper_force(self):
-        """
-        Returns last applied gripper force.
-        :return: last applied gripper force [N].
-        """
-        result = self.lib.read_gripper_force(self.obj)
+        result = self.lib.is_moving(self.obj)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
         return result
@@ -258,31 +238,44 @@ class FrankaRobot:
             raise Exception(self.read_error())
         return result
 
-    def close_gripper(self, width, force):
+    def set_gripper_width(self, width):
+        """
+        Opens gripper to a desired width.
+        :param width: width.
+        """
+        self.lib.set_gripper_width(self.obj, width)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
+
+    def read_gripper_force(self):
+        """
+        Returns last applied gripper force.
+        :return: last applied gripper force [N].
+        """
+        result = self.lib.read_gripper_force(self.obj)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
+        return result
+
+    def grasp(self, width, force):
         """
         Method to grasp an object with force.
         :param width: width.
         :param force: force.
         """
-        self.lib.close_gripper(self.obj, width, force)
+        self.lib.grasp(self.obj, width, force)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
-    def move_gripper(self, width):
+    def is_gripping(self):
         """
-        Opens gripper to a desired width.
-        :param width: width.
+        Checks gripping status of the end-effector.
+        :return: True if end-effector is closed.
         """
-        self.lib.move_gripper(self.obj, width)
+        result = self.lib.is_gripping(self.obj)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
-
-    def is_in_error_mode(self):
-        """
-        Class method to check if the robot is in error state.
-        :return: True if is in error state.
-        """
-        return self.lib.is_in_error_mode(self.obj)
+        return result
 
     def read_error(self):
         """
@@ -296,6 +289,13 @@ class FrankaRobot:
         Resets current error.
         """
         self.lib.reset_error(self.obj)
+
+    def is_in_error_mode(self):
+        """
+        Class method to check if the robot is in error state.
+        :return: True if is in error state.
+        """
+        return self.lib.is_in_error_mode(self.obj)
 
 
 def comtest(ip, realtime_config, limit_rate, cutoff_frequency):

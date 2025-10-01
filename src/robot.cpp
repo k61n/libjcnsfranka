@@ -30,7 +30,37 @@ Robot::~Robot()
     delete robot;
 }
 
-Pose Robot::read_state()
+void Robot::reference()
+{
+    moving = true;
+    try
+    {
+        robot->get_franka_robot().stop();
+        reset_error();
+        std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4}};
+        double speed_factor = 0.1;
+        robot->joint_motion(
+            [&](const franka::RobotState& frankastate)
+            {
+                state = frankastate;
+            },
+            q_goal, speed_factor);
+        gripper->reference();
+        gripperforce = 0;
+    }
+    catch (franka::Exception const& e)
+    {
+        frankaerror = std::string(e.what());
+    }
+    moving = false;
+}
+
+franka::RobotMode Robot::read_mode() const
+{
+    return state.robot_mode;
+}
+
+Pose Robot::read_pose()
 {
     if (!is_moving())
     {
@@ -53,11 +83,6 @@ Pose Robot::read_state()
     return pose;
 }
 
-franka::RobotMode Robot::read_mode() const
-{
-    return state.robot_mode;
-}
-
 Load Robot::read_load() const
 {
     Load res{};
@@ -65,16 +90,6 @@ Load Robot::read_load() const
     res.F_x_Cload = state.F_x_Cload;
     res.load_inertia = state.I_load;
     return res;
-}
-
-double Robot::read_csr() const
-{
-    return state.control_command_success_rate;
-}
-
-bool Robot::is_moving() const
-{
-    return moving;
 }
 
 void Robot::set_load(double load_mass, const std::array<double, 3>& F_x_Cload,
@@ -94,29 +109,9 @@ void Robot::set_load(double load_mass, const std::array<double, 3>& F_x_Cload,
     }
 }
 
-void Robot::go_home()
+double Robot::read_csr() const
 {
-    moving = true;
-    try
-    {
-        robot->get_franka_robot().stop();
-        reset_error();
-        std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4}};
-        double speed_factor = 0.1;
-        robot->joint_motion(
-            [&](const franka::RobotState& frankastate)
-            {
-                state = frankastate;
-            },
-            q_goal, speed_factor);
-        gripper->go_home();
-        gripperforce = 0;
-    }
-    catch (franka::Exception const& e)
-    {
-        frankaerror = std::string(e.what());
-    }
-    moving = false;
+    return state.control_command_success_rate;
 }
 
 void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
@@ -196,10 +191,10 @@ void Robot::move_absolute(double x, double y, double z, double dt)
     moving = true;
     if (dt == 0)
     {
-        auto current_state = read_state();
-        double x0 = current_state.xyz[0];
-        double y0 = current_state.xyz[1];
-        double z0 = current_state.xyz[2];
+        auto pose = read_pose();
+        double x0 = pose.xyz[0];
+        double y0 = pose.xyz[1];
+        double z0 = pose.xyz[2];
         double s = sqrt(pow((x - x0), 2) + pow((y - y0), 2) + pow((z - z0), 2));
         // fastest time for franka to perform a movement
         dt = s/vmax + vmax/amax;
@@ -222,23 +217,9 @@ void Robot::move_absolute(double x, double y, double z, double dt)
     moving = false;
 }
 
-bool Robot::is_gripping()
+bool Robot::is_moving() const
 {
-    bool gripper_state;
-    try
-    {
-        gripper_state = gripper->is_gripping();
-    }
-    catch (franka::Exception const& e)
-    {
-        frankaerror = std::string(e.what());
-    }
-    return gripper_state;
-}
-
-double Robot::read_gripper_force() const
-{
-    return gripperforce;
+    return moving;
 }
 
 double Robot::read_gripper_width()
@@ -257,13 +238,33 @@ double Robot::read_gripper_width()
     return gripperwidth;
 }
 
-void Robot::close_gripper(double width, double force)
+void Robot::set_gripper_width(double width)
+{
+    gripperforce = 0;
+    moving = true;
+    try
+    {
+        gripper->set_width(width);
+    }
+    catch (franka::Exception const& e)
+    {
+        frankaerror = std::string(e.what());
+    }
+    moving = false;
+}
+
+double Robot::read_gripper_force() const
+{
+    return gripperforce;
+}
+
+void Robot::grasp(double width, double force)
 {
     moving = true;
     try
     {
         gripperforce = force;
-        gripper->close_gripper(width, force);
+        gripper->grasp(width, force);
     }
     catch (franka::Exception const& e)
     {
@@ -273,24 +274,18 @@ void Robot::close_gripper(double width, double force)
     moving = false;
 }
 
-void Robot::move_gripper(double width)
+bool Robot::is_gripping()
 {
-    gripperforce = 0;
-    moving = true;
+    bool gripper_state;
     try
     {
-        gripper->move_gripper(width);
+        gripper_state = gripper->is_gripping();
     }
     catch (franka::Exception const& e)
     {
         frankaerror = std::string(e.what());
     }
-    moving = false;
-}
-
-bool Robot::is_in_error_mode()
-{
-    return !frankaerror.empty();
+    return gripper_state;
 }
 
 char *Robot::read_error()
@@ -302,4 +297,9 @@ void Robot::reset_error()
 {
     robot->get_franka_robot().automaticErrorRecovery();
     frankaerror = "";
+}
+
+bool Robot::is_in_error_mode()
+{
+    return !frankaerror.empty();
 }

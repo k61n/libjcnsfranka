@@ -21,16 +21,10 @@ namespace JcnsFranka
         ~Gripper();
 
         /**
-         * @brief go_home
+         * @brief reference
          * References the gripper
          */
-        void go_home();
-
-        /**
-         * @brief read_width
-         * @return width of the actual gripper state
-         */
-        double read_width();
+        void reference();
 
         /**
          * @brief max_width
@@ -39,26 +33,32 @@ namespace JcnsFranka
         double max_width() const;
 
         /**
+         * @brief read_width
+         * @return width of the actual gripper state
+         */
+        double read_width();
+
+        /**
+         * @brief set_gripper_width
+         * Opens gripper to a desired width
+         * @param width
+         */
+        void set_width(double width);
+
+        /**
+         * @brief grasp
+         * Closes the gripper applying the force
+         * @param width
+         * @param force
+         */
+        void grasp(double width, double force);
+
+        /**
          * @brief is_gripping
          * @return Checks gripping status
          * @return True is gripping
          */
         bool is_gripping();
-
-        /**
-         * @brief close_gripper
-         * Closes the gripper applying the force
-         * @param width
-         * @param force
-         */
-        void close_gripper(double width, double force);
-
-        /**
-         * @brief move_gripper
-         * Opens gripper to a desired width
-         * @param width
-         */
-        void move_gripper(double width);
 
         /**
          * @brief stop
