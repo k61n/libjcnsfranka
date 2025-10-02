@@ -51,6 +51,11 @@ extern "C"
         return result;
     }
 
+    void set_pose(JcnsFranka::Robot* self, double x, double y, double z, double roll, double pitch, double yaw, double t)
+    {
+        self->set_pose(x, y, z, roll, pitch, yaw, t);
+    }
+
     JcnsFrankaLoad read_load(JcnsFranka::Robot* self)
     {
         JcnsFranka::Load load = self->read_load();

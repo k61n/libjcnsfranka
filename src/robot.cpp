@@ -83,6 +83,28 @@ Pose Robot::read_pose()
     return pose;
 }
 
+void Robot::set_pose(double x, double y, double z, double roll, double pitch, double yaw, double t)
+{
+    moving = true;
+    orl::Pose orlpose{};
+    orlpose.setPosition(orl::Position(x, y, z));
+    orlpose.set_RPY(roll, pitch, yaw);
+    try
+    {
+        robot->cart_motion(
+            [&](const franka::RobotState& frankastate)
+            {
+                state = frankastate;
+            },
+            orlpose, t);
+    }
+    catch (franka::Exception const& e)
+    {
+        frankaerror = std::string(e.what());
+    }
+    moving = false;
+}
+
 Load Robot::read_load() const
 {
     Load res{};
