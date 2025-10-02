@@ -146,16 +146,16 @@ void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
     moving = false;
 }
 
-void Robot::move_relative(double dx, double dy, double dz, double dt)
+void Robot::move_relative(double dx, double dy, double dz, double t)
 {
     moving = true;
-    if (dt == 0)
+    if (t == 0)
     {
         double s = sqrt(dx * dx + dy * dy + dz * dz);
         // fastest time for franka to perform a movement
-        dt = s/vmax + vmax/amax;
+        t = s/vmax + vmax/amax;
         // 10 * t is empirical value to allow franka move smooth yet fast
-        dt *= 10;
+        t *= 10;
     }
     try
     {
@@ -164,7 +164,7 @@ void Robot::move_relative(double dx, double dy, double dz, double dt)
             {
                 state = frankastate;
             },
-            dx, dy, dz, dt);
+            dx, dy, dz, t);
     }
     catch (franka::Exception const& e)
     {
@@ -186,10 +186,10 @@ void Robot::move_linear(double dx, double dy, double dz)
         this->move_relative(ddx, ddy, ddz);
 }
 
-void Robot::move_absolute(double x, double y, double z, double dt)
+void Robot::move_absolute(double x, double y, double z, double t)
 {
     moving = true;
-    if (dt == 0)
+    if (t == 0)
     {
         auto pose = read_pose();
         double x0 = pose.xyz[0];
@@ -197,9 +197,9 @@ void Robot::move_absolute(double x, double y, double z, double dt)
         double z0 = pose.xyz[2];
         double s = sqrt(pow((x - x0), 2) + pow((y - y0), 2) + pow((z - z0), 2));
         // fastest time for franka to perform a movement
-        dt = s/vmax + vmax/amax;
+        t = s/vmax + vmax/amax;
         // 10 * t is empirical value to allow franka move smooth yet fast
-        dt *= 10;
+        t *= 10;
     }
     try
     {
@@ -208,7 +208,7 @@ void Robot::move_absolute(double x, double y, double z, double dt)
             {
                 state = frankastate;
             },
-            x, y, z, dt);
+            x, y, z, t);
     }
     catch (franka::Exception const& e)
     {

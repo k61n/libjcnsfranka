@@ -87,9 +87,9 @@ extern "C"
         self->move_joints(joints_arr, speed_factor);
     }
 
-    void move_relative(JcnsFranka::Robot* self, double dx, double dy, double dz, double dt)
+    void move_relative(JcnsFranka::Robot* self, double dx, double dy, double dz, double t)
     {
-        self->move_relative(dx, dy, dz, dt);
+        self->move_relative(dx, dy, dz, t);
     }
 
     void move_linear(JcnsFranka::Robot* self, double dx, double dy, double dz)
@@ -97,9 +97,9 @@ extern "C"
         self->move_linear(dx, dy, dz);
     }
 
-    void move_absolute(JcnsFranka::Robot* self, double x, double y, double z, double dt)
+    void move_absolute(JcnsFranka::Robot* self, double x, double y, double z, double t)
     {
-        self->move_absolute(x, y, z, dt);
+        self->move_absolute(x, y, z, t);
     }
 
     bool is_moving(JcnsFranka::Robot* self)

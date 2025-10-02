@@ -115,9 +115,9 @@ namespace JcnsFranka {
          * @param dx relative displacement in X axis [m]
          * @param dy relative displacement in Y axis [m]
          * @param dz relative displacement in Z axis [m]
-         * @param dt time to complete the movement [s]
+         * @param t time to complete the movement [s]
          */
-        void move_relative(double dx, double dy, double dz, double dt=0);
+        void move_relative(double dx, double dy, double dz, double t=0);
 
         /**
          * @brief move_linear
@@ -136,9 +136,9 @@ namespace JcnsFranka {
          * @param x target X coordinate in cartesian space [m]
          * @param y target Y coordinate in cartesian space [m]
          * @param z target Z coordinate in cartesian space [m]
-         * @param dt time to complete the movement [s]
+         * @param t time to complete the movement [s]
          */
-        void move_absolute(double x, double y, double z, double dt=0);
+        void move_absolute(double x, double y, double z, double t=0);
 
         /**
          * @brief is_moving

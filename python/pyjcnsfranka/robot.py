@@ -182,15 +182,15 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
-    def move_relative(self, dx, dy, dz, dt=0):
+    def move_relative(self, dx, dy, dz, t=0):
         """
         Performs relative motion of the Franka robot in cartesian space.
         :param dx: relative displacement in X axis [m].
         :param dy: relative displacement in Y axis [m].
         :param dz: relative displacement in Z axis [m].
-        :param dt: time to complete the movement [s].
+        :param t: time to complete the movement [s].
         """
-        self.lib.move_relative(self.obj, dx, dy, dz, dt)
+        self.lib.move_relative(self.obj, dx, dy, dz, t)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
@@ -206,15 +206,15 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
-    def move_absolute(self, x, y, z, dt=0):
+    def move_absolute(self, x, y, z, t=0):
         """
         Perform motion of the robot to a given coordinate in cartesian space.
         :param x: target X coordinate in cartesian space [m].
         :param y: target Y coordinate in cartesian space [m].
         :param z: target Z coordinate in cartesian space [m].
-        :param dt: time to complete the movement [s].
+        :param t: time to complete the movement [s].
         """
-        self.lib.move_absolute(self.obj, x, y, z, dt)
+        self.lib.move_absolute(self.obj, x, y, z, t)
         if self.is_in_error_mode():
             raise Exception(self.read_error())
 
