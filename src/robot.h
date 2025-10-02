@@ -76,6 +76,19 @@ namespace JcnsFranka {
         Pose read_pose();
 
         /**
+         * @brief set_pose
+         * Set new pose to the end-effector
+         * @param x cartesian coordinate in X-axis [m]
+         * @param y cartesian coordinate in Y-axis [m]
+         * @param z cartesian coordinate in Z-axis [m]
+         * @param roll roll angle [rad]
+         * @param pitch pitch angle [rad]
+         * @param yaw yaw angle [rad]
+         * @param t time to finish the motion [s]
+         */
+        void set_pose(double x, double y, double z, double roll, double pitch, double yaw, double t);
+
+        /**
          * @brief read_load
          * Reads current load configuration
          * @return current load configuration

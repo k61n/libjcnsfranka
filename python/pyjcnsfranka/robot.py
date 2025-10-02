@@ -48,6 +48,10 @@ class FrankaRobot:
         self.lib.read_pose.argtypes = [c_void_p]
         self.lib.read_pose.restype = FrankaPose
 
+        self.lib.set_pose.argtypes = [c_void_p, c_double, c_double, c_double,
+                                      c_double, c_double, c_double, c_double]
+        self.lib.set_pose.restype = None
+
         self.lib.read_load.argtypes = [c_void_p]
         self.lib.read_load.restype = FrankaLoad
 
@@ -133,6 +137,21 @@ class FrankaRobot:
         if self.is_in_error_mode():
             raise Exception(self.read_error())
         return result.to_dict()
+
+    def set_pose(self, x, y, z, roll, pitch, yaw, t=0):
+        """
+        Set new pose to the end-effector.
+        :param x: cartesian coordinate of end-effector in X-axis [m]
+        :param y: cartesian coordinate of end-effector in Y-axis [m]
+        :param z: cartesian coordinate of end-effector in Z-axis [m]
+        :param roll: roll angle of end-effector [rad]
+        :param pitch: pitch angle of end-effector [rad]
+        :param yaw: yaw angle of end-effector [rad]
+        :param t: time to finish the motion [s]
+        """
+        result = self.lib.set_pose(self.obj, x, y, z, roll, pitch, yaw, t)
+        if self.is_in_error_mode():
+            raise Exception(self.read_error())
 
     def read_load(self):
         """
