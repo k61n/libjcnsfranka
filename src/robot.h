@@ -86,7 +86,7 @@ namespace JcnsFranka {
          * @param yaw yaw angle [rad]
          * @param t time to finish the motion [s]
          */
-        void set_pose(double x, double y, double z, double roll, double pitch, double yaw, double t);
+        void set_pose(double x, double y, double z, double roll, double pitch, double yaw, double t=0);
 
         /**
          * @brief read_load
@@ -270,6 +270,16 @@ namespace JcnsFranka {
          * Description of error from libfranka
          */
         std::string frankaerror;
+
+        /**
+         * @brief calculate_t
+         * Calculates time to finish the movement
+         * @param x relative displacement in X axis [m]
+         * @param y relative displacement in Y axis [m]
+         * @param z relative displacement in Z axis [m]
+         * @return time to finish the motion [s]
+         */
+        double calculate_t(double x, double y, double z) const;
     };
 }
 

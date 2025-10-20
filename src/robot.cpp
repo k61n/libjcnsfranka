@@ -89,6 +89,11 @@ void Robot::set_pose(double x, double y, double z, double roll, double pitch, do
     orl::Pose orlpose{};
     orlpose.setPosition(orl::Position(x, y, z));
     orlpose.set_RPY(roll, pitch, yaw);
+    if (t == 0)
+    {
+        auto p = read_pose();
+        t = calculate_t(x - p.xyz[0], y - p.xyz[1], z - p.xyz[2]);
+    }
     try
     {
         robot->cart_motion(
@@ -171,14 +176,7 @@ void Robot::move_joints(std::array<double, 7> joints, double speed_factor)
 void Robot::move_relative(double dx, double dy, double dz, double t)
 {
     moving = true;
-    if (t == 0)
-    {
-        double s = sqrt(dx * dx + dy * dy + dz * dz);
-        // fastest time for franka to perform a movement
-        t = s/vmax + vmax/amax;
-        // 10 * t is empirical value to allow franka move smooth yet fast
-        t *= 10;
-    }
+    t = (t == 0 ? calculate_t(dx, dy, dz) : t);
     try
     {
         robot->relative_cart_motion(
@@ -213,15 +211,8 @@ void Robot::move_absolute(double x, double y, double z, double t)
     moving = true;
     if (t == 0)
     {
-        auto pose = read_pose();
-        double x0 = pose.xyz[0];
-        double y0 = pose.xyz[1];
-        double z0 = pose.xyz[2];
-        double s = sqrt(pow((x - x0), 2) + pow((y - y0), 2) + pow((z - z0), 2));
-        // fastest time for franka to perform a movement
-        t = s/vmax + vmax/amax;
-        // 10 * t is empirical value to allow franka move smooth yet fast
-        t *= 10;
+        auto p = read_pose();
+        t = calculate_t(x - p.xyz[0], y - p.xyz[1], z - p.xyz[2]);
     }
     try
     {
@@ -324,4 +315,18 @@ void Robot::reset_error()
 bool Robot::is_in_error_mode()
 {
     return !frankaerror.empty();
+}
+
+double Robot::calculate_t(double x, double y, double z) const
+{
+    // relative displacement [m]
+    double s = sqrt(x * x + y * y + z * z);
+    double t;
+    // fastest time for franka to perform a movement [s]
+    if (sqrt(s * amax) <= vmax)
+        t = sqrt(s / amax);
+    else
+        t = s/vmax + vmax/amax;
+    // 20 * t is empirical value to allow franka move smooth yet fast
+    return t * 20;
 }
