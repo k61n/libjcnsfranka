@@ -74,10 +74,16 @@ namespace JcnsFranka
         franka::Gripper *gripper;
 
         /**
-         * @brief maxWidth
+         * @brief maxWidth [m]
          * Once gripper is initialized its max width is stored
          */
         double maxWidth = 0.081;
+
+        /**
+         * @brief maxSpeed [m/s]
+         * Once gripper is initialized its max speed is stored
+         */
+        double maxSpeed = 0.05;
     };
 }
 
