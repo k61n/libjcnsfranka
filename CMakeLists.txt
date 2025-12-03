@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(jcnsfranka
-    VERSION 0.4.6
+    VERSION 0.4.7
     LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

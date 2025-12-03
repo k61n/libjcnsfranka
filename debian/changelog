@@ -1,3 +1,15 @@
+jcnsfranka (0.4.7) unstable; urgency=medium
+
+  * refactor gripper class
+  * revise internal evaluation of time to finish a movement
+  * new method to set a pose robot::set_pose
+  * rename variable names
+  * refactor the library API
+  * add reading roll, pitch and yaw of the pose
+  * add method to read current load
+
+ -- Konstantin Kholostov <k.kholostov@fz-juelich.de>  Wed, 03 Dec 2025 16:56:52 +0100
+
 jcnsfranka (0.4.6) unstable; urgency=medium
 
   * string doesn't need to be initialised with empty string

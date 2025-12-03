@@ -30,7 +30,7 @@ class FrankaRobot:
     """
     def __init__(self, ip, realtime_config=False):
 
-        self.lib = CDLL('libjcnsfranka.so.0.4.6', winmode=0)
+        self.lib = CDLL('libjcnsfranka.so.0.4.7', winmode=0)
         self.lib.init.argtypes = [c_char_p, c_int8]
         self.lib.init.restype = c_void_p
         buffer = create_string_buffer(ip.encode('utf-8'))
@@ -327,7 +327,7 @@ def comtest(ip, realtime_config, limit_rate, cutoff_frequency):
     :param cutoff_frequency: 1000 or low-pass filtered 100 [Hz].
     :return: number of lost states.
     """
-    lib = CDLL('libjcnsfranka.so.0.4.6', winmode=0)
+    lib = CDLL('libjcnsfranka.so.0.4.7', winmode=0)
     buffer = create_string_buffer(ip.encode('utf-8'))
     lib.communication_test.argtypes = [c_char_p, c_int, c_bool, c_double]
     lib.communication_test.restype = c_uint64
